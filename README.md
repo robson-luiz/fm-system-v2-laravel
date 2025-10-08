@@ -8,9 +8,19 @@
 * MySQL 8.0 ou superior - Conferir a versão: mysql --version
 * Composer - Conferir a instalação: composer --version
 * Node.js 22 ou superior - Conferir a versão: node -v
+* NPM ou Yarn - Para gerenciar dependências do Node.js e compilar assets
 * GIT - Conferir se está instalado o GIT: git -v
 
+**Frontend:**
+* Tailwind CSS v4 - Incluído como dependência do projeto (instalado via npm)
+
 ## Como rodar o projeto baixado
+
+Primeiro, baixe o projeto do repositório GitHub:
+```
+git clone https://github.com/robson-luiz/fm-system-v2-laravel.git
+cd fm-system-v2-laravel
+```
 
 - Duplicar o arquivo ".env.example" e renomear para ".env".
 - Alterar as credenciais do banco de dados.
@@ -88,9 +98,7 @@ http://127.0.0.1:8000
 
 ## Armazenamento de Arquivos
 
-O sistema utiliza armazenamento local para imagens de usuários e comprovantes.
-
-Para uso em produção, é possível configurar S3 ou outros serviços de armazenamento cloud editando o arquivo `config/filesystems.php`.
+O sistema utiliza armazenamento local para imagens de usuários e comprovantes em desenvolvimento e produção.
 
 ## Deploy em Produção
 
@@ -110,7 +118,7 @@ ssh usuario-do-servidor@ip-do-servidor-vps
 
 Baixar os arquivos do GitHub para o servidor.
 ```
-git clone -b <branch_name> <repository_url> .
+git clone -b main <repository_url> .
 ```
 
 Duplicar o arquivo ".env.example" e renomear para ".env".
@@ -202,9 +210,9 @@ sudo supervisorctl update
 sudo supervisorctl start fm-system-worker:*
 ```
 
-## Sequência para criar o projeto
+## Comandos Artisan Úteis para Desenvolvimento
 
-Criar o projeto com Laravel
+Criar o projeto com Laravel (comando usado inicialmente pelo professor)
 ```
 composer create-project laravel/laravel .
 ```
@@ -224,7 +232,7 @@ Executar as bibliotecas Node.js.
 npm run dev
 ```
 
-Acessar o conteúdo padrão do Laravel
+Acessar o sistema FM System
 ```
 http://127.0.0.1:8000
 ```
@@ -234,7 +242,7 @@ Criar Controller com php artisan.
 php artisan make:controller NomeController
 ```
 ```
-php artisan make:controller CoursesController
+php artisan make:controller ExpenseController
 ```
 
 Criar View com php artisan.
@@ -242,7 +250,7 @@ Criar View com php artisan.
 php artisan make:view diretorio.nome-view
 ```
 ```
-php artisan make:view courses.index
+php artisan make:view expenses.index
 ```
 
 Criar migration com php artisan.
@@ -250,7 +258,8 @@ Criar migration com php artisan.
 php artisan make:migration create_nome_table
 ```
 ```
-php artisan make:migration create_courses_table
+php artisan make:migration create_expenses_table
+php artisan make:migration create_installments_table
 ```
 
 Executar as migrations para criar a base de dados e as tabelas.
@@ -263,7 +272,7 @@ Criar seed com php artisan para cadastrar registros de testes.
 php artisan make:seeder NomeSeeder
 ```
 ```
-php artisan make:seeder UserSeeder
+php artisan make:seeder ExpenseSeeder
 ```
 
 Executar seed com php artisan para cadastrar registros de testes.
@@ -286,7 +295,7 @@ Criar componente
 php artisan make:component nome --view
 ```
 ```
-php artisan make:component alert --view
+php artisan make:component expense-card --view
 ```
 
 Criar o arquivo de Request com validações para o formulário.
@@ -294,7 +303,7 @@ Criar o arquivo de Request com validações para o formulário.
 php artisan make:request NomeRequest
 ```
 ```
-php artisan make:request UserRequest
+php artisan make:request ExpenseRequest
 ```
 
 Traduzir para português [Módulo pt-BR](https://github.com/lucascudo/laravel-pt-BR-localization)
@@ -337,39 +346,40 @@ Executar as migrations do sistema de permissão.
 php artisan migrate
 ```
 
-Instalar a biblioteca para apresentar o alerta personalizado.
+## Bibliotecas e Dependências Incluídas
+
+O projeto já vem com as seguintes bibliotecas pré-instaladas:
+
+**Frontend:**
+- **Tailwind CSS v4** - Framework CSS utilitário
+- **Alpine.js v3** - Framework JavaScript reativo
+- **Chart.js v4** - Biblioteca para gráficos
+- **SweetAlert2** - Alertas personalizados elegantes
+
+**Backend:**
+- **Spatie Laravel Permission** - Sistema de permissões e roles
+- **OwenIt Laravel Auditing** - Auditoria de ações do sistema
+- **Intervention Image** - Manipulação de imagens
+- **Laravel Tinker** - REPL interativo do Laravel
+
+**Desenvolvimento:**
+- **Laravel Pint** - Formatador de código PHP
+- **Laravel Sail** - Ambiente Docker (opcional)
+- **Faker** - Geração de dados fake para testes
+
+Para instalar todas as dependências após clonar o projeto:
 ```
-npm install sweetalert2
+composer install
+npm install
 ```
 
-Instalar a biblioteca para gerar PDF.
-```
-composer require barryvdh/laravel-dompdf
-```
+## Como baixar e trabalhar com o projeto do GitHub
 
-Instalar a biblioteca para gerar gráfico.
-```
-npm install chart.js
-```
-
-Instalar o pacote de manipulação de imagens.
-```
-composer require intervention/image
-```
-
-Como criar o arquivo de rotas para API no Laravel 11
-```
-php artisan install:api
-```
-
-## Como enviar e baixar os arquivos do GitHub
-
-- Criar o repositório **"fm-system-v2-laravel"** no GitHub.
-- Criar o branch **"main"** no repositório.
+O repositório **"fm-system-v2-laravel"** já está criado no GitHub com a branch **"main"**.
 
 Baixar os arquivos do Git.
 ```
-git clone -b <branch_name> <repository_url> .
+git clone -b main <repository_url> .
 ```
 
 - Colocar o código fonte do projeto no diretório que está trabalhando.
@@ -404,7 +414,7 @@ git commit -m "Base projeto"
 Enviar os commits locais, para um repositório remoto.
 ```
 git push <remote> <branch>
-git push origin develop
+git push origin main
 ```
 
 Voltar um ou mais commits. Usar HEAD~2 para voltar dois commits, e assim por diante.
@@ -417,7 +427,7 @@ Criar nova branch no PC.
 git checkout -b <branch>
 ```
 ```
-git checkout -b main
+git checkout -b feature/nova-funcionalidade
 ```
 
 Mudar de branch.
@@ -425,7 +435,7 @@ Mudar de branch.
 git switch <branch>
 ```
 ```
-git switch main
+git switch feature/nova-funcionalidade
 ```
 
 Mesclar o histórico de commits de uma branch em outra branch.
@@ -433,7 +443,7 @@ Mesclar o histórico de commits de uma branch em outra branch.
 git merge <branch_name>
 ```
 ```
-git merge develop
+git merge feature/nova-funcionalidade
 ```
 
 Fazer o push das alterações.
