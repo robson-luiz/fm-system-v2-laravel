@@ -20,6 +20,11 @@ yarn-error.log
 # Arquivos pessoais de planejamento (não vão pro GitHub)
 README.txt
 
+# Documentações de desenvolvimento/implementação (não vão pro GitHub)
+CUSTOM_SMS_PROVIDERS.md
+IMPLEMENTACAO_VALIDADA.md
+SMS_CONFIG_EXAMPLES.md
+
 # Build artifacts
 /public/build
 /public/mix-manifest.json

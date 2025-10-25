@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Expense extends Model implements Auditable
@@ -23,7 +24,7 @@ class Expense extends Model implements Auditable
         'amount',
         'due_date',
         'periodicity',
-        'status',
+        'status', // 'pending', 'paid', 'overdue'
         'payment_date',
         'num_installments',
         'reason_not_paid',
@@ -147,7 +148,7 @@ class Expense extends Model implements Auditable
      */
     public function getIsOverdueAttribute()
     {
-        return $this->status === 'pending' && $this->due_date < now();
+    return ($this->status === 'pending' && $this->due_date < now()) || $this->status === 'overdue';
     }
 
     /**
@@ -182,7 +183,9 @@ class Expense extends Model implements Auditable
      */
     public function getStatusTranslatedAttribute()
     {
-        return $this->status === 'paid' ? 'Paga' : 'Pendente';
+    if ($this->status === 'paid') return 'Paga';
+    if ($this->status === 'overdue') return 'Atrasada';
+    return 'Pendente';
     }
 
     /**
@@ -193,16 +196,10 @@ class Expense extends Model implements Auditable
         $colors = [
             'paid' => 'bg-green-500',
             'pending' => 'bg-yellow-500',
+            'overdue' => 'bg-red-500',
         ];
-
-        if ($this->is_overdue) {
-            $color = 'bg-red-500';
-            $text = 'Vencida';
-        } else {
-            $color = $colors[$this->status] ?? 'bg-gray-500';
-            $text = $this->status_translated;
-        }
-
+        $text = $this->status_translated;
+        $color = $colors[$this->status] ?? 'bg-gray-500';
         return "<span class=\"px-2 py-1 text-xs rounded {$color} text-white\">{$text}</span>";
     }
 
@@ -250,7 +247,69 @@ class Expense extends Model implements Auditable
             'total' => $this->installments->count(),
             'paid' => $this->installments->where('status', 'paid')->count(),
             'pending' => $this->installments->where('status', 'pending')->count(),
-            'overdue' => $this->installments->filter(fn($i) => $i->is_overdue)->count(),
+            'overdue' => $this->installments->where('status', 'overdue')->count(),
         ];
+    }
+
+    /**
+     * Marca a despesa e todas as parcelas como pagas
+     */
+    public function markAllAsPaid($paymentDate = null)
+    {
+        $paymentDate = $paymentDate ?? now()->toDateString();
+        
+        return DB::transaction(function () use ($paymentDate) {
+            // Atualizar a despesa principal
+            $this->update([
+                'status' => 'paid',
+                'payment_date' => $paymentDate,
+                'reason_not_paid' => null,
+            ]);
+
+            // Atualizar todas as parcelas
+            if ($this->hasInstallments()) {
+                $this->installments()->update([
+                    'status' => 'paid',
+                    'payment_date' => $paymentDate,
+                    'reason_not_paid' => null,
+                ]);
+            }
+
+            return true;
+        });
+    }
+
+    /**
+     * Marca a despesa e todas as parcelas como atrasadas
+     */
+    public function markAllAsOverdue($reason = null)
+    {
+        return DB::transaction(function () use ($reason) {
+            // Atualizar a despesa principal
+            $this->update([
+                'status' => 'overdue',
+                'payment_date' => null,
+                'reason_not_paid' => $reason,
+            ]);
+
+            // Atualizar todas as parcelas
+            if ($this->hasInstallments()) {
+                $this->installments()->update([
+                    'status' => 'overdue',
+                    'payment_date' => null,
+                    'reason_not_paid' => $reason,
+                ]);
+            }
+
+            return true;
+        });
+    }
+
+    /**
+     * Scope para filtrar despesas atrasadas
+     */
+    public function scopeOverdueStatus($query)
+    {
+        return $query->where('status', 'overdue');
     }
 }

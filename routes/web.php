@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\Admin\TwoFactorSettingsController;
+use App\Http\Controllers\Admin\EmailSmsSettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Finance\ExpenseController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -40,11 +43,14 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showRequestForm'])->name('password.reset');
 Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
 
-// Formulário para redefinir a senha com o token. Só usado para gerar o link recuperar senha, mas não funciona de forma externa
-Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showRequestForm'])->name('password.reset');
+// Rotas de 2FA (fora do middleware auth para permitir acesso após login inicial)
+Route::get('/two-factor', [TwoFactorController::class, 'show'])->name('two-factor.show')->middleware('auth');
+Route::post('/two-factor/verify', [TwoFactorController::class, 'verify'])->name('two-factor.verify')->middleware('auth');
+Route::post('/two-factor/send', [TwoFactorController::class, 'sendCode'])->name('two-factor.send')->middleware('auth');
+Route::post('/two-factor/resend', [TwoFactorController::class, 'resend'])->name('two-factor.resend')->middleware('auth');
 
-// Grupo de rotas restritas
-Route::group(['middleware' => 'auth'], function () {
+// Grupo de rotas restritas (com 2FA)
+Route::group(['middleware' => ['auth', 'two-factor']], function () {
     // Página inicial do administrativo
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('permission:dashboard');
@@ -132,6 +138,26 @@ Route::group(['middleware' => 'auth'], function () {
         // Rotas para marcar parcelas como paga/não paga
         Route::post('/installments/{installment}/mark-as-paid', [ExpenseController::class, 'markInstallmentAsPaid'])->name('installments.mark-as-paid')->middleware('permission:edit-expense');
         Route::post('/installments/{installment}/mark-as-unpaid', [ExpenseController::class, 'markInstallmentAsUnpaid'])->name('installments.mark-as-unpaid')->middleware('permission:edit-expense');
+        
+        // Rotas para marcar despesa inteira como paga/atrasada
+        Route::post('/{expense}/mark-paid', [ExpenseController::class, 'markPaid'])->name('expenses.mark-paid')->middleware('permission:edit-expense');
+        Route::post('/{expense}/mark-overdue', [ExpenseController::class, 'markOverdue'])->name('expenses.mark-overdue')->middleware('permission:edit-expense');
+    });
+
+    // Rotas administrativas de 2FA
+    Route::prefix('admin/two-factor')->name('admin.two-factor.')->group(function () {
+        Route::get('/', [TwoFactorSettingsController::class, 'index'])->name('index')->middleware('permission:manage-system-settings');
+        Route::put('/update', [TwoFactorSettingsController::class, 'update'])->name('update')->middleware('permission:manage-system-settings');
+        Route::get('/statistics', [TwoFactorSettingsController::class, 'statistics'])->name('statistics')->middleware('permission:manage-system-settings');
+    });
+
+    // Rotas administrativas de Email e SMS
+    Route::prefix('admin/email-sms')->name('admin.email-sms.')->group(function () {
+        Route::get('/', [EmailSmsSettingsController::class, 'index'])->name('index')->middleware('permission:manage-system-settings');
+        Route::put('/update-email', [EmailSmsSettingsController::class, 'updateEmail'])->name('update-email')->middleware('permission:manage-system-settings');
+        Route::put('/update-sms', [EmailSmsSettingsController::class, 'updateSms'])->name('update-sms')->middleware('permission:manage-system-settings');
+        Route::post('/test-email', [EmailSmsSettingsController::class, 'testEmail'])->name('test-email')->middleware('permission:manage-system-settings');
+        Route::post('/test-sms', [EmailSmsSettingsController::class, 'testSms'])->name('test-sms')->middleware('permission:manage-system-settings');
     });
 
 });

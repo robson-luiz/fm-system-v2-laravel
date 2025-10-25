@@ -29,6 +29,10 @@ class User extends Authenticatable implements Auditable
         'cpf',
         'alias',
         'image',
+        'two_factor_enabled',
+        'two_factor_method',
+        'phone_number',
+        'phone_verified_at',
     ];
 
     /**
@@ -51,6 +55,10 @@ class User extends Authenticatable implements Auditable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'two_factor_enabled' => 'boolean',
+            'phone_verified_at' => 'datetime',
+            'two_factor_verified_at' => 'datetime',
+            'two_factor_locked_until' => 'datetime',
         ];
     }
 
@@ -93,14 +101,159 @@ class User extends Authenticatable implements Auditable
             return asset('/images/users/user.png');
         }
 
-        // Caminho da imagem
-        $path = 'users/' . $this->id . '/' . $this->image;
+        // Primeiro verifica se existe na pasta profile (perfil do usuário)
+        $profilePath = "profile/{$this->id}/{$this->image}";
+        if (Storage::disk('public')->exists($profilePath)) {
+            return asset("storage/{$profilePath}");
+        }
 
-        // Se não encontrar a imagem, carrega a imagem padrão
+        // Depois verifica se existe na pasta users (admin editando)
+        $usersPath = "users/{$this->id}/{$this->image}";
+        if (Storage::disk('public')->exists($usersPath)) {
+            return asset("storage/{$usersPath}");
+        }
+
+        // Verifica se ainda existe na pasta pública antiga (para compatibilidade)
         if (file_exists(public_path('images/users/' . $this->id . '/' . $this->image))) {
             return asset('images/users/' . $this->id . '/' . $this->image);
-        } else {
-            return asset('/images/users/user.png');
         }
+
+        // Se não encontrar em lugar algum, retorna a imagem padrão
+        return asset('/images/users/user.png');
+    }
+
+    /**
+     * Relacionamento com códigos de 2FA
+     */
+    public function twoFactorCodes()
+    {
+        return $this->hasMany(TwoFactorCode::class);
+    }
+
+    /**
+     * Verificar se o usuário tem 2FA habilitado
+     */
+    public function hasTwoFactorEnabled(): bool
+    {
+        return $this->two_factor_enabled;
+    }
+
+    /**
+     * Verificar se o usuário deve usar 2FA obrigatoriamente
+     */
+    public function requiresTwoFactor(): bool
+    {
+        if (!TwoFactorAuthSetting::isEnabled()) {
+            return false;
+        }
+
+        // Se é obrigatório para admins e o usuário é admin
+        if (TwoFactorAuthSetting::isRequiredForAdmins() && $this->hasRole('admin')) {
+            return true;
+        }
+
+        // Se o usuário habilitou voluntariamente
+        return $this->two_factor_enabled;
+    }
+
+    /**
+     * Obter o destino para envio do código 2FA
+     */
+    public function getTwoFactorDestination(): string
+    {
+        return $this->two_factor_method === 'sms' 
+            ? $this->phone_number 
+            : $this->email;
+    }
+
+    /**
+     * Verificar se o telefone está verificado (necessário para SMS)
+     */
+    public function hasVerifiedPhone(): bool
+    {
+        return $this->phone_verified_at !== null;
+    }
+
+    /**
+     * Verificar se o usuário está bloqueado por tentativas de 2FA
+     */
+    public function isTwoFactorLocked(): bool
+    {
+        return $this->two_factor_locked_until && 
+               $this->two_factor_locked_until > now();
+    }
+
+    /**
+     * Bloquear usuário por tentativas excessivas de 2FA
+     */
+    public function lockTwoFactor(int $minutes = 15): void
+    {
+        $this->update([
+            'two_factor_locked_until' => now()->addMinutes($minutes)
+        ]);
+    }
+
+    /**
+     * Desbloquear usuário do 2FA
+     */
+    public function unlockTwoFactor(): void
+    {
+        $this->update([
+            'two_factor_locked_until' => null,
+            'two_factor_failed_attempts' => 0
+        ]);
+    }
+
+    /**
+     * Incrementar tentativas falhadas de 2FA
+     */
+    public function incrementTwoFactorFailedAttempts(): void
+    {
+        $this->increment('two_factor_failed_attempts');
+        
+        $maxAttempts = TwoFactorAuthSetting::getMaxAttempts();
+        if ($this->two_factor_failed_attempts >= $maxAttempts) {
+            $this->lockTwoFactor();
+        }
+    }
+
+    /**
+     * Resetar tentativas falhadas de 2FA
+     */
+    public function resetTwoFactorFailedAttempts(): void
+    {
+        $this->update([
+            'two_factor_failed_attempts' => 0,
+            'two_factor_verified_at' => now()
+        ]);
+    }
+
+    /**
+     * Habilitar 2FA para o usuário
+     */
+    public function enableTwoFactor(string $method = null): void
+    {
+        $method = $method ?: TwoFactorAuthSetting::getDefaultMethod();
+        
+        $this->update([
+            'two_factor_enabled' => true,
+            'two_factor_method' => $method
+        ]);
+    }
+
+    /**
+     * Desabilitar 2FA para o usuário
+     */
+    public function disableTwoFactor(): void
+    {
+        $this->update([
+            'two_factor_enabled' => false,
+            'two_factor_verified_at' => null,
+            'two_factor_failed_attempts' => 0,
+            'two_factor_locked_until' => null
+        ]);
+
+        // Remover códigos pendentes
+        $this->twoFactorCodes()->delete();
     }
 }

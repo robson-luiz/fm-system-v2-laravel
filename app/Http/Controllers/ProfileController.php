@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\ImageUploadService;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -183,19 +185,21 @@ class ProfileController extends Controller
         return view('profile.edit_image', ['user' => $user]);
     }
 
-    // Editar no banco de dados a imagem do perfil
-    public function updateImage(Request $request)
+        /**
+     * Editar a imagem do perfil
+     */
+    public function updateImage(Request $request): RedirectResponse
     {
-        // Validar o formulário
+        // Validar os dados do formulário
         $request->validate(
             [
-                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
             ],
             [
-                'image.required' => "Campo imagem é obrigatório!",
-                'image.image' => "Necessário enviar arquivo do tipo imagem!",
-                'image.mimes' => "Imagem deve ser do tipo: jpeg, png ou jpg!",
-                'image.max' => "Tamanho da imagem deve ser no máximo :max KB!",
+                'image.required' => 'A imagem é obrigatória!',
+                'image.image' => 'O arquivo deve ser uma imagem!',
+                'image.mimes' => 'A imagem deve ser JPG ou PNG!',
+                'image.max' => 'A imagem deve ter no máximo 2MB!',
             ]
         );
 
@@ -204,83 +208,20 @@ class ProfileController extends Controller
             // Recuperar do banco de dados as informações do usuário logado
             $user = User::where('id', Auth::id())->first();
 
-            // Upload no S3
+            // Upload da imagem
             if ($request->hasFile('image') && $request->file('image')->isValid()) {
                 $file = $request->file('image');
+                
+                // Instanciar o service de upload
+                $imageUploadService = new ImageUploadService();
 
                 // Exclui a imagem anterior, se existir
                 if (!empty($user->image)) {
-                    $oldPath = public_path('images/users/' . $user->id . '/' . $user->image);
-                    if (file_exists($oldPath)) {
-                        unlink($oldPath);
-                    }
+                    $imageUploadService->deleteImage($user->image, $user->id, 'profile');
                 }
 
-                // Nome do arquivo sem extensão
-                $nameWithoutExt = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-
-                // Slug do nome (ex: "Foto de Perfil" => "foto-de-perfil")
-                $slug = Str::slug($nameWithoutExt);
-
-                // Extensão (ex: jpg)
-                $extension = $file->getClientOriginalExtension();
-
-                // Nome final do arquivo
-                $filename = "{$slug}.{$extension}";
-
-                // === PROCESSAMENTO DA IMAGEM ===
-                // Cria manager com GD
-                $manager = new ImageManager(new Driver());
-
-                // Carrega imagem
-                $image = $manager->read($file->getRealPath());
-
-                // Dimensões
-                $width  = $image->width();
-                $height = $image->height();
-
-                if ($width !== $height) {
-                    $side = min($width, $height);
-                    $x = intval(($width  - $side) / 2);
-                    $y = intval(($height - $side) / 2);
-
-                    // Recorta quadrado
-                    $image->crop($side, $side, $x, $y);
-                }
-
-                // Redimensiona 150x150
-                $image->resize(150, 150);
-
-                // Converte para binário no formato original (qualidade 100%)
-                // Detecta a extensão enviada
-                $extension = strtolower($file->getClientOriginalExtension());
-
-                switch ($extension) {
-                    case 'png':
-                        // PNG → nível de compressão (0 sem compressão, 9 máxima)
-                        $encoded = $image->encode(new PngEncoder(0));
-                        break;
-
-                    case 'jpg':
-                    case 'jpeg':
-                        // JPG → qualidade 0 a 100
-                        $encoded = $image->encode(new JpegEncoder(100));
-                        break;
-
-                    default:
-                        // fallback: força para jpg
-                        $encoded = $image->encode(new JpegEncoder(100));
-                        $extension = 'jpg';
-                        $filename = "{$slug}.jpg";
-                        break;
-                }
-
-                // Upload para a pasta public/images/users
-                $uploadPath = public_path('images/users/' . $user->id);
-                if (!file_exists($uploadPath)) {
-                    mkdir($uploadPath, 0755, true);
-                }
-                $file->move($uploadPath, $filename);
+                // Fazer upload da nova imagem
+                $filename = $imageUploadService->uploadProfileImage($file, $user->id);
 
                 // Atualiza a imagem no banco
                 $user->update(['image' => $filename]);

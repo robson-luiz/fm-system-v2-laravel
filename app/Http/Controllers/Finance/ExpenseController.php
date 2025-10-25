@@ -418,4 +418,64 @@ class ExpenseController extends Controller
             'installment' => $installment->fresh(),
         ]);
     }
+
+    /**
+     * Marcar despesa inteira como paga
+     */
+    public function markPaid(Request $request, Expense $expense)
+    {
+        // Verificar se a despesa pertence ao usuário
+        if ($expense->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Acesso não autorizado.'], 403);
+        }
+        
+        $validated = $request->validate([
+            'payment_date' => 'required|date',
+        ]);
+        
+        try {
+            $expense->markAllAsPaid($validated['payment_date']);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Despesa marcada como paga com sucesso!',
+                'expense' => $expense->fresh(['installments']),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Erro ao marcar despesa como paga.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Marcar despesa inteira como atrasada
+     */
+    public function markOverdue(Request $request, Expense $expense)
+    {
+        // Verificar se a despesa pertence ao usuário
+        if ($expense->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Acesso não autorizado.'], 403);
+        }
+        
+        $validated = $request->validate([
+            'reason_not_paid' => 'required|string|max:500',
+        ]);
+        
+        try {
+            $expense->markAllAsOverdue($validated['reason_not_paid']);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Despesa marcada como atrasada.',
+                'expense' => $expense->fresh(['installments']),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Erro ao marcar despesa como atrasada.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

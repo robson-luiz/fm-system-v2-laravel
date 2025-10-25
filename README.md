@@ -475,12 +475,14 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 
 ### Funcionalidades Principais
 
-- Gerenciamento de despesas e receitas
-- Controle de cartões de crédito
-- Wishlist com análise de viabilidade
-- Dashboard financeiro com gráficos
-- Alertas inteligentes de pagamentos
-- Sistema completo de permissões e auditoria
+- 🔐 **Sistema de autenticação robusto** com login de dois fatores (2FA)
+- 💰 **Gerenciamento inteligente de despesas** com sistema de parcelas flexíveis
+- 💳 **Controle de cartões de crédito** com análise de melhor data de compra
+- 📊 **Dashboard financeiro** com gráficos e relatórios detalhados
+- 🎯 **Wishlist inteligente** com análise de viabilidade financeira
+- 🔔 **Alertas proativos** de pagamentos e vencimentos
+- 👥 **Sistema completo de permissões** e auditoria de ações
+- 🎨 **Interface moderna** com tema claro/escuro e design responsivo
 
 ### Roadmap
 
@@ -500,27 +502,38 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Marcação individual de parcelas pagas
 - [x] Histórico de pagamentos
 
-**Fase 2 - Cartões de Crédito** 📋 Planejada
+**Fase 2 - Login com 2 Fatores** ✅ Concluída (25/10/2025)
+- [x] Implementação de autenticação de dois fatores (2FA)
+- [x] Configuração administrativa para escolha do método de envio
+- [x] Envio de código via e-mail
+- [x] Envio de código via SMS
+- [x] Interface de configuração no painel administrativo
+- [x] Validação e verificação de códigos temporários
+- [x] Backup codes para recuperação de acesso
+- [x] Logs de segurança para tentativas de login
+- [x] **Provedores SMS Customizados**: Configure qualquer provedor SMS (Iagente, ZenviaNow, TotalVoice, etc)
+
+**Fase 3 - Cartões de Crédito** 📋 Planejada
 - [ ] CRUD de cartões de crédito
 - [ ] Vinculação de despesas com cartões
 - [ ] Controle de limite e fatura
 - [ ] Alerta de melhor dia de compra
 
-**Fase 3 - Receitas e Dashboard** 📋 Planejada
+**Fase 4 - Receitas e Dashboard** 📋 Planejada
 - [ ] CRUD de receitas
 - [ ] Dashboard financeiro com gráficos
 - [ ] Relatórios de fluxo de caixa
 
-**Fase 4 - Wishlist e Análises** 📋 Planejada
+**Fase 5 - Wishlist e Análises** 📋 Planejada
 - [ ] Wishlist inteligente
 - [ ] Análise de viabilidade de compras
 - [ ] Verificação automática de pagamentos
 - [ ] Alertas inteligentes
 
-**Fase 5 - Recursos Avançados** 📋 Futuro
+**Fase 6 - Recursos Avançados** 📋 Futuro
 - [ ] Integração com IA para análises
 - [ ] Open Banking
-- [ ] Notificações por e-mail/SMS
+- [ ] Notificações por e-mail/SMS avançadas
 - [ ] Multi-moeda
 
 ---
@@ -602,6 +615,55 @@ Exemplo: Entrada + Parcelas diferentes
 - Filtro por cartão de crédito
 - Filtro por mês/ano
 - Estatísticas em cards
+
+### 🔐 Sistema de Autenticação 2FA (Fase 2 - Concluída em 25/10/2025)
+
+#### **Autenticação de Dois Fatores**
+- ✅ **Verificação por E-mail**: Códigos de 6 dígitos via SMTP
+- ✅ **Verificação por SMS**: Integração com provedores SMS
+- ✅ **Backup Codes**: Códigos de recuperação para emergências
+- ✅ **Configuração Flexível**: Admin escolhe método padrão por usuário
+
+#### **Painel Administrativo Completo**
+- ✅ **Configurações de E-mail**: SMTP configurável via interface
+- ✅ **Configurações de SMS**: Múltiplos provedores suportados
+- ✅ **Teste Integrado**: Teste de envio direto no painel
+- ✅ **Estatísticas**: Monitoramento de códigos enviados/validados
+
+#### **Provedores SMS Customizados** 🇧🇷
+**Sistema revolucionário que permite configurar QUALQUER provedor SMS**
+
+**Características:**
+- ✅ **Flexibilidade Total**: Configure qualquer API REST
+- ✅ **Provedores Brasileiros**: Iagente, ZenviaNow, TotalVoice
+- ✅ **Provedores Internacionais**: Twilio, Nexmo, etc
+- ✅ **Interface Amigável**: Configure sem tocar no código
+- ✅ **Teste em Tempo Real**: Validação antes de ativar
+
+**Configuração Simples:**
+```
+Nome: Iagente
+URL: https://api.iagente.com.br/v1/sms/send
+Método: POST
+Campo Telefone: to
+Campo Mensagem: message
+Headers: Authorization: Bearer TOKEN
+Indicadores: status: success
+```
+
+**Benefícios:**
+- 🚫 **Sem Vendor Lock-in**: Mude de provedor quando quiser
+- 🇧🇷 **Suporte Nacional**: Use empresas brasileiras
+- 💰 **Economia**: Escolha o provedor mais barato
+- 🔧 **Manutenção Zero**: Configure uma vez, funciona sempre
+- 📊 **Logs Detalhados**: Monitore todos os envios
+
+#### **Recursos Técnicos 2FA**
+- **Guzzle HTTP**: Cliente HTTP robusto para APIs SMS
+- **Validação Dinâmica**: Headers e campos personalizáveis
+- **Rate Limiting**: Proteção contra spam de códigos
+- **Auditoria Completa**: Log de todas as tentativas
+- **Segurança Avançada**: Códigos com tempo de expiração
 
 ---
 

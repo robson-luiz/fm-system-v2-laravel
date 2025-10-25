@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Services\ImageUploadService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -262,79 +263,20 @@ class UserController extends Controller
         // Capturar possíveis exceções durante a execução.
         try {
 
-            // Upload no S3
+            // Upload da imagem
             if ($request->hasFile('image') && $request->file('image')->isValid()) {
                 $file = $request->file('image');
-
-                // Nome do arquivo sem extensão
-                $nameWithoutExt = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-
-                // Slug do nome (ex: "Foto de Perfil" => "foto-de-perfil")
-                $slug = Str::slug($nameWithoutExt);
-
-                // Extensão (ex: jpg)
-                $extension = $file->getClientOriginalExtension();
-
-                // Nome final do arquivo
-                $filename = "{$slug}.{$extension}";
-
-                // === PROCESSAMENTO DA IMAGEM ===
-                // Cria manager com GD
-                $manager = new ImageManager(new Driver());
-
-                // Carrega imagem
-                $image = $manager->read($file->getRealPath());
-
-                // Dimensões
-                $width  = $image->width();
-                $height = $image->height();
-
-                if ($width !== $height) {
-                    $side = min($width, $height);
-                    $x = intval(($width  - $side) / 2);
-                    $y = intval(($height - $side) / 2);
-
-                    // Recorta quadrado
-                    $image->crop($side, $side, $x, $y);
-                }
-
-                // Redimensiona 150x150
-                $image->resize(150, 150);
-
-                // Converte para binário no formato original (qualidade 100%)
-                // Detecta a extensão enviada
-                $extension = strtolower($file->getClientOriginalExtension());
-
-                switch ($extension) {
-                    case 'png':
-                        // PNG → nível de compressão (0 sem compressão, 9 máxima)
-                        $encoded = $image->encode(new PngEncoder(0));
-                        break;
-
-                    case 'jpg':
-                    case 'jpeg':
-                        // JPG → qualidade 0 a 100
-                        $encoded = $image->encode(new JpegEncoder(100));
-                        break;
-
-                    default:
-                        // fallback: força para jpg
-                        $encoded = $image->encode(new JpegEncoder(100));
-                        $extension = 'jpg';
-                        $filename = "{$slug}.jpg";
-                        break;
-                }
+                
+                // Instanciar o service de upload
+                $imageUploadService = new ImageUploadService();
 
                 // Exclui a imagem anterior, se existir
-                if (!empty($user->image) && Storage::disk('s3')->exists("users/{$user->id}/" . $user->image)) {
-                    Storage::disk('s3')->delete("users/{$user->id}/" . $user->image);
+                if (!empty($user->image)) {
+                    $imageUploadService->deleteImage($user->image, $user->id, 'users');
                 }
 
-                // Upload para o S3
-                Storage::disk('s3')->put(
-                    "users/{$user->id}/{$filename}",   // caminho final no S3
-                    (string) $encoded                  // conteúdo binário da imagem
-                );
+                // Fazer upload da nova imagem
+                $filename = $imageUploadService->uploadUserImage($file, $user->id);
 
                 // Atualiza a imagem no banco
                 $user->update(['image' => $filename]);

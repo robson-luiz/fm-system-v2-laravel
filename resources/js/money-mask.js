@@ -49,17 +49,26 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Converter para decimal antes de submeter o formulário
         input.form?.addEventListener('submit', function(e) {
-            // Criar campo hidden com valor decimal
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = input.name;
-            hiddenInput.value = moneyToDecimal(input.value);
-            
-            // Remover o name do input visível para não enviar
-            input.removeAttribute('name');
-            
-            // Adicionar o hidden input ao form
-            this.appendChild(hiddenInput);
+                // Remover qualquer campo hidden anterior com o mesmo name
+                const oldHidden = this.querySelector('input[type="hidden"][name="' + input.name + '"]');
+                if (oldHidden) {
+                    oldHidden.remove();
+                }
+
+                // Sempre garantir que o valor do input está formatado corretamente antes de converter
+                input.value = formatMoney(input.value.replace(/\D/g, ''));
+
+                // Criar campo hidden com valor decimal
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = input.name;
+                hiddenInput.value = moneyToDecimal(input.value);
+
+                // Remover o name do input visível para não enviar
+                input.removeAttribute('name');
+
+                // Adicionar o hidden input ao form
+                this.appendChild(hiddenInput);
         });
     });
 });

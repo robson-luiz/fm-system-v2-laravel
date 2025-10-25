@@ -240,6 +240,11 @@
         @apply border p-2 w-full mt-1 rounded-md border-gray-200 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:outline-none dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400;
     }
 
+    /* Select dropdown padrão */
+    .form-select {
+        @apply border p-2 w-full mt-1 rounded-md border-gray-200 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:outline-none bg-white text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100;
+    }
+
     /* Input checkbox */
     .form-input-checkbox {
         @apply text-sm text-gray-500 dark:text-gray-400;

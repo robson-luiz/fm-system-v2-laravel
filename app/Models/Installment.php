@@ -21,7 +21,7 @@ class Installment extends Model implements AuditableContract
         'installment_number',
         'amount',
         'due_date',
-        'status',
+        'status', // 'pending', 'paid', 'overdue'
         'payment_date',
         'reason_not_paid',
     ];
@@ -66,6 +66,14 @@ class Installment extends Model implements AuditableContract
      */
     public function scopeOverdue($query)
     {
+        return $query->where('status', 'overdue');
+    }
+
+    /**
+     * Scope: Filter installments that should be overdue (pending + past due date)
+     */
+    public function scopeShouldBeOverdue($query)
+    {
         return $query->where('status', 'pending')
                      ->where('due_date', '<', now()->toDateString());
     }
@@ -98,8 +106,8 @@ class Installment extends Model implements AuditableContract
         $badges = [
             'pending' => '<span class="badge badge-warning">Pendente</span>',
             'paid' => '<span class="badge badge-success">Pago</span>',
+            'overdue' => '<span class="badge badge-danger">Atrasada</span>',
         ];
-
         return $badges[$this->status] ?? '<span class="badge badge-secondary">Desconhecido</span>';
     }
 
@@ -108,7 +116,7 @@ class Installment extends Model implements AuditableContract
      */
     public function getIsOverdueAttribute()
     {
-        return $this->status === 'pending' && $this->due_date < now()->toDateString();
+    return ($this->status === 'pending' && $this->due_date < now()->toDateString()) || $this->status === 'overdue';
     }
 
     /**
@@ -138,8 +146,21 @@ class Installment extends Model implements AuditableContract
      */
     public function markAsUnpaid($reason = null)
     {
+        $newStatus = ($this->due_date < now()->toDateString()) ? 'overdue' : 'pending';
         $this->update([
-            'status' => 'pending',
+            'status' => $newStatus,
+            'payment_date' => null,
+            'reason_not_paid' => $reason,
+        ]);
+    }
+
+    /**
+     * Mark installment as overdue with reason
+     */
+    public function markAsOverdue($reason = null)
+    {
+        $this->update([
+            'status' => 'overdue',
             'payment_date' => null,
             'reason_not_paid' => $reason,
         ]);

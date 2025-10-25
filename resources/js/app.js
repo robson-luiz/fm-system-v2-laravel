@@ -456,81 +456,169 @@ if (window.location.pathname.includes('/expenses/') && !window.location.pathname
     };
 
     // Função para marcar despesa como paga
-    window.markAsPaid = function() {
+    window.markExpenseAsPaid = function() {
         Swal.fire({
             title: 'Marcar como Paga',
-            html: '<label class="block text-sm font-medium mb-2">Data de Pagamento:</label>' +
-                  '<input type="date" id="payment_date" class="swal2-input" style="width: 90%; margin: 0;" value="' + new Date().toISOString().split('T')[0] + '">',
+            html: `
+                <div style="text-align: center; padding: 10px;">
+                    <label for="payment_date" style="display: block; font-weight: 500; margin-bottom: 8px; color: inherit;">
+                        Data do Pagamento
+                    </label>
+                    <input type="date" 
+                           id="payment_date" 
+                           class="swal2-input" 
+                           value="${new Date().toISOString().split('T')[0]}" 
+                           style="width: 100%; max-width: 300px; margin: 0 auto; display: block;" 
+                           required>
+                </div>
+            `,
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#16a34a',
-            cancelButtonColor: '#6b7280',
-            confirmButtonText: 'Confirmar',
+            confirmButtonText: 'Marcar como Paga',
             cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#10b981',
+            cancelButtonColor: '#6b7280',
             background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
             color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#1f2937',
             preConfirm: () => {
                 const paymentDate = document.getElementById('payment_date').value;
                 if (!paymentDate) {
-                    Swal.showValidationMessage('Por favor, informe a data de pagamento');
+                    Swal.showValidationMessage('Por favor, selecione a data do pagamento');
                     return false;
                 }
-                return paymentDate;
+                return { payment_date: paymentDate };
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = window.location.pathname + '/mark-as-paid';
+                const data = result.value;
                 
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-                form.innerHTML = `
-                    <input type="hidden" name="_token" value="${csrfToken}">
-                    <input type="hidden" name="payment_date" value="${result.value}">
-                `;
-                
-                document.body.appendChild(form);
-                form.submit();
+                fetch(window.location.pathname + '/mark-paid', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonColor: '#10b981',
+                            background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+                            color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#1f2937'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Erro!',
+                            text: data.error || 'Ocorreu um erro ao processar a solicitação.',
+                            icon: 'error',
+                            confirmButtonColor: '#ef4444',
+                            background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+                            color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#1f2937'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: 'Ocorreu um erro de comunicação.',
+                        icon: 'error',
+                        confirmButtonColor: '#ef4444',
+                        background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+                        color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#1f2937'
+                    });
+                });
             }
         });
     };
 
-    // Função para marcar despesa como não paga
-    window.markAsUnpaid = function() {
+    // Função para marcar despesa como atrasada
+    window.markExpenseAsOverdue = function() {
         Swal.fire({
-            title: 'Não Consegui Pagar',
-            html: '<label class="block text-sm font-medium mb-2">Motivo:</label>' +
-                  '<textarea id="reason_not_paid" class="swal2-textarea" style="width: 90%; margin: 0;" placeholder="Descreva o motivo..."></textarea>',
+            title: 'Não Conseguiu Pagar?',
+            html: `
+                <div style="text-align: center; padding: 10px;">
+                    <label for="reason_not_paid" style="display: block; font-weight: 500; margin-bottom: 8px; color: inherit;">
+                        Motivo (obrigatório)
+                    </label>
+                    <textarea id="reason_not_paid" 
+                              class="swal2-textarea" 
+                              placeholder="Descreva o motivo pelo qual não conseguiu pagar..." 
+                              rows="4" 
+                              style="width: 100%; max-width: 400px; margin: 0 auto; display: block; resize: vertical; min-height: 80px;"
+                              required></textarea>
+                </div>
+            `,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#dc2626',
-            cancelButtonColor: '#6b7280',
-            confirmButtonText: 'Registrar',
+            confirmButtonText: 'Marcar como Atrasada',
             cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#6b7280',
             background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
             color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#1f2937',
             preConfirm: () => {
-                const reason = document.getElementById('reason_not_paid').value;
+                const reason = document.getElementById('reason_not_paid').value.trim();
                 if (!reason) {
                     Swal.showValidationMessage('Por favor, informe o motivo');
                     return false;
                 }
-                return reason;
+                return { reason_not_paid: reason };
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = window.location.pathname + '/mark-as-unpaid';
+                const data = result.value;
                 
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-                form.innerHTML = `
-                    <input type="hidden" name="_token" value="${csrfToken}">
-                    <input type="hidden" name="reason_not_paid" value="${result.value}">
-                `;
-                
-                document.body.appendChild(form);
-                form.submit();
+                fetch(window.location.pathname + '/mark-overdue', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Atualizado!',
+                            text: data.message,
+                            icon: 'info',
+                            confirmButtonColor: '#3b82f6',
+                            background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+                            color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#1f2937'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Erro!',
+                            text: data.error || 'Ocorreu um erro ao processar a solicitação.',
+                            icon: 'error',
+                            confirmButtonColor: '#ef4444',
+                            background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+                            color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#1f2937'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: 'Ocorreu um erro de comunicação.',
+                        icon: 'error',
+                        confirmButtonColor: '#ef4444',
+                        background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+                        color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#1f2937'
+                    });
+                });
             }
         });
     };
@@ -644,3 +732,505 @@ if (window.location.pathname.includes('/expenses/') && !window.location.pathname
         });
     };
 }
+
+/**** Funções para Configurações 2FA ****/
+
+// Carregar estatísticas de 2FA
+function loadStatistics() {
+    const statisticsRoute = document.querySelector('meta[name="two-factor-statistics-route"]');
+    if (!statisticsRoute) return;
+    
+    fetch(statisticsRoute.getAttribute('content'))
+        .then(response => response.json())
+        .then(data => {
+            const content = document.getElementById('statistics-content');
+            if (content) {
+                content.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">${data.total_users || 0}</div>
+                            <div class="text-sm text-gray-500">Total de Usuários</div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div>
+                                <div class="text-xl font-semibold text-green-600 dark:text-green-400">${data.users_with_2fa || 0}</div>
+                                <div class="text-xs text-gray-500">Com 2FA</div>
+                            </div>
+                            <div>
+                                <div class="text-xl font-semibold text-purple-600 dark:text-purple-400">${data.users_email_2fa || 0}</div>
+                                <div class="text-xs text-gray-500">Via Email</div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div>
+                                <div class="text-xl font-semibold text-orange-600 dark:text-orange-400">${data.users_sms_2fa || 0}</div>
+                                <div class="text-xs text-gray-500">Via SMS</div>
+                            </div>
+                            <div>
+                                <div class="text-xl font-semibold text-indigo-600 dark:text-indigo-400">${data.codes_sent_today || 0}</div>
+                                <div class="text-xs text-gray-500">Códigos Hoje</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar estatísticas:', error);
+            const content = document.getElementById('statistics-content');
+            if (content) {
+                content.innerHTML = '<div class="text-red-500 text-center">Erro ao carregar estatísticas</div>';
+            }
+        });
+}
+
+// Atualizar estatísticas de 2FA
+function refreshStatistics() {
+    const btn = document.getElementById('refresh-stats-btn');
+    if (!btn) return;
+    
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = '<span class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>Atualizando...';
+    
+    // Mostrar loading nas estatísticas
+    const content = document.getElementById('statistics-content');
+    if (content) {
+        content.innerHTML = `
+            <div class="text-center py-4">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                <p class="text-gray-500 mt-2">Atualizando...</p>
+            </div>
+        `;
+    }
+    
+    loadStatistics();
+    
+    setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        
+        Swal.fire({
+            title: 'Atualizado!',
+            text: 'Estatísticas atualizadas com sucesso.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    }, 1000);
+}
+
+// Testar provedor SMS
+function testProvider() {
+    const testProviderRoute = document.querySelector('meta[name="two-factor-test-provider-route"]');
+    
+    // Se não há rota (página 2FA), redirecionar para Email/SMS
+    if (!testProviderRoute) {
+        Swal.fire({
+            title: 'Configure SMS',
+            text: 'Configure o provedor SMS na página Email e SMS.',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Ir para Email e SMS',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#3b82f6'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/admin/email-sms';
+            }
+        });
+        return;
+    }
+    
+    const btn = event.target.closest('button');
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = '<span class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>Testando...';
+    
+    fetch(testProviderRoute.getAttribute('content'), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.fire({
+            title: data.success ? 'Sucesso!' : 'Erro!',
+            text: data.message,
+            icon: data.success ? 'success' : 'error',
+            confirmButtonColor: data.success ? '#10b981' : '#ef4444'
+        });
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Erro de comunicação.',
+            icon: 'error',
+            confirmButtonColor: '#ef4444'
+        });
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    });
+}
+
+// Testar SMS (2FA)
+function testSms() {
+    const testSmsRoute = document.querySelector('meta[name="two-factor-test-sms-route"]');
+    
+    // Se não há rota (página 2FA), redirecionar para Email/SMS
+    if (!testSmsRoute) {
+        Swal.fire({
+            title: 'Configure SMS',
+            text: 'Configure e teste SMS na página Email e SMS.',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Ir para Email e SMS',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#3b82f6'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/admin/email-sms';
+            }
+        });
+        return;
+    }
+    
+    const phone = document.getElementById('test-phone');
+    if (!phone || !phone.value) {
+        Swal.fire({
+            title: 'Atenção!',
+            text: 'Digite um número de telefone para teste.',
+            icon: 'warning',
+            confirmButtonColor: '#f59e0b'
+        });
+        return;
+    }
+    
+    const btn = event.target.closest('button');
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = '<span class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>Enviando...';
+    
+    fetch(testSmsRoute.getAttribute('content'), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ test_phone: phone.value })
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.fire({
+            title: data.success ? 'SMS Enviado!' : 'Erro!',
+            text: data.message,
+            icon: data.success ? 'success' : 'error',
+            confirmButtonColor: data.success ? '#10b981' : '#ef4444'
+        });
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Erro de comunicação.',
+            icon: 'error',
+            confirmButtonColor: '#ef4444'
+        });
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    });
+}
+
+/**** Funções para Configurações Email e SMS ****/
+
+// Testar configuração de Email
+function testEmail() {
+    const testEmailRoute = document.querySelector('meta[name="email-sms-test-email-route"]');
+    if (!testEmailRoute) return;
+    
+    const testEmailInput = document.querySelector('input[name="test_email"]');
+    if (!testEmailInput || !testEmailInput.value) {
+        Swal.fire({
+            title: 'Atenção!',
+            text: 'Digite um email para teste.',
+            icon: 'warning',
+            confirmButtonColor: '#f59e0b'
+        });
+        return;
+    }
+    
+    const btn = event.target.closest('button');
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = '<span class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>Enviando...';
+    
+    fetch(testEmailRoute.getAttribute('content'), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ test_email: testEmailInput.value })
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.fire({
+            title: data.success ? 'Email Enviado!' : 'Erro!',
+            text: data.message,
+            icon: data.success ? 'success' : 'error',
+            confirmButtonColor: data.success ? '#10b981' : '#ef4444'
+        });
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Erro de comunicação.',
+            icon: 'error',
+            confirmButtonColor: '#ef4444'
+        });
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    });
+}
+
+// Testar SMS (Email/SMS Settings)
+function testSmsEmailSettings() {
+    const testSmsRoute = document.querySelector('meta[name="email-sms-test-sms-route"]');
+    if (!testSmsRoute) return;
+    
+    const testPhoneInput = document.querySelector('input[name="test_phone"]');
+    if (!testPhoneInput || !testPhoneInput.value) {
+        Swal.fire({
+            title: 'Atenção!',
+            text: 'Digite um número de telefone para teste.',
+            icon: 'warning',
+            confirmButtonColor: '#f59e0b'
+        });
+        return;
+    }
+    
+    const btn = event.target.closest('button');
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = '<span class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>Enviando...';
+    
+    fetch(testSmsRoute.getAttribute('content'), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ test_phone: testPhoneInput.value })
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.fire({
+            title: data.success ? 'SMS Enviado!' : 'Erro!',
+            text: data.message,
+            icon: data.success ? 'success' : 'error',
+            confirmButtonColor: data.success ? '#10b981' : '#ef4444'
+        });
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Erro!',
+            text: 'Erro de comunicação.',
+            icon: 'error',
+            confirmButtonColor: '#ef4444'
+        });
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    });
+}
+
+// Configurar mudança de provedor SMS (2FA)
+function setupSmsProviderChange() {
+    const smsProvider = document.getElementById('sms-provider');
+    if (smsProvider) {
+        smsProvider.addEventListener('change', function() {
+            const provider = this.value;
+            
+            // Esconder todas as configurações
+            document.querySelectorAll('.provider-config').forEach(config => {
+                config.style.display = 'none';
+            });
+            
+            // Mostrar configuração do provedor selecionado
+            if (provider) {
+                const configDiv = document.getElementById('config-' + provider);
+                if (configDiv) {
+                    configDiv.style.display = 'block';
+                }
+            }
+        });
+    }
+}
+
+// Inicializar funcionalidades das páginas de configuração
+document.addEventListener('DOMContentLoaded', function() {
+    // Carregar estatísticas se estiver na página 2FA
+    if (document.getElementById('statistics-content')) {
+        loadStatistics();
+    }
+    
+    // Configurar mudança de provedor SMS
+    setupSmsProviderChange();
+});
+
+// Disponibilizar funções globalmente
+window.loadStatistics = loadStatistics;
+window.refreshStatistics = refreshStatistics;
+window.testProvider = testProvider;
+window.testSms = testSms;
+window.testEmail = testEmail;
+window.testSmsEmailSettings = testSmsEmailSettings;
+
+/**** Funcionalidades para SMS Customizado ****/
+
+// Contadores para garantir IDs únicos - inicializados dinamicamente
+let headerCounter = 0;
+let fieldCounter = 0;
+let successCounter = 0;
+
+// Inicializar contadores baseado nos elementos existentes na página
+function initializeSmsCounters() {
+    // Contar headers existentes
+    const headerPairs = document.querySelectorAll('#custom-headers-container .header-pair');
+    headerCounter = headerPairs.length;
+    
+    // Contar campos existentes
+    const fieldPairs = document.querySelectorAll('#custom-fields-container .field-pair');
+    fieldCounter = fieldPairs.length;
+    
+    // Contar indicadores existentes
+    const successPairs = document.querySelectorAll('#custom-success-container .success-pair');
+    successCounter = successPairs.length;
+}
+
+// Adicionar novo par de header
+function addHeaderPair() {
+    const container = document.getElementById('custom-headers-container');
+    if (!container) return;
+    
+    const div = document.createElement('div');
+    div.className = 'header-pair flex gap-2 mb-2';
+    div.innerHTML = `
+        <input type="text" name="custom_sms_headers[${headerCounter}][key]" 
+               class="form-input flex-1" placeholder="Chave (Ex: Authorization)">
+        <input type="text" name="custom_sms_headers[${headerCounter}][value]" 
+               class="form-input flex-1" placeholder="Valor (Ex: Bearer TOKEN)">
+        <button type="button" class="bg-red-500 hover:bg-red-600 text-white text-sm px-2 py-1 rounded" onclick="removeHeaderPair(this)">×</button>
+    `;
+    container.appendChild(div);
+    headerCounter++;
+}
+
+// Remover par de header
+function removeHeaderPair(button) {
+    const headerPair = button.closest('.header-pair');
+    if (headerPair) {
+        headerPair.remove();
+    }
+}
+
+// Adicionar novo par de campo
+function addFieldPair() {
+    const container = document.getElementById('custom-fields-container');
+    if (!container) return;
+    
+    const div = document.createElement('div');
+    div.className = 'field-pair flex gap-2 mb-2';
+    div.innerHTML = `
+        <input type="text" name="custom_sms_additional_fields[${fieldCounter}][key]" 
+               class="form-input flex-1" placeholder="Campo (Ex: from, api_key)">
+        <input type="text" name="custom_sms_additional_fields[${fieldCounter}][value]" 
+               class="form-input flex-1" placeholder="Valor (Ex: FM System)">
+        <button type="button" class="bg-red-500 hover:bg-red-600 text-white text-sm px-2 py-1 rounded" onclick="removeFieldPair(this)">×</button>
+    `;
+    container.appendChild(div);
+    fieldCounter++;
+}
+
+// Remover par de campo
+function removeFieldPair(button) {
+    const fieldPair = button.closest('.field-pair');
+    if (fieldPair) {
+        fieldPair.remove();
+    }
+}
+
+// Adicionar novo par de indicador de sucesso
+function addSuccessPair() {
+    const container = document.getElementById('custom-success-container');
+    if (!container) return;
+    
+    const div = document.createElement('div');
+    div.className = 'success-pair flex gap-2 mb-2';
+    div.innerHTML = `
+        <select name="custom_sms_success_indicators[${successCounter}][key]" class="form-select flex-1">
+            <option value="">Selecione...</option>
+            <option value="status_code">Status Code</option>
+            <option value="status">Campo "status"</option>
+            <option value="success">Campo "success"</option>
+            <option value="response_contains">Resposta contém</option>
+            <option value="error">Campo "error"</option>
+        </select>
+        <input type="text" name="custom_sms_success_indicators[${successCounter}][value]" 
+               class="form-input flex-1" placeholder="Valor esperado (Ex: 200, success, true)">
+        <button type="button" class="bg-red-500 hover:bg-red-600 text-white text-sm px-2 py-1 rounded" onclick="removeSuccessPair(this)">×</button>
+    `;
+    container.appendChild(div);
+    successCounter++;
+}
+
+// Remover par de indicador de sucesso
+function removeSuccessPair(button) {
+    const successPair = button.closest('.success-pair');
+    if (successPair) {
+        successPair.remove();
+    }
+}
+
+// Configurar funcionalidades específicas da página de Email/SMS
+function setupEmailSmsPage() {
+    // Inicializar contadores se estiver na página de configuração SMS
+    if (document.getElementById('custom-headers-container')) {
+        initializeSmsCounters();
+    }
+}
+
+// Atualizar a inicialização existente
+document.addEventListener('DOMContentLoaded', function() {
+    // Carregar estatísticas se estiver na página 2FA
+    if (document.getElementById('statistics-content')) {
+        loadStatistics();
+    }
+    
+    // Configurar mudança de provedor SMS
+    setupSmsProviderChange();
+    
+    // Configurar página Email/SMS
+    setupEmailSmsPage();
+});
+
+// Disponibilizar funções SMS customizado globalmente
+window.addHeaderPair = addHeaderPair;
+window.removeHeaderPair = removeHeaderPair;
+window.addFieldPair = addFieldPair;
+window.removeFieldPair = removeFieldPair;
+window.addSuccessPair = addSuccessPair;
+window.removeSuccessPair = removeSuccessPair;

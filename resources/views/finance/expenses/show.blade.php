@@ -150,19 +150,19 @@
         </div>
 
         <!-- Ações Rápidas -->
-        @if($expense->status === 'pending')
+        @if($expense->status === 'pending' || $expense->status === 'overdue')
         <div class="mb-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
             <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Ações Rápidas</h4>
             <div class="flex gap-4 flex-wrap">
-                <button onclick="markAsPaid()" class="btn-success-md align-icon-btn">
+                <button onclick="markExpenseAsPaid()" class="btn-success-md align-icon-btn">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                     </svg>
                     <span>Marcar como Paga</span>
                 </button>
-                <button onclick="markAsUnpaid()" class="btn-danger-md align-icon-btn">
+                <button onclick="markExpenseAsOverdue()" class="btn-danger-md align-icon-btn">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
                     </svg>
                     <span>Não Consegui Pagar</span>
                 </button>
@@ -277,3 +277,4 @@
 
     </div>
 @endsection
+

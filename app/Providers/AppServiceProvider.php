@@ -12,7 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Registrar services de 2FA
+        $this->app->singleton(\App\Services\SmsService::class);
+        $this->app->singleton(\App\Services\TwoFactorAuthService::class);
     }
 
     /**

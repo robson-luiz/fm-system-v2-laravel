@@ -78,23 +78,6 @@
             </button>
         </div>
 
-        <div class="mt-4 mb-4">
-            <label class="inline-flex items-start gap-2">
-                <input type="checkbox" name="accept_terms" class="form-checkbox mt-1" required>
-                <span class="text-sm text-gray-700 dark:text-gray-300">
-                    Eu li e aceito os
-                    <a href="https://celke.com.br/termos-de-uso" target="_blank"
-                        class="no-underline text-blue-600 hover:text-blue-800">
-                        Termos de Uso
-                    </a> e a
-                    <a href="https://celke.com.br/politica-de-privacidade" target="_blank"
-                        class="no-underline text-blue-600 hover:text-blue-800">
-                        Política de Privacidade
-                    </a>.
-                </span>
-            </label>
-        </div>
-
         <!-- Link para página de login -->
         <div class="btn-group-login">
             <a href="{{ route('login') }}" class="link-login">Login</a>

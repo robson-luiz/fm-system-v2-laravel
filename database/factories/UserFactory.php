@@ -26,9 +26,12 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'cpf' => fake()->numerify('###########'), // 11 dígitos
+            'alias' => fake()->optional()->firstName(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'user_status_id' => 3, // Status padrão (assumindo que 3 = Ativo)
         ];
     }
 

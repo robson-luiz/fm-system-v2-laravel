@@ -71,6 +71,7 @@ class PermissionSeeder extends Seeder
                 ['title'=> 'Cadastrar a despesa', 'name' => 'create-expense'],
                 ['title'=> 'Editar a despesa', 'name' => 'edit-expense'],
                 ['title'=> 'Apagar a despesa', 'name' => 'destroy-expense'],
+                ['title'=> 'Gerenciar parcelas', 'name' => 'manage-installments'],
 
                 // Permissões para Gerenciar cartões de crédito
                 ['title'=> 'Listar os cartões', 'name' => 'index-credit-card'],
@@ -102,6 +103,11 @@ class PermissionSeeder extends Seeder
 
                 // Permissão para acessar o dashboard financeiro
                 ['title'=> 'Dashboard Financeiro', 'name' => 'finance-dashboard'],
+
+                // Permissões para Configurações do Sistema
+                ['title'=> 'Gerenciar Configurações do Sistema', 'name' => 'manage-system-settings'],
+                ['title'=> 'Configurações de Email e SMS', 'name' => 'manage-email-sms-settings'],
+                ['title'=> 'Configurações de Autenticação 2FA', 'name' => 'manage-two-factor-settings'],
 
             ];
 
