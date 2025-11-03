@@ -29,6 +29,7 @@ class CreditCard extends Model implements Auditable
         'interest_rate',
         'annual_fee',
         'is_active',
+        'auto_calculate_limit',
     ];
 
     /**
@@ -44,6 +45,7 @@ class CreditCard extends Model implements Auditable
             'interest_rate' => 'decimal:2',
             'annual_fee' => 'decimal:2',
             'is_active' => 'boolean',
+            'auto_calculate_limit' => 'boolean',
         ];
     }
 

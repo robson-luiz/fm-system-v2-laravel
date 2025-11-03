@@ -75,6 +75,9 @@ class User extends Authenticatable implements Auditable
     }
 
     // Relacionamento com cartões de crédito
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<CreditCard>
+     */
     public function creditCards()
     {
         return $this->hasMany(CreditCard::class);

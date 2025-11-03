@@ -513,11 +513,15 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Logs de segurança para tentativas de login
 - [x] **Provedores SMS Customizados**: Configure qualquer provedor SMS (Iagente, ZenviaNow, TotalVoice, etc)
 
-**Fase 3 - Cartões de Crédito** 📋 Planejada
-- [ ] CRUD de cartões de crédito
-- [ ] Vinculação de despesas com cartões
-- [ ] Controle de limite e fatura
-- [ ] Alerta de melhor dia de compra
+**Fase 3 - Cartões de Crédito** ✅ Concluída (02/11/2025)
+- [x] CRUD de cartões de crédito
+- [x] Vinculação de despesas com cartões
+- [x] Controle de limite e fatura
+- [x] Alerta de melhor dia de compra
+- [x] Cálculo automático de limite disponível
+- [x] Observer para atualização em tempo real
+
+> ⚠️ **Nota**: Alguns ajustes pontuais serão implementados em breve para refinamento da funcionalidade.
 
 **Fase 4 - Receitas e Dashboard** 📋 Planejada
 - [ ] CRUD de receitas
@@ -665,6 +669,48 @@ Indicadores: status: success
 - **Auditoria Completa**: Log de todas as tentativas
 - **Segurança Avançada**: Códigos com tempo de expiração
 
+### 💳 Sistema de Cartões de Crédito (Fase 3 - Concluída em 02/11/2025)
+
+#### **CRUD Completo de Cartões**
+- ✅ **Listagem Inteligente**: Cards visuais com estatísticas em tempo real
+- ✅ **Cadastro Avançado**: Validações, máscaras de dinheiro e cálculos automáticos
+- ✅ **Visualização Detalhada**: Interface tipo "cartão físico" com informações completas
+- ✅ **Edição Flexível**: Atualização com controle de limite automático/manual
+
+#### **Controle de Limite Inteligente**
+- ✅ **Cálculo Automático**: Observer atualiza limite em tempo real baseado nas despesas
+- ✅ **Modo Manual**: Controle direto do usuário sobre limite disponível
+- ✅ **Validações**: Previne limite disponível maior que limite total
+- ✅ **Feedback Visual**: Gráficos circulares e barras de progresso do uso
+
+#### **Integração com Despesas**
+- ✅ **Vinculação Automática**: Despesas ligadas a cartões específicos
+- ✅ **Atualização em Tempo Real**: Observer monitora criação/edição/exclusão de despesas
+- ✅ **Histórico de Transações**: Visualização das despesas recentes por cartão
+- ✅ **Estatísticas Detalhadas**: Total de despesas, valores pendentes e pagos
+
+#### **Análise de Melhor Dia para Compra**
+- ✅ **Cálculo Automático**: Sistema identifica melhor data baseado no fechamento
+- ✅ **Configuração Manual**: Usuário pode definir dia preferido
+- ✅ **Alertas Visuais**: Destaque do próximo vencimento e dias restantes
+- ✅ **Planejamento Financeiro**: Informações para maximizar prazo de pagamento
+
+#### **Interface e UX**
+- ✅ **Design Responsivo**: Adaptado para mobile e desktop
+- ✅ **Tema Claro/Escuro**: Suporte completo aos dois temas
+- ✅ **Máscaras de Dinheiro**: Formatação automática de valores monetários
+- ✅ **Alertas Inteligentes**: SweetAlert2 para confirmações e feedback
+- ✅ **Navegação Intuitiva**: Breadcrumbs e botões de ação contextuais
+
+#### **Recursos Técnicos**
+- **Observer Pattern**: ExpenseObserver para atualização automática de limites
+- **Eloquent Relationships**: Relacionamentos otimizados entre cartões e despesas
+- **JavaScript Modular**: Máscaras de dinheiro e validações em tempo real
+- **Migrations Versionadas**: Campo `auto_calculate_limit` para configuração
+- **Comando Artisan**: `credit-cards:update-limits` para manutenção
+
+> ⚠️ **Status**: Funcionalidade completa e operacional. Pequenos ajustes e melhorias serão implementados conforme feedback de uso.
+
 ---
 
 ## Estrutura de Banco de Dados
@@ -688,7 +734,21 @@ Indicadores: status: success
 - timestamps
 ```
 
-**Relacionamento:** 1 Expense → N Installments (cascade delete)
+### Tabela: `credit_cards`
+```sql
+- id, user_id
+- name, bank, last_four_digits
+- card_limit, available_limit
+- closing_day, due_day, best_purchase_day
+- interest_rate, annual_fee
+- is_active, auto_calculate_limit
+- timestamps
+```
+
+**Relacionamentos:**
+- 1 Expense → N Installments (cascade delete)
+- 1 CreditCard → N Expenses (nullable foreign key)
+- 1 User → N CreditCards (user ownership)
 
 ---
 

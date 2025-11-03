@@ -28,9 +28,9 @@ function moneyToDecimal(value) {
     return parseFloat(value) || 0;
 }
 
-// Aplicar máscara em campos com a classe 'money-input'
+// Aplicar máscara em campos com a classe 'money-input' ou 'money-mask'
 document.addEventListener('DOMContentLoaded', function() {
-    const moneyInputs = document.querySelectorAll('.money-input');
+    const moneyInputs = document.querySelectorAll('.money-input, .money-mask');
     
     moneyInputs.forEach(function(input) {
         // Formatar valor inicial se existir

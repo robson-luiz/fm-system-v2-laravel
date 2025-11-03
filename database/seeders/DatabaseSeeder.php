@@ -35,6 +35,9 @@ class DatabaseSeeder extends Seeder
                 // Dados dos usuários
                 UserStatusSeeder::class,
                 UserSeeder::class,
+                
+                // Dados financeiros de teste
+                CreditCardSeeder::class,
             ]);
         }
     }

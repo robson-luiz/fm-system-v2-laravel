@@ -22,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Registrar Observers
+        \App\Models\Expense::observe(\App\Observers\ExpenseObserver::class);
+        
         // Super Admin tem acesso a todas as páginas
         Gate::before(function ($user, $ability) {
             return $user->hasRole('Super Admin') ? true : null;

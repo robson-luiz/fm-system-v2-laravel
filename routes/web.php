@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\TwoFactorSettingsController;
 use App\Http\Controllers\Admin\EmailSmsSettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Finance\ExpenseController;
+use App\Http\Controllers\Finance\CreditCardController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -142,6 +143,20 @@ Route::group(['middleware' => ['auth', 'two-factor']], function () {
         // Rotas para marcar despesa inteira como paga/atrasada
         Route::post('/{expense}/mark-paid', [ExpenseController::class, 'markPaid'])->name('expenses.mark-paid')->middleware('permission:edit-expense');
         Route::post('/{expense}/mark-overdue', [ExpenseController::class, 'markOverdue'])->name('expenses.mark-overdue')->middleware('permission:edit-expense');
+    });
+
+    // Finanças - Cartões de Crédito
+    Route::prefix('credit-cards')->group(function () {
+        Route::get('/', [CreditCardController::class, 'index'])->name('credit-cards.index')->middleware('permission:index-credit-card');
+        Route::get('/create', [CreditCardController::class, 'create'])->name('credit-cards.create')->middleware('permission:create-credit-card');
+        Route::get('/{creditCard}', [CreditCardController::class, 'show'])->name('credit-cards.show')->middleware('permission:show-credit-card');
+        Route::post('/', [CreditCardController::class, 'store'])->name('credit-cards.store')->middleware('permission:create-credit-card');
+        Route::get('/{creditCard}/edit', [CreditCardController::class, 'edit'])->name('credit-cards.edit')->middleware('permission:edit-credit-card');
+        Route::put('/{creditCard}', [CreditCardController::class, 'update'])->name('credit-cards.update')->middleware('permission:edit-credit-card');
+        Route::delete('/{creditCard}', [CreditCardController::class, 'destroy'])->name('credit-cards.destroy')->middleware('permission:destroy-credit-card');
+        
+        // Rota para ativar/desativar cartão
+        Route::post('/{creditCard}/toggle-status', [CreditCardController::class, 'toggleStatus'])->name('credit-cards.toggle-status')->middleware('permission:edit-credit-card');
     });
 
     // Rotas administrativas de 2FA
