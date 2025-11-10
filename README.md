@@ -512,23 +512,32 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Backup codes para recuperação de acesso
 - [x] Logs de segurança para tentativas de login
 - [x] **Provedores SMS Customizados**: Configure qualquer provedor SMS (Iagente, ZenviaNow, TotalVoice, etc)
+- [x] **Verificação completa do sistema 2FA** - (09/11/2025)
 
-**Fase 3 - Cartões de Crédito** ✅ Concluída (02/11/2025)
+**Fase 3 - Cartões de Crédito** ✅ Concluída (09/11/2025)
 - [x] CRUD de cartões de crédito
 - [x] Vinculação de despesas com cartões
 - [x] Controle de limite e fatura
 - [x] Alerta de melhor dia de compra
 - [x] Cálculo automático de limite disponível
 - [x] Observer para atualização em tempo real
+- [x] Ajustes de UI/UX e responsividade móvel
 
-> ⚠️ **Nota**: Alguns ajustes pontuais serão implementados em breve para refinamento da funcionalidade.
+**Fase 4 - Sistema de Receitas** ✅ Concluída (09/11/2025)
+- [x] CRUD completo de receitas
+- [x] Sistema de categorização (Salário, Freelance, Vendas, Investimentos, Aluguel, Comissões, Outros)
+- [x] Tipos de receita (Fixa e Variável)
+- [x] Status de recebimento (Pendente e Recebida)
+- [x] Interface tabular padronizada seguindo padrão de despesas
+- [x] Estatísticas em tempo real (pendentes, recebidas no mês, total, receitas fixas)
+- [x] Filtros avançados por status, tipo, categoria e período mensal
+- [x] Sistema de fontes/origem das receitas
+- [x] Observações personalizadas
+- [x] Seeder com dados realísticos para testes
+- [x] Validações completas (frontend e backend)
+- [x] **⚠️ Observação**: Sistema funcional, ajustes e melhorias serão implementados nos próximos dias
 
-**Fase 4 - Receitas e Dashboard** 📋 Planejada
-- [ ] CRUD de receitas
-- [ ] Dashboard financeiro com gráficos
-- [ ] Relatórios de fluxo de caixa
-
-**Fase 5 - Wishlist e Análises** 📋 Planejada
+**Fase 5 - Dashboard e Relatórios** 📋 Planejada
 - [ ] Wishlist inteligente
 - [ ] Análise de viabilidade de compras
 - [ ] Verificação automática de pagamentos
@@ -711,6 +720,58 @@ Indicadores: status: success
 
 > ⚠️ **Status**: Funcionalidade completa e operacional. Pequenos ajustes e melhorias serão implementados conforme feedback de uso.
 
+### 💰 Sistema de Receitas (Fase 4 - Concluída em 09/11/2025)
+
+#### **CRUD Completo de Receitas**
+- ✅ **Listagem Inteligente**: Interface tabular padronizada seguindo o padrão de despesas
+- ✅ **Cadastro Avançado**: Formulário com validações completas e máscara de dinheiro
+- ✅ **Visualização Detalhada**: Cards informativos com todas as informações da receita
+- ✅ **Edição Flexível**: Formulário de edição com dados pré-preenchidos
+
+#### **Sistema de Categorização**
+- ✅ **Categorias Padrão**: Salário, Freelance, Vendas, Investimentos, Aluguel, Comissões, Outros
+- ✅ **Tipos de Receita**: 
+  - **Fixa**: Receitas regulares e previsíveis (salário, aluguel)
+  - **Variável**: Receitas ocasionais e variáveis (freelance, vendas)
+- ✅ **Fonte/Origem**: Campo opcional para identificar a fonte da receita
+- ✅ **Status de Recebimento**: Pendente (laranja) e Recebida (verde)
+
+#### **Estatísticas em Tempo Real**
+- ✅ **Pendentes**: Valor total em receitas pendentes (R$)
+- ✅ **Recebidas no Mês**: Total recebido no mês atual (R$)
+- ✅ **Total de Receitas**: Contador total de receitas cadastradas
+- ✅ **Receitas Fixas**: Contador de receitas do tipo fixa
+
+#### **Sistema de Filtros e Pesquisa**
+- ✅ **Filtro por Status**: Todos, Pendentes, Recebidas
+- ✅ **Filtro por Tipo**: Todos, Receita Fixa, Receita Variável
+- ✅ **Filtro por Categoria**: Todas as categorias disponíveis
+- ✅ **Filtro por Período**: Seleção de mês/ano específico
+- ✅ **Botões de Ação**: Pesquisar (azul) e Limpar filtros (amarelo)
+
+#### **Interface e Experiência do Usuário**
+- ✅ **Design Consistente**: Segue exatamente o padrão visual de despesas
+- ✅ **Tabela Responsiva**: Colunas ocultas em mobile, informações adaptadas
+- ✅ **Ações Contextuais**: Visualizar, Editar e Excluir com ícones intuitivos
+- ✅ **Validações em Tempo Real**: Máscaras de dinheiro e validação de campos
+- ✅ **Feedback Visual**: Mensagens de sucesso/erro com SweetAlert2
+
+#### **Recursos Técnicos**
+- **Eloquent Scopes**: `forUser()`, `byStatus()`, `byCategory()`, `byType()`, `currentMonth()`
+- **Request Validation**: `IncomeRequest` com validações completas
+- **Seeder Inteligente**: `IncomeSeeder` com dados realísticos dos últimos 6 meses
+- **Formatação Automática**: Accessors para valores monetários formatados
+- **Relacionamentos**: Receitas vinculadas a usuários com controle de acesso
+
+#### **Dados de Teste Realísticos**
+- ✅ **Período Abrangente**: Receitas dos últimos 6 meses + próximos 3 meses
+- ✅ **Variedade de Valores**: Baseados na categoria (salário: R$ 2.800-12.000)
+- ✅ **Receitas Recorrentes**: Salário e aluguel fixos mensais
+- ✅ **Observações Contextuais**: Notas específicas por categoria
+- ✅ **Status Inteligente**: 85% das receitas passadas marcadas como recebidas
+
+> ⚠️ **Status**: Sistema completo e funcional. Ajustes e melhorias serão implementados nos próximos dias conforme feedback de uso e testes adicionais.
+
 ---
 
 ## Estrutura de Banco de Dados
@@ -734,6 +795,15 @@ Indicadores: status: success
 - timestamps
 ```
 
+### Tabela: `incomes`
+```sql
+- id, user_id
+- description, amount
+- received_date, category, type
+- status, source, notes
+- timestamps
+```
+
 ### Tabela: `credit_cards`
 ```sql
 - id, user_id
@@ -749,6 +819,7 @@ Indicadores: status: success
 - 1 Expense → N Installments (cascade delete)
 - 1 CreditCard → N Expenses (nullable foreign key)
 - 1 User → N CreditCards (user ownership)
+- 1 User → N Incomes (user ownership)
 
 ---
 

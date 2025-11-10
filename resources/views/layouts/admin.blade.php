@@ -281,7 +281,7 @@
                                 <a @class([
                                     'sidebar-link item-dropdown',
                                     'active' => isset($menu) && $menu == 'incomes',
-                                ]) href="#">
+                                ]) href="{{ route('incomes.index') }}">
                                     <!-- Ícone arrow-trending-up (Heroicons) -->
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-4">

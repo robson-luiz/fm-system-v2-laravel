@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
                 
                 // Dados financeiros de teste
                 CreditCardSeeder::class,
+                IncomeSeeder::class,
             ]);
         }
     }

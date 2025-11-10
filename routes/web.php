@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EmailSmsSettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Finance\ExpenseController;
 use App\Http\Controllers\Finance\CreditCardController;
+use App\Http\Controllers\Finance\IncomeController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -157,6 +158,20 @@ Route::group(['middleware' => ['auth', 'two-factor']], function () {
         
         // Rota para ativar/desativar cartão
         Route::post('/{creditCard}/toggle-status', [CreditCardController::class, 'toggleStatus'])->name('credit-cards.toggle-status')->middleware('permission:edit-credit-card');
+    });
+
+    // Finanças - Receitas
+    Route::prefix('incomes')->group(function () {
+        Route::get('/', [IncomeController::class, 'index'])->name('incomes.index')->middleware('permission:index-income');
+        Route::get('/create', [IncomeController::class, 'create'])->name('incomes.create')->middleware('permission:create-income');
+        Route::get('/{income}', [IncomeController::class, 'show'])->name('incomes.show')->middleware('permission:show-income');
+        Route::post('/', [IncomeController::class, 'store'])->name('incomes.store')->middleware('permission:create-income');
+        Route::get('/{income}/edit', [IncomeController::class, 'edit'])->name('incomes.edit')->middleware('permission:edit-income');
+        Route::put('/{income}', [IncomeController::class, 'update'])->name('incomes.update')->middleware('permission:edit-income');
+        Route::delete('/{income}', [IncomeController::class, 'destroy'])->name('incomes.destroy')->middleware('permission:destroy-income');
+
+        // Rota para alternar status recebida/pendente
+        Route::post('/{income}/toggle-status', [IncomeController::class, 'toggleStatus'])->name('incomes.toggle-status')->middleware('permission:edit-income');
     });
 
     // Rotas administrativas de 2FA

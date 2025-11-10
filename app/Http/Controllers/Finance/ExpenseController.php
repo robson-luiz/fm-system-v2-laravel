@@ -18,6 +18,7 @@ class ExpenseController extends Controller
      */
     public function index(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         
         // Query base - apenas despesas do usuário logado
@@ -67,7 +68,9 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $creditCards = Auth::user()->creditCards()->active()->get();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $creditCards = $user->creditCards()->active()->get();
         
         return view('finance.expenses.create', compact('creditCards'))
             ->with('menu', 'expenses');
@@ -169,7 +172,9 @@ class ExpenseController extends Controller
             abort(403, 'Acesso não autorizado.');
         }
         
-        $creditCards = Auth::user()->creditCards()->active()->get();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $creditCards = $user->creditCards()->active()->get();
         
         return view('finance.expenses.edit', compact('expense', 'creditCards'))
             ->with('menu', 'expenses');

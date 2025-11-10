@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements Auditable
 {
@@ -69,18 +70,30 @@ class User extends Authenticatable implements Auditable
     }
 
     // Relacionamento com despesas
-    public function expenses()
+    /**
+     * @return HasMany<Expense>
+     */
+    public function expenses(): HasMany
     {
         return $this->hasMany(Expense::class);
     }
 
     // Relacionamento com cartões de crédito
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<CreditCard>
+     * @return HasMany<CreditCard>
      */
-    public function creditCards()
+    public function creditCards(): HasMany
     {
         return $this->hasMany(CreditCard::class);
+    }
+
+    // Relacionamento com receitas
+    /**
+     * @return HasMany<Income>
+     */
+    public function incomes(): HasMany
+    {
+        return $this->hasMany(Income::class);
     }
 
     // Formatar o CPF para imprimir na VIEW
