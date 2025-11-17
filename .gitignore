@@ -19,6 +19,7 @@ yarn-error.log
 
 # Arquivos pessoais de planejamento (não vão pro GitHub)
 README.txt
+phpunit.xml (already exists)
 
 # Documentações de desenvolvimento/implementação (não vão pro GitHub)
 CUSTOM_SMS_PROVIDERS.md

@@ -523,7 +523,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Observer para atualização em tempo real
 - [x] Ajustes de UI/UX e responsividade móvel
 
-**Fase 4 - Sistema de Receitas** ✅ Concluída (09/11/2025)
+**Fase 4 - Sistema de Receitas** ✅ Concluída (16/11/2025)
 - [x] CRUD completo de receitas
 - [x] Sistema de categorização (Salário, Freelance, Vendas, Investimentos, Aluguel, Comissões, Outros)
 - [x] Tipos de receita (Fixa e Variável)
@@ -535,7 +535,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Observações personalizadas
 - [x] Seeder com dados realísticos para testes
 - [x] Validações completas (frontend e backend)
-- [x] **⚠️ Observação**: Sistema funcional, ajustes e melhorias serão implementados nos próximos dias
+- [x] **Refinamentos (16/11/2025)**: Correções no formulário de edição, máscaras centralizadas, SweetAlert2 e ajustes de tema
 
 **Fase 5 - Dashboard e Relatórios** 📋 Planejada
 - [ ] Wishlist inteligente
@@ -716,17 +716,18 @@ Indicadores: status: success
 - **Eloquent Relationships**: Relacionamentos otimizados entre cartões e despesas
 - **JavaScript Modular**: Máscaras de dinheiro e validações em tempo real
 - **Migrations Versionadas**: Campo `auto_calculate_limit` para configuração
-- **Comando Artisan**: `credit-cards:update-limits` para manutenção
+- ✅ **Comando Artisan**: `credit-cards:update-limits` para manutenção
+- ✅ **Ajustes de Legibilidade (16/11/2025)**: Melhorias em cores de texto para tema escuro
 
-> ⚠️ **Status**: Funcionalidade completa e operacional. Pequenos ajustes e melhorias serão implementados conforme feedback de uso.
+> ⚠️ **Status**: Funcionalidade completa e operacional. Ajustes de legibilidade implementados em 16/11/2025.
 
-### 💰 Sistema de Receitas (Fase 4 - Concluída em 09/11/2025)
+### 💰 Sistema de Receitas (Fase 4 - Concluída em 16/11/2025)
 
 #### **CRUD Completo de Receitas**
 - ✅ **Listagem Inteligente**: Interface tabular padronizada seguindo o padrão de despesas
-- ✅ **Cadastro Avançado**: Formulário com validações completas e máscara de dinheiro
+- ✅ **Cadastro Avançado**: Formulário com validações completas e máscara de dinheiro centralizada
 - ✅ **Visualização Detalhada**: Cards informativos com todas as informações da receita
-- ✅ **Edição Flexível**: Formulário de edição com dados pré-preenchidos
+- ✅ **Edição Refinada**: Formulário corrigido com dados pré-preenchidos e categorias funcionais
 
 #### **Sistema de Categorização**
 - ✅ **Categorias Padrão**: Salário, Freelance, Vendas, Investimentos, Aluguel, Comissões, Outros
@@ -753,8 +754,9 @@ Indicadores: status: success
 - ✅ **Design Consistente**: Segue exatamente o padrão visual de despesas
 - ✅ **Tabela Responsiva**: Colunas ocultas em mobile, informações adaptadas
 - ✅ **Ações Contextuais**: Visualizar, Editar e Excluir com ícones intuitivos
-- ✅ **Validações em Tempo Real**: Máscaras de dinheiro e validação de campos
-- ✅ **Feedback Visual**: Mensagens de sucesso/erro com SweetAlert2
+- ✅ **Validações em Tempo Real**: Máscaras de dinheiro centralizadas via `money-mask.js`
+- ✅ **Feedback Visual**: SweetAlert2 integrado para exclusão elegante
+- ✅ **Tema Claro/Escuro**: Ajustes de legibilidade em cores de texto
 
 #### **Recursos Técnicos**
 - **Eloquent Scopes**: `forUser()`, `byStatus()`, `byCategory()`, `byType()`, `currentMonth()`
@@ -762,6 +764,14 @@ Indicadores: status: success
 - **Seeder Inteligente**: `IncomeSeeder` com dados realísticos dos últimos 6 meses
 - **Formatação Automática**: Accessors para valores monetários formatados
 - **Relacionamentos**: Receitas vinculadas a usuários com controle de acesso
+- **JavaScript Modular**: Scripts centralizados para máscaras de dinheiro
+
+#### **Refinamentos Técnicos (16/11/2025)**
+- ✅ **Formulário de Edição**: Corrigido problema com `getDefaultCategories()` substituído por `$categories`
+- ✅ **Máscaras de Dinheiro**: Centralizadas no `money-mask.js`, removidos scripts duplicados
+- ✅ **SweetAlert2**: Implementado para exclusão de receitas com modais elegantes
+- ✅ **Legibilidade**: Ajustadas cores de texto para tema escuro em cartões
+- ✅ **Testes**: Corrigidos 2 testes com falhas, todos os 9 testes agora passam
 
 #### **Dados de Teste Realísticos**
 - ✅ **Período Abrangente**: Receitas dos últimos 6 meses + próximos 3 meses
@@ -770,7 +780,7 @@ Indicadores: status: success
 - ✅ **Observações Contextuais**: Notas específicas por categoria
 - ✅ **Status Inteligente**: 85% das receitas passadas marcadas como recebidas
 
-> ⚠️ **Status**: Sistema completo e funcional. Ajustes e melhorias serão implementados nos próximos dias conforme feedback de uso e testes adicionais.
+> ✅ **Status**: Sistema 100% funcional e refinado. Todos os ajustes técnicos implementados em 16/11/2025.
 
 ---
 

@@ -54,7 +54,7 @@
                         <label for="amount" class="form-label">Valor *</label>
                         <div class="relative">
                             <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">R$</span>
-                            <input type="text" name="amount" id="amount" class="form-input pl-10" 
+                            <input type="text" name="amount" id="amount" class="form-input money-mask pl-10" 
                                    placeholder="0,00" 
                                    value="{{ old('amount') }}" required>
                         </div>
@@ -139,40 +139,14 @@
             </div>
 
             <!-- Botões de Ação -->
-            <div class="flex justify-end space-x-3">
-                <a href="{{ route('incomes.index') }}" class="btn-secondary-md">
-                    Cancelar
-                </a>
+            <div class="flex justify-start space-x-3">
                 <button type="submit" class="btn-success-md">
                     Cadastrar Receita
                 </button>
+                <a href="{{ route('incomes.index') }}" class="btn-secondary-md">
+                    Cancelar
+                </a>                               
             </div>
         </form>
     </div>
-
-    @push('scripts')
-    <script>
-        // Máscara de dinheiro para o campo valor
-        document.addEventListener('DOMContentLoaded', function() {
-            const amountInput = document.getElementById('amount');
-            
-            if (amountInput) {
-                amountInput.addEventListener('input', function(e) {
-                    let value = e.target.value;
-                    
-                    // Remove tudo que não é dígito
-                    value = value.replace(/\D/g, '');
-                    
-                    // Aplica a máscara de moeda
-                    value = (value / 100).toLocaleString('pt-BR', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    });
-                    
-                    e.target.value = value;
-                });
-            }
-        });
-    </script>
-    @endpush
 @endsection

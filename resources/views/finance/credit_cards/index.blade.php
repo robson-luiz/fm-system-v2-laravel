@@ -163,7 +163,7 @@
                             <div class="mb-4">
                                 <div class="flex justify-between items-center mb-2">
                                     <span class="text-sm text-gray-600 dark:text-gray-400">Limite Utilizado</span>
-                                    <span class="text-sm font-medium">{{ $card->usage_percentage }}%</span>
+                                    <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $card->usage_percentage }}%</span>
                                 </div>
                                 
                                 <!-- Barra de Progresso -->
@@ -194,10 +194,10 @@
                             <div class="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                                 <div class="flex justify-between items-center">
                                     <span class="text-sm text-gray-600 dark:text-gray-400">Próximo Vencimento:</span>
-                                    <span class="text-sm font-medium">
+                                    <span class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                         {{ $card->next_due_date->format('d/m/Y') }}
                                         @if($card->days_to_due <= 7)
-                                            <span class="text-red-600 ml-1">({{ $card->days_to_due }} dias)</span>
+                                            <span class="text-red-600 dark:text-red-400 ml-1">({{ $card->days_to_due }} dias)</span>
                                         @endif
                                     </span>
                                 </div>
