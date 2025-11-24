@@ -140,8 +140,14 @@
 
             <!-- Botões de Ação -->
             <div class="flex justify-start space-x-3">
-                <button type="submit" class="btn-success-md">
-                    Cadastrar Receita
+                <button type="submit" class="btn-success-md align-icon-btn">
+                    <!-- Ícone plus-circle (Heroicons) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Cadastrar
                 </button>
                 <a href="{{ route('incomes.index') }}" class="btn-secondary-md">
                     Cancelar
