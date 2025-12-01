@@ -537,17 +537,35 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Validações completas (frontend e backend)
 - [x] **Refinamentos (16/11/2025)**: Correções no formulário de edição, máscaras centralizadas, SweetAlert2 e ajustes de tema
 
-**Fase 5 - Dashboard e Relatórios** 📋 Planejada
-- [ ] Wishlist inteligente
-- [ ] Análise de viabilidade de compras
-- [ ] Verificação automática de pagamentos
-- [ ] Alertas inteligentes
+**Fase 5 - Dashboard e Relatórios** ✅ Concluída (30/11/2025)
+- [x] Dashboard financeiro principal com estatísticas gerais
+- [x] Gráficos interativos (Chart.js) de receitas vs despesas
+- [x] Verificação automática de pagamentos pendentes
+- [x] Sistema de alertas inteligentes
+- [x] Central de alertas com prioridades (high, medium, low)
+- [x] Análise de saúde financeira (déficit/superávit)
+- [x] Gráficos de uso dos cartões de crédito
+- [x] Interface responsiva com tema claro/escuro
+
+**Fase 5.1 - Análises Avançadas** 📋 Futuro
+- [ ] **Modal Inteligente de Verificação**: Sistema que verifica contas pendentes no login e pergunta "Essas contas já foram pagas?" com atualização automática do status
+- [ ] **Atualização Dinâmica do Dashboard**: Recálculo automático das estatísticas após mudanças de status das contas
+- [ ] Análise de fluxo de caixa mensal/anual com projeções
+- [ ] Wishlist inteligente com análise de viabilidade financeira
+- [ ] Sistema de categorias para despesas (Alimentação, Transporte, Lazer, etc.)
+- [ ] Relatórios de tendências e projeções baseados em histórico
+- [ ] Comparativo de gastos por categoria com metas
+- [ ] Alertas de mudanças significativas nos padrões de consumo
+- [ ] Sistema de metas financeiras por categoria
+- [ ] Export de relatórios em PDF/Excel
 
 **Fase 6 - Recursos Avançados** 📋 Futuro
-- [ ] Integração com IA para análises
-- [ ] Open Banking
-- [ ] Notificações por e-mail/SMS avançadas
-- [ ] Multi-moeda
+- [ ] Integração com IA para análises preditivas
+- [ ] Open Banking para sincronização automática
+- [ ] Notificações por e-mail/SMS avançadas e personalizáveis
+- [ ] Sistema multi-moeda com conversão automática
+- [ ] Integração com APIs de investimentos
+- [ ] Sistema de backup automático na nuvem
 
 ---
 
@@ -780,7 +798,79 @@ Indicadores: status: success
 - ✅ **Observações Contextuais**: Notas específicas por categoria
 - ✅ **Status Inteligente**: 85% das receitas passadas marcadas como recebidas
 
-> ✅ **Status**: Sistema 100% funcional e refinado. Todos os ajustes técnicos implementados em 16/11/2025.
+### 📊 Dashboard e Relatórios (Fase 5 - Concluída em 30/11/2025)
+
+#### **Dashboard Financeiro Completo**
+- ✅ **Cards Estatísticos**: Receitas do mês, despesas, cartões de crédito e saldo geral
+- ✅ **DashboardController**: Sistema otimizado com consultas agregadas para performance
+- ✅ **AlertService**: Serviço dedicado para análise e geração de alertas inteligentes
+- ✅ **Estatísticas em Tempo Real**: Todos os dados atualizados dinamicamente
+
+#### **Sistema de Alertas Inteligentes**
+- ✅ **Central de Alertas**: Interface dedicada com cores tema-aware (vermelho suave)
+- ✅ **Prioridades**: Sistema de alta, média e baixa prioridade com contadores
+- ✅ **Alertas Financeiros**: Detecção automática de déficit, oportunidades de investimento
+- ✅ **Alertas de Vencimento**: Despesas vencidas, vencendo em breve, receitas atrasadas
+- ✅ **Alertas de Cartão**: Limite próximo ao máximo, melhores datas para compra
+- ✅ **Sugestões Inteligentes**: Ações recomendadas para cada tipo de alerta
+
+#### **Gráficos Interativos com Chart.js v4**
+- ✅ **Receitas vs Despesas**: Gráfico de linha comparativo dos últimos 6 meses
+- ✅ **Uso dos Cartões**: Gráfico de rosca mostrando percentual de uso por cartão
+- ✅ **Tema Compatível**: Cores que se adaptam ao tema claro/escuro automaticamente
+- ✅ **Responsividade**: Gráficos otimizados para mobile e desktop
+
+#### **Interface e Experiência do Usuário**
+- ✅ **Design Responsivo**: Mobile-first com adaptação perfeita para todos os dispositivos
+- ✅ **Tema Claro/Escuro**: Suporte completo com cores balanceadas
+- ✅ **Performance**: Consultas otimizadas com eager loading e agregações
+- ✅ **Navegação Intuitiva**: Layout organizado com informações hierarquizadas
+
+#### **Recursos Técnicos Implementados**
+- **DashboardController.php**: Métodos otimizados para estatísticas (receitas, despesas, cartões)
+- **AlertService.php**: 200+ linhas de lógica inteligente para detecção de padrões
+- **Consultas Otimizadas**: Uso de `selectRaw()` e agregações para performance
+- **Alpine.js**: Componentes reativos para interatividade
+- **Chart.js CDN**: Carregamento otimizado da biblioteca de gráficos
+- **@stack('scripts')**: Sistema de scripts modulares no layout
+
+> ✅ **Status**: Dashboard completo e totalmente funcional. Pronto para Fase 5.1 - Análises Avançadas.
+
+---
+
+## 🚀 Próximas Funcionalidades
+
+### Fase 5.1 - Análises Avançadas (Futuro)
+
+#### **Modal Inteligente de Verificação de Contas** 🧠
+**Funcionalidade revolucionária que analisa contas pendentes automaticamente no login:**
+
+**Como funcionará:**
+1. **Análise Automática**: Quando o usuário faz login, o sistema analisa:
+   - Despesas com status "pendente"
+   - Data de vencimento já passou
+   - Tempo desde o vencimento
+
+2. **Modal Inteligente**: Sistema exibe modal perguntando:
+   ```
+   "Detectamos contas vencidas. Essas contas já foram pagas?"
+   
+   [Lista das contas vencidas com valores e datas]
+   
+   [Marcar como Pagas] [Deixar Pendentes]
+   ```
+
+3. **Atualização Inteligente**: 
+   - **Se "Marcar como Pagas"**: Atualiza status para "paid" + data de pagamento
+   - **Se "Deixar Pendentes"**: Mantém status + exibe alerta "Pague o mais rápido possível"
+
+4. **Recálculo Automático**: Dashboard atualiza estatísticas instantaneamente após mudanças
+
+**Benefícios:**
+- 🎯 **Proatividade**: Sistema antecipa necessidades do usuário
+- ⚡ **Agilidade**: Atualização rápida de múltiplas contas
+- 📊 **Precisão**: Dashboard sempre atualizado com dados reais
+- 🧠 **Inteligência**: Aprende padrões de pagamento do usuário
 
 ---
 

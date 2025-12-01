@@ -92,6 +92,14 @@ class Income extends Model implements Auditable
     }
 
     /**
+     * Scope para receitas do mês atual (alias)
+     */
+    public function scopeThisMonth($query)
+    {
+        return $this->scopeCurrentMonth($query);
+    }
+
+    /**
      * Scope para receitas por período
      */
     public function scopeBetweenDates($query, $startDate, $endDate)
