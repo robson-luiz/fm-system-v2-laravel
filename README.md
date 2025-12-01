@@ -2,6 +2,33 @@
 
 > 💡 **Sobre as Versões**: Esta é a versão 2 do FM System, completamente reescrita com Laravel 12. A versão 1 foi desenvolvida em PHP puro e não está disponível publicamente.
 
+---
+
+## 🌐 **Idiomas / Languages**
+
+- 🇧🇷 **Português**: [README.md](./README.md)
+- 🇺🇸 **English**: [README.en.md](./README.en.md)
+
+---
+
+## Screenshots
+
+### Dashboard
+![Screenshot do Dashboard](docs/fm_system_dashboard.png)
+*Dashboard financeiro completo com estatísticas, gráficos e alertas inteligentes*
+
+### Gerenciamento de Despesas
+![Screenshot do Gerenciamento de Despesas](docs/fm_system_despesas.png)
+*Gerenciamento avançado de despesas com sistema de parcelas flexíveis*
+
+### Controle de Cartões de Crédito
+![Screenshot dos Cartões de Crédito](docs/fm_system_cartao_credito.png)
+*Controle inteligente de cartões de crédito com monitoramento de limite em tempo real*
+
+### Sistema de Receitas
+![Screenshot das Receitas](docs/fm_system_receitas.png)
+*Gerenciamento completo de receitas com categorização e filtros inteligentes*
+
 ## Requisitos
 
 * PHP 8.2 ou superior - Conferir a versão: php -v

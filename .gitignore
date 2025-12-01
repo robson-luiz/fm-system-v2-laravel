@@ -16,6 +16,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+docs/images/README.md
 
 # Arquivos pessoais de planejamento (não vão pro GitHub)
 README.txt
