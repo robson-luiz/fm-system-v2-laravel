@@ -7,8 +7,10 @@ use App\Models\Income;
 use App\Models\CreditCard;
 use App\Models\Installment;
 use App\Services\AlertService;
+use App\Services\OverdueExpenseService;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +18,12 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     protected $alertService;
+    protected $overdueExpenseService;
 
-    public function __construct(AlertService $alertService)
+    public function __construct(AlertService $alertService, OverdueExpenseService $overdueExpenseService)
     {
         $this->alertService = $alertService;
+        $this->overdueExpenseService = $overdueExpenseService;
     }
 
     // Página inicial do administrativo
@@ -320,5 +324,136 @@ class DashboardController extends Controller
             'monthly_projected' => $projectedBalance,
             'yearly_projected' => $incomesStats['yearly_total'] - $expensesStats['yearly_total'],
         ];
+    }
+
+    /**
+     * Obter contas vencidas para o modal (AJAX)
+     */
+    public function getOverdueAccounts()
+    {
+        try {
+            $userId = Auth::id();
+            $overdueData = $this->overdueExpenseService->getOverdueAccounts($userId);
+            
+            return response()->json([
+                'success' => true,
+                'data' => $overdueData,
+            ]);
+        } catch (Exception $e) {
+            Log::error('Erro ao obter contas vencidas.', ['error' => $e->getMessage(), 'user_id' => Auth::id()]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao obter contas vencidas.',
+            ], 500);
+        }
+    }
+
+    /**
+     * Marcar contas como pagas em lote (AJAX)
+     */
+    public function markAccountsAsPaid(Request $request)
+    {
+        try {
+            $userId = Auth::id();
+            
+            $expenseIds = $request->input('expense_ids', []);
+            $installmentIds = $request->input('installment_ids', []);
+            
+            // Validar que os IDs pertencem ao usuário autenticado
+            if (!empty($expenseIds)) {
+                $validExpenseIds = Expense::where('user_id', $userId)
+                    ->whereIn('id', $expenseIds)
+                    ->pluck('id')
+                    ->toArray();
+                    
+                if (count($validExpenseIds) !== count($expenseIds)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Algumas despesas não pertencem ao usuário.',
+                    ], 403);
+                }
+            }
+            
+            if (!empty($installmentIds)) {
+                $validInstallmentIds = Installment::whereHas('expense', function ($query) use ($userId) {
+                        $query->where('user_id', $userId);
+                    })
+                    ->whereIn('id', $installmentIds)
+                    ->pluck('id')
+                    ->toArray();
+                    
+                if (count($validInstallmentIds) !== count($installmentIds)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Algumas parcelas não pertencem ao usuário.',
+                    ], 403);
+                }
+            }
+            
+            // Marcar como pagas
+            DB::beginTransaction();
+            
+            $expensesUpdated = $this->overdueExpenseService->markExpensesAsPaid($expenseIds);
+            $installmentsUpdated = $this->overdueExpenseService->markInstallmentsAsPaid($installmentIds);
+            
+            DB::commit();
+            
+            Log::notice('Contas marcadas como pagas em lote.', [
+                'action_user_id' => $userId,
+                'expenses_updated' => $expensesUpdated,
+                'installments_updated' => $installmentsUpdated,
+            ]);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Contas marcadas como pagas com sucesso!',
+                'expenses_updated' => $expensesUpdated,
+                'installments_updated' => $installmentsUpdated,
+            ]);
+            
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            Log::error('Erro ao marcar contas como pagas.', ['error' => $e->getMessage(), 'user_id' => Auth::id()]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao marcar contas como pagas.',
+            ], 500);
+        }
+    }
+
+    /**
+     * Obter estatísticas atualizadas do dashboard (AJAX)
+     */
+    public function getUpdatedStats()
+    {
+        try {
+            $userId = Auth::id();
+
+            // Recalcular todas as estatísticas
+            $incomesStats = $this->getIncomesStats($userId);
+            $expensesStats = $this->getExpensesStats($userId);
+            $creditCardsStats = $this->getCreditCardsStats($userId);
+            $balance = $this->calculateBalance($incomesStats, $expensesStats);
+            
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'incomes' => $incomesStats,
+                    'expenses' => $expensesStats,
+                    'creditCards' => $creditCardsStats,
+                    'balance' => $balance,
+                ],
+            ]);
+        } catch (Exception $e) {
+            Log::error('Erro ao obter estatísticas atualizadas.', ['error' => $e->getMessage(), 'user_id' => Auth::id()]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao atualizar estatísticas.',
+            ], 500);
+        }
     }
 }

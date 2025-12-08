@@ -56,6 +56,11 @@ Route::group(['middleware' => ['auth', 'two-factor']], function () {
     // Página inicial do administrativo
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('permission:dashboard');
+    
+    // Rotas AJAX do Dashboard
+    Route::get('/dashboard/overdue-accounts', [DashboardController::class, 'getOverdueAccounts'])->name('dashboard.overdue-accounts');
+    Route::post('/dashboard/mark-accounts-paid', [DashboardController::class, 'markAccountsAsPaid'])->name('dashboard.mark-accounts-paid');
+    Route::get('/dashboard/updated-stats', [DashboardController::class, 'getUpdatedStats'])->name('dashboard.updated-stats');
 
     // Perfil
     Route::prefix('profile')->group(function () {

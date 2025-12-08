@@ -103,11 +103,6 @@ Start the Laravel project.
 php artisan serve
 ```
 
-Start the Laravel project on specific port.
-```
-php artisan serve --port=8082
-```
-
 Run Node.js libraries.
 ```
 npm run dev
@@ -143,12 +138,6 @@ The project comes with the following pre-installed libraries:
 - **Laravel Pint** - PHP code formatter
 - **Laravel Sail** - Docker environment (optional)
 - **Faker** - Fake data generation for testing
-
-To install all dependencies after cloning the project:
-```
-composer install
-npm install
-```
 
 ## About the Project
 
@@ -243,9 +232,9 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] Credit card usage charts
 - [x] Responsive interface with light/dark theme
 
-**Phase 5.1 - Advanced Analytics** 📋 Future
-- [ ] **Intelligent Verification Modal**: System that checks pending accounts on login and asks "Have these accounts been paid?" with automatic status update
-- [ ] **Dynamic Dashboard Update**: Automatic statistics recalculation after account status changes
+**Phase 5.1 - Advanced Analytics** 🔄 In Progress
+- [x] **Intelligent Verification Modal**: System that checks pending accounts on login and asks "Have these accounts been paid?" with automatic status update - ✅ (12/08/2025)
+- [x] **Dynamic Dashboard Update**: Automatic statistics recalculation after account status changes - ✅ (12/08/2025)
 - [ ] Monthly/annual cash flow analysis with projections
 - [ ] Intelligent wishlist with financial viability analysis
 - [ ] Category system for expenses (Food, Transportation, Leisure, etc.)
@@ -535,41 +524,91 @@ Indicators: status: success
 
 > ✅ **Status**: Complete and fully functional dashboard. Ready for Phase 5.1 - Advanced Analytics.
 
+### 🧠 Intelligent Verification Modal (Phase 5.1 - Completed on 12/08/2025)
+
+#### **Automatic Overdue Account Verification System**
+- ✅ **Automatic Detection**: System analyzes overdue accounts when accessing dashboard
+- ✅ **Intelligent Modal**: Interactive interface with SweetAlert2 listing all overdue accounts
+- ✅ **Batch Update**: Mark multiple expenses and installments as paid simultaneously
+- ✅ **Dynamic Recalculation**: Dashboard automatically updates statistics after changes
+- ✅ **Display Control**: Modal shown only once per session using sessionStorage
+
+#### **Implemented Features**
+
+**1. Automatic Analysis**
+- Detection of simple overdue expenses (without installments)
+- Detection of overdue installments of installment expenses
+- Filter by authenticated user with security
+- Calculation of overdue days for prioritization
+
+**2. Interactive Modal**
+```
+🔔 Overdue Accounts Detected
+
+We detected X overdue account(s) totaling R$ XXX.XX
+Have these accounts been paid?
+
+[Visual list of accounts with priority badges]
+- Critical (>30 days): Red badge
+- Attention (>7 days): Yellow badge
+- Pending: Gray badge
+
+[✓ Mark All as Paid] [⊘ Leave Pending] [× Close]
+```
+
+**3. Batch Update (AJAX)**
+- Endpoint: `POST /dashboard/mark-accounts-paid`
+- Ownership validation (security)
+- DB transactions for atomicity
+- Update of `status` and `payment_date`
+- Complete audit log
+
+**4. Dynamic Dashboard Recalculation**
+- Endpoint: `GET /dashboard/updated-stats`
+- Recalculation of income statistics
+- Recalculation of expense statistics
+- Recalculation of monthly/annual balance
+- UI update without page reload
+
+**5. Display Control**
+- SessionStorage to control display
+- Modal shown only once per session
+- Not shown if there are no overdue accounts
+- Intelligent prioritization system
+
+#### **Advanced Technical Features**
+- **OverdueExpenseService.php**: Dedicated service for overdue accounts logic
+- **DashboardController**: 3 new AJAX endpoints (getOverdueAccounts, markAccountsAsPaid, getUpdatedStats)
+- **overdue-verification-modal.js**: Modular JavaScript with asynchronous functions (compiled with Vite)
+- **SweetAlert2**: Elegant modals with light/dark theme support
+- **Data Attributes**: `data-stat` system for dynamic element updating
+- **Optimized Queries**: Eager loading and security validations
+- **DB Transactions**: Integrity guarantee in batch updates
+
+#### **Implemented Benefits**
+- 🎯 **Proactivity**: System anticipates user needs
+- ⚡ **Agility**: Quick update of multiple accounts simultaneously
+- 📊 **Accuracy**: Dashboard always updated with real-time data
+- 🧠 **Intelligence**: Detects patterns and prioritizes critical accounts
+- 🔒 **Security**: Complete validation of ownership and permissions
+- 🎨 **Modern UX**: Responsive interface with light/dark theme
+
+> ✅ **Status**: Complete and operational features. System tested and ready for production.
+
 ---
 
 ## 🚀 Next Features
 
-### Phase 5.1 - Advanced Analytics (Future)
+### Phase 5.1 - Advanced Analytics (Continuation)
 
-#### **Intelligent Account Verification Modal** 🧠
-**Revolutionary functionality that automatically analyzes pending accounts on login:**
-
-**How it will work:**
-1. **Automatic Analysis**: When user logs in, system analyzes:
-   - Expenses with "pending" status
-   - Due date already passed
-   - Time since due date
-
-2. **Intelligent Modal**: System displays modal asking:
-   ```
-   "We detected overdue accounts. Have these accounts been paid?"
-   
-   [List of overdue accounts with values and dates]
-   
-   [Mark as Paid] [Leave Pending]
-   ```
-
-3. **Intelligent Update**: 
-   - **If "Mark as Paid"**: Updates status to "paid" + payment date
-   - **If "Leave Pending"**: Maintains status + displays "Pay as soon as possible" alert
-
-4. **Automatic Recalculation**: Dashboard updates statistics instantly after changes
-
-**Benefits:**
-- 🎯 **Proactivity**: System anticipates user needs
-- ⚡ **Agility**: Quick update of multiple accounts
-- 📊 **Precision**: Dashboard always updated with real data
-- 🧠 **Intelligence**: Learns user payment patterns
+- [ ] Monthly/annual cash flow analysis with projections
+- [ ] Intelligent wishlist with financial viability analysis
+- [ ] Category system for expenses (Food, Transportation, Leisure, etc.)
+- [ ] Trend and projection reports based on history
+- [ ] Category spending comparison with goals
+- [ ] Alerts for significant changes in consumption patterns
+- [ ] Financial goals system by category
+- [ ] PDF/Excel report export
 
 ---
 

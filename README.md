@@ -103,11 +103,6 @@ Iniciar o projeto criado com Laravel.
 php artisan serve
 ```
 
-Iniciar o projeto criado com Laravel na porta específica.
-```
-php artisan serve --port=8082
-```
-
 Executar as bibliotecas Node.js.
 ```
 npm run dev
@@ -143,12 +138,6 @@ O projeto já vem com as seguintes bibliotecas pré-instaladas:
 - **Laravel Pint** - Formatador de código PHP
 - **Laravel Sail** - Ambiente Docker (opcional)
 - **Faker** - Geração de dados fake para testes
-
-Para instalar todas as dependências após clonar o projeto:
-```
-composer install
-npm install
-```
 
 ## Sobre o Projeto
 
@@ -243,9 +232,9 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Gráficos de uso dos cartões de crédito
 - [x] Interface responsiva com tema claro/escuro
 
-**Fase 5.1 - Análises Avançadas** 📋 Futuro
-- [ ] **Modal Inteligente de Verificação**: Sistema que verifica contas pendentes no login e pergunta "Essas contas já foram pagas?" com atualização automática do status
-- [ ] **Atualização Dinâmica do Dashboard**: Recálculo automático das estatísticas após mudanças de status das contas
+**Fase 5.1 - Análises Avançadas** 🔄 Em Andamento
+- [x] **Modal Inteligente de Verificação**: Sistema que verifica contas pendentes no login e pergunta "Essas contas já foram pagas?" com atualização automática do status - ✅ (08/12/2025)
+- [x] **Atualização Dinâmica do Dashboard**: Recálculo automático das estatísticas após mudanças de status das contas - ✅ (08/12/2025)
 - [ ] Análise de fluxo de caixa mensal/anual com projeções
 - [ ] Wishlist inteligente com análise de viabilidade financeira
 - [ ] Sistema de categorias para despesas (Alimentação, Transporte, Lazer, etc.)
@@ -535,41 +524,82 @@ Indicadores: status: success
 
 > ✅ **Status**: Dashboard completo e totalmente funcional. Pronto para Fase 5.1 - Análises Avançadas.
 
+### 🧠 Modal Inteligente de Verificação (Fase 5.1 - Concluída em 08/12/2025)
+
+#### **Sistema de Verificação Automática de Contas Vencidas**
+- ✅ **Detecção Automática**: Sistema analisa contas vencidas ao acessar o dashboard
+- ✅ **Modal Inteligente**: Interface interativa com SweetAlert2 listando todas as contas vencidas
+- ✅ **Atualização em Lote**: Marcar múltiplas despesas e parcelas como pagas simultaneamente
+- ✅ **Recálculo Dinâmico**: Dashboard atualiza estatísticas automaticamente após mudanças
+- ✅ **Controle de Exibição**: Modal exibido apenas uma vez por sessão usando sessionStorage
+
+#### **Funcionalidades Implementadas**
+
+**1. Análise Automática**
+- Detecção de despesas simples vencidas (sem parcelas)
+- Detecção de parcelas vencidas de despesas parceladas
+- Filtro por usuário autenticado com segurança
+- Cálculo de dias de atraso para priorização
+
+**2. Modal Interativo**
+```
+🔔 Contas Vencidas Detectadas
+
+Detectamos X conta(s) vencida(s) no valor total de R$ XXX,XX
+Essas contas já foram pagas?
+
+[Lista visual das contas com badges de prioridade]
+- Crítico (>30 dias): Badge vermelho
+- Atenção (>7 dias): Badge amarelo  
+- Pendente: Badge cinza
+
+[✓ Marcar Todas como Pagas] [⊘ Deixar Pendentes] [× Fechar]
+```
+
+**3. Atualização em Lote (AJAX)**
+- Endpoint: `POST /dashboard/mark-accounts-paid`
+- Validação de propriedade (segurança)
+- Transações DB para atomicidade
+- Atualização de `status` e `payment_date`
+- Log de auditoria completo
+
+**4. Recálculo Dinâmico do Dashboard**
+- Endpoint: `GET /dashboard/updated-stats`
+- Recálculo de estatísticas de receitas
+- Recálculo de estatísticas de despesas
+- Recálculo de saldo mensal/anual
+- Atualização da UI sem reload da página
+
+**5. Controle de Exibição**
+- SessionStorage para controlar exibição
+- Modal exibido apenas uma vez por sessão
+- Não mostra se não houver contas vencidas
+- Sistema inteligente de priorização
+
+#### **Recursos Técnicos Avançados**
+- **OverdueExpenseService.php**: Serviço dedicado para lógica de contas vencidas
+- **DashboardController**: 3 novos endpoints AJAX (getOverdueAccounts, markAccountsAsPaid, getUpdatedStats)
+- **overdue-verification-modal.js**: JavaScript modular com funções assíncronas
+- **SweetAlert2**: Modais elegantes com suporte a tema claro/escuro
+- **Data Attributes**: Sistema `data-stat` para atualização dinâmica de elementos
+- **Consultas Otimizadas**: Eager loading e validações de segurança
+- **Transações DB**: Garantia de integridade nas atualizações em lote
+
+#### **Benefícios Implementados**
+- 🎯 **Proatividade**: Sistema antecipa necessidades do usuário
+- ⚡ **Agilidade**: Atualização rápida de múltiplas contas simultaneamente
+- 📊 **Precisão**: Dashboard sempre atualizado com dados reais em tempo real
+- 🧠 **Inteligência**: Detecta padrões e prioriza contas críticas
+- 🔒 **Segurança**: Validação completa de propriedade e permissões
+- 🎨 **UX Moderna**: Interface responsiva com tema claro/escuro
+
+> ✅ **Status**: Funcionalidades completas e operacionais. Sistema testado e pronto para produção.
+
 ---
 
 ## 🚀 Próximas Funcionalidades
 
-### Fase 5.1 - Análises Avançadas (Futuro)
-
-#### **Modal Inteligente de Verificação de Contas** 🧠
-**Funcionalidade revolucionária que analisa contas pendentes automaticamente no login:**
-
-**Como funcionará:**
-1. **Análise Automática**: Quando o usuário faz login, o sistema analisa:
-   - Despesas com status "pendente"
-   - Data de vencimento já passou
-   - Tempo desde o vencimento
-
-2. **Modal Inteligente**: Sistema exibe modal perguntando:
-   ```
-   "Detectamos contas vencidas. Essas contas já foram pagas?"
-   
-   [Lista das contas vencidas com valores e datas]
-   
-   [Marcar como Pagas] [Deixar Pendentes]
-   ```
-
-3. **Atualização Inteligente**: 
-   - **Se "Marcar como Pagas"**: Atualiza status para "paid" + data de pagamento
-   - **Se "Deixar Pendentes"**: Mantém status + exibe alerta "Pague o mais rápido possível"
-
-4. **Recálculo Automático**: Dashboard atualiza estatísticas instantaneamente após mudanças
-
-**Benefícios:**
-- 🎯 **Proatividade**: Sistema antecipa necessidades do usuário
-- ⚡ **Agilidade**: Atualização rápida de múltiplas contas
-- 📊 **Precisão**: Dashboard sempre atualizado com dados reais
-- 🧠 **Inteligência**: Aprende padrões de pagamento do usuário
+### Fase 5.1 - Análises Avançadas (Continuação)
 
 ---
 

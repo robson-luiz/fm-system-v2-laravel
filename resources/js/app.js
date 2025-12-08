@@ -1,6 +1,8 @@
 import './bootstrap';
 import './chart-config';
 import './money-mask';
+import './overdue-verification-modal';
+import './chart-dashboard';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 

@@ -23,12 +23,12 @@
                     <div class="min-w-0 flex-1">
                         <p class="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-400 truncate">Receitas do Mês</p>
                         <div class="flex items-baseline">
-                            <p class="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white truncate">
+                            <p class="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white truncate" data-stat="incomes-monthly-received">
                                 R$ {{ number_format($incomesStats['monthly_received'], 2, ',', '.') }}
                             </p>
                         </div>
                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">
-                            Pendente: R$ {{ number_format($incomesStats['monthly_pending'], 2, ',', '.') }}
+                            Pendente: <span data-stat="incomes-monthly-pending">R$ {{ number_format($incomesStats['monthly_pending'], 2, ',', '.') }}</span>
                         </p>
                     </div>
                     <div class="p-2 md:p-3 bg-green-100 dark:bg-green-900 rounded-full flex-shrink-0">
@@ -56,12 +56,12 @@
                     <div class="min-w-0 flex-1">
                         <p class="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-400 truncate">Despesas do Mês</p>
                         <div class="flex items-baseline">
-                            <p class="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white truncate">
+                            <p class="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white truncate" data-stat="expenses-monthly-paid">
                                 R$ {{ number_format($expensesStats['monthly_paid'], 2, ',', '.') }}
                             </p>
                         </div>
                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">
-                            Pendente: R$ {{ number_format($expensesStats['monthly_pending'], 2, ',', '.') }}
+                            Pendente: <span data-stat="expenses-monthly-pending">R$ {{ number_format($expensesStats['monthly_pending'], 2, ',', '.') }}</span>
                         </p>
                     </div>
                     <div class="p-2 md:p-3 bg-red-100 dark:bg-red-900 rounded-full flex-shrink-0">
@@ -74,19 +74,19 @@
                     @if($expensesStats['overdue_count'] > 0)
                         <div class="flex items-center text-xs md:text-sm">
                             <span class="text-red-600 dark:text-red-400 font-medium">
-                                {{ $expensesStats['overdue_count'] }} vencidas
+                                <span data-stat="expenses-overdue-count">{{ $expensesStats['overdue_count'] }}</span> vencidas
                             </span>
                             @if($expensesStats['due_soon_count'] > 0)
                                 <span class="text-gray-500 dark:text-gray-400 mx-1 md:mx-2">•</span>
                                 <span class="text-yellow-600 dark:text-yellow-400 truncate">
-                                    {{ $expensesStats['due_soon_count'] }} próximas
+                                    <span data-stat="expenses-due-soon-count">{{ $expensesStats['due_soon_count'] }}</span> próximas
                                 </span>
                             @endif
                         </div>
                     @elseif($expensesStats['due_soon_count'] > 0)
                         <div class="flex items-center text-xs md:text-sm">
                             <span class="text-yellow-600 dark:text-yellow-400">
-                                {{ $expensesStats['due_soon_count'] }} vencendo em breve
+                                <span data-stat="expenses-due-soon-count">{{ $expensesStats['due_soon_count'] }}</span> vencendo em breve
                             </span>
                         </div>
                     @else
@@ -105,7 +105,7 @@
                     <div class="min-w-0 flex-1">
                         <p class="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-400 truncate">Saldo do Mês</p>
                         <div class="flex items-baseline">
-                            <p class="text-xl md:text-2xl font-semibold {{ $balance['monthly_actual'] >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }} truncate">
+                            <p class="text-xl md:text-2xl font-semibold {{ $balance['monthly_actual'] >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }} truncate" data-stat="balance-monthly-actual">
                                 R$ {{ number_format(abs($balance['monthly_actual']), 2, ',', '.') }}
                             </p>
                         </div>
@@ -434,126 +434,11 @@
         </div>
     </div>
 
-    <!-- Scripts para Chart.js -->
+    <!-- Dados para os gráficos Chart.js -->
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Configuração baseada no tema
-            const isDarkMode = document.documentElement.classList.contains('dark');
-            
-            // Cores para o tema
-            const colors = {
-                primary: isDarkMode ? '#60A5FA' : '#3B82F6',
-                success: isDarkMode ? '#34D399' : '#10B981',
-                danger: isDarkMode ? '#F87171' : '#EF4444',
-                warning: isDarkMode ? '#FBBF24' : '#F59E0B',
-                text: isDarkMode ? '#F3F4F6' : '#374151',
-                grid: isDarkMode ? '#374151' : '#E5E7EB'
-            };
-
-            // Dados do PHP
-            const chartData = @json($chartsData);
-
-            // Gráfico Receitas vs Despesas
-            const incomeCtx = document.getElementById('incomeVsExpenseChart');
-            if (incomeCtx) {
-                new Chart(incomeCtx, {
-                    type: 'line',
-                    data: {
-                        labels: chartData.monthly_comparison.labels,
-                        datasets: [{
-                            label: 'Receitas',
-                            data: chartData.monthly_comparison.incomes,
-                            borderColor: colors.success,
-                            backgroundColor: colors.success + '20',
-                            tension: 0.4,
-                            fill: false
-                        }, {
-                            label: 'Despesas',
-                            data: chartData.monthly_comparison.expenses,
-                            borderColor: colors.danger,
-                            backgroundColor: colors.danger + '20',
-                            tension: 0.4,
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    color: colors.text
-                                }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                ticks: { color: colors.text },
-                                grid: { color: colors.grid }
-                            },
-                            y: {
-                                ticks: { 
-                                    color: colors.text,
-                                    callback: function(value) {
-                                        return 'R$ ' + value.toLocaleString('pt-BR');
-                                    }
-                                },
-                                grid: { color: colors.grid }
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Gráfico Uso dos Cartões
-            const cardCtx = document.getElementById('creditCardUsageChart');
-            if (cardCtx && chartData.credit_card_usage.length > 0) {
-                const cardLabels = chartData.credit_card_usage.map(card => card.name);
-                const cardUsage = chartData.credit_card_usage.map(card => card.usage_percentage);
-                
-                new Chart(cardCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: cardLabels,
-                        datasets: [{
-                            data: cardUsage,
-                            backgroundColor: [
-                                colors.primary,
-                                colors.success,
-                                colors.warning,
-                                colors.danger,
-                                '#8B5CF6',
-                                '#06B6D4'
-                            ],
-                            borderWidth: 2,
-                            borderColor: isDarkMode ? '#1F2937' : '#FFFFFF'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: colors.text,
-                                    padding: 20
-                                }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        return context.label + ': ' + context.parsed + '%';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-        });
+    <script type="application/json" id="chartData">
+        @json($chartsData)
     </script>
     @endpush
     
