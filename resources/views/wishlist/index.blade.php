@@ -24,7 +24,7 @@
     {{-- Título e Botão --}}
     <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">🎯 Wishlist Inteligente</h1>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">🎯 Lista de Desejos Inteligente</h1>
             <p class="text-gray-600 dark:text-gray-400">Planeje e alcance seus objetivos financeiros</p>
         </div>
         <a href="{{ route('wishlist.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg mt-4 md:mt-0">
