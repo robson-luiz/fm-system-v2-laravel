@@ -164,6 +164,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - 💰 **Intelligent expense management** with flexible installments system
 - 💳 **Credit card control** with best purchase date analysis
 - 📊 **Financial dashboard** with detailed charts and reports
+- 📈 **Cash flow analysis** with AI-based future projections
 - 🎯 **Intelligent wishlist** with financial viability analysis
 - 🔔 **Proactive alerts** for payments and due dates
 - 👥 **Complete permissions system** and action auditing
@@ -232,11 +233,11 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] Credit card usage charts
 - [x] Responsive interface with light/dark theme
 
-**Phase 5.1 - Advanced Analytics** 🔄 In Progress
+**Phase 5.1 - Advanced Analytics** ✅ Completed (12/14/2025)
 - [x] **Intelligent Verification Modal**: System that checks pending accounts on login and asks "Have these accounts been paid?" with automatic status update - ✅ (12/08/2025)
 - [x] **Dynamic Dashboard Update**: Automatic statistics recalculation after account status changes - ✅ (12/08/2025)
-- [ ] Monthly/annual cash flow analysis with projections
-- [ ] Intelligent wishlist with financial viability analysis
+- [x] **Monthly/annual cash flow analysis with projections** - ✅ (12/14/2025)
+- [x] **Intelligent wishlist with financial viability analysis** - ✅ (12/14/2025)
 - [ ] Category system for expenses (Food, Transportation, Leisure, etc.)
 - [ ] Trend and projection reports based on history
 - [ ] Category spending comparison with goals
@@ -595,14 +596,176 @@ Have these accounts been paid?
 
 > ✅ **Status**: Complete and operational features. System tested and ready for production.
 
+### 📊 Cash Flow Analysis (Phase 5.1 - Completed on 12/14/2025)
+
+#### **Complete Financial Analysis System**
+- ✅ **Monthly Flow**: Detailed analysis of the last 6, 12, or 24 months
+- ✅ **Future Projections**: Automatic forecasting for the next 6 months
+- ✅ **Trend Analysis**: Identification of growth/decline patterns
+- ✅ **Annual Summary**: Consolidated year view with monthly averages
+
+#### **Implemented Features**
+
+**1. Historical Analysis Dashboard**
+- Interactive period filter (6, 12, or 24 months)
+- Statistical cards (average income, expenses, balance)
+- 2 interactive charts with Chart.js v4:
+  - **Historical Flow**: Income vs expenses over the months
+  - **Future Projections**: Trend forecast for next 6 months
+- Detailed table with month-by-month breakdown
+- Visual trend indicators (↗ growth, ↘ decline, → stable)
+
+**2. Intelligent Projections**
+- **Algorithm based on 6-month average**: Uses real historical data
+- **Linear trend**: Considers recent growth/decline patterns
+- **Realistic forecasts**: Projects income and expenses separately
+- **Visualization**: Dashed lines for projections vs solid for historical
+
+**3. Financial Metrics**
+- **Monthly average**: Calculation of average income/expense over the period
+- **Positive/negative balance**: Identification of surplus or deficit months
+- **Percentage variation**: Monthly comparison with previous period
+- **Trend analysis**: Growth, decline or stability detection
+
+**4. Interactive Charts**
+- **Theme-aware colors**: Automatic adaptation to light/dark theme
+- **Responsive design**: Optimized for mobile and desktop
+- **Hover tooltips**: Detailed information on mouseover
+- **Graph legends**: Clear identification of each data series
+
+#### **Technical Architecture**
+- **CashFlowService.php**: 244 lines of business logic
+  - `getMonthlyFlow($userId, $months)`: Historical data
+  - `getProjections($userId)`: 6-month forecasts
+  - `getTrends($monthlyData)`: Trend analysis
+  - `getYearlyFlow($userId, $year)`: Annual summary
+  - `getCompleteAnalysis($userId, $months)`: Complete data
+- **CashFlowController.php**: 5 AJAX endpoints
+  - `index()`: Main view
+  - `getData($months)`: Complete analysis via AJAX
+  - `getMonthlyFlow()`: Monthly data
+  - `getProjections()`: Projections
+  - `getYearlySummary()`: Annual summary
+- **cash-flow-charts.js**: Interactive charts with Chart.js v4
+  - Theme-aware colors (light/dark)
+  - Responsive chart creation
+  - Real-time data table update
+- **Routes**: `/cash-flow` and 4 AJAX routes
+
+#### **Key Benefits**
+- 📊 **Visual clarity**: Graphs that facilitate understanding
+- 🔮 **Predictability**: Anticipate future financial behavior
+- 📈 **Strategic insights**: Identify growth or decline patterns
+- ⚡ **Performance**: Optimized queries with aggregations
+- 🎨 **Modern UX**: Responsive interface with theme support
+
+---
+
+### 🎯 Intelligent Wishlist (Phase 5.1 - Completed on 12/14/2025)
+
+#### **Financial Goals System with AI**
+- ✅ **Complete CRUD**: Create, view, edit, and delete goals
+- ✅ **Viability Analysis**: Algorithm that assesses if goal is achievable
+- ✅ **Smart Recommendations**: Automatic suggestions based on budget
+- ✅ **Visual Progress**: Progress bars and percentages
+- ✅ **Priority System**: High, medium, and low with visual classification
+
+#### **Implemented Features**
+
+**1. Goals Management**
+- **Index page**: Visual cards with statistics and filters
+  - Total goals, in progress, completed, total amount
+  - Filter by status (in progress, completed, canceled)
+  - Filter by priority (high, medium, low)
+  - Progress bar and percentage per goal
+- **Registration**: Complete form with validations
+  - Name, description, target amount, current amount
+  - Priority (high/medium/low), target date (optional)
+  - Additional notes
+- **Detailed view**: Information + AI analysis
+  - Progress statistics
+  - Complete viability analysis
+  - Budget impact
+  - Personalized recommendations
+- **Editing**: Update data while maintaining history
+
+**2. Viability Analysis Algorithm**
+
+**Advanced Calculations:**
+- ✅ **Average Monthly Balance**: Based on last 6 real months
+- ✅ **Months Needed**: Considers saving 30% of monthly balance
+- ✅ **Completion Date**: Automatic prediction based on current pace
+- ✅ **Monthly Amount Needed**: How much to save per month
+- ✅ **Budget Impact**: Percentage of balance committed
+
+**Viability Classification:**
+```
+✅ Very Viable (95%): Needs up to 20% of monthly balance
+👍 Viable (75%): Needs up to 40% of monthly balance
+⚠️ Moderate (50%): Needs up to 60% of monthly balance
+🔶 Difficult (30%): Needs up to 80% of monthly balance
+❌ Unfeasible (10%): Needs more than 80% of monthly balance
+```
+
+**Smart Recommendations Examples:**
+- ✅ "Excellent! This goal is very viable with your current budget."
+- 💡 "Set aside 25.5% of your monthly balance for this goal."
+- ⚠️ "Consider reducing non-essential expenses to facilitate."
+- 📅 "Consider postponing the target date to June/2026."
+- 💰 "A goal of up to R$ 12,000.00 would be more viable in 12 months."
+
+**3. Visual Progress System**
+- **Interactive progress bar**: Real-time percentage
+- **Formatted amounts**: Current, remaining, and target
+- **Priority badges**: Colored classification (red/yellow/gray)
+- **Status indicators**: In progress, completed, canceled
+
+**4. Financial Integration**
+- **CashFlowService**: Uses existing cash flow data
+- **Real historical data**: Based on actual income and expenses
+- **Realistic projections**: Considers 30% safe saving capacity
+- **Impact analysis**: Calculates commitment to monthly budget
+
+#### **Technical Architecture**
+- **Database**: `wishlists` table with complete structure
+  - Fields: name, description, target_amount, current_amount
+  - priority, target_date, status, notes
+  - Relationships with users
+- **Wishlist Model**: Eloquent with intelligent accessors
+  - `progress_percentage`, `remaining_amount`
+  - Formatted monetary values
+  - Scopes: `forUser()`, `byStatus()`, `byPriority()`
+- **WishlistViabilityService.php**: 300+ lines of AI logic
+  - `analyzeViability()`: Complete analysis
+  - `calculateMonthsNeeded()`: Time forecast
+  - `analyzeImpact()`: Budget impact
+  - `generateRecommendations()`: Smart suggestions
+- **WishlistController.php**: Complete CRUD + AJAX
+  - 7 RESTful methods (index, create, store, show, edit, update, destroy)
+  - 2 AJAX endpoints (addProgress, getViabilityAnalysis)
+- **WishlistRequest.php**: Validations with money conversion
+- **4 Blade Views**: Following system standard pattern
+  - index.blade.php: Visual cards with filters
+  - create.blade.php: Registration form
+  - edit.blade.php: Editing form
+  - show.blade.php: Details + viability analysis
+- **WishlistSeeder**: 5 realistic goals for testing
+- **Routes**: Resource + 2 custom routes
+
+#### **Key Benefits**
+- 🎯 **Financial planning**: Clear goals with measurable progress
+- 🧠 **Artificial intelligence**: Smart analysis based on real data
+- 💡 **Personalized guidance**: Recommendations adapted to each situation
+- 📊 **Clear visualization**: Intuitive progress and statistics
+- ✅ **Decision-making**: Know if goal is viable before starting
+- 🔒 **Security**: Complete validation of ownership and permissions
+
 ---
 
 ## 🚀 Next Features
 
 ### Phase 5.1 - Advanced Analytics (Continuation)
 
-- [ ] Monthly/annual cash flow analysis with projections
-- [ ] Intelligent wishlist with financial viability analysis
 - [ ] Category system for expenses (Food, Transportation, Leisure, etc.)
 - [ ] Trend and projection reports based on history
 - [ ] Category spending comparison with goals
@@ -653,11 +816,22 @@ Have these accounts been paid?
 - timestamps
 ```
 
+### Table: `wishlists`
+```sql
+- id, user_id
+- name, description
+- target_amount, current_amount
+- priority, target_date, status
+- notes
+- timestamps
+```
+
 **Relationships:**
 - 1 Expense → N Installments (cascade delete)
 - 1 CreditCard → N Expenses (nullable foreign key)
 - 1 User → N CreditCards (user ownership)
 - 1 User → N Incomes (user ownership)
+- 1 User → N Wishlists (user ownership)
 
 ---
 

@@ -3,6 +3,7 @@ import './chart-config';
 import './money-mask';
 import './overdue-verification-modal';
 import './chart-dashboard';
+import './cash-flow-charts';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
@@ -91,6 +92,35 @@ window.confirmDelete = function (id) {
     }).then((result) => {
         if (result.isConfirmed) {
             document.getElementById('delete-form-' + id).submit();
+        }
+    });
+}
+
+// Função para deletar wishlist
+window.deleteWishlist = function(id) {
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja remover este objetivo da wishlist?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, remover!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/wishlist/${id}`;
+            
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            form.innerHTML = `
+                <input type="hidden" name="_token" value="${csrfToken}">
+                <input type="hidden" name="_method" value="DELETE">
+            `;
+            
+            document.body.appendChild(form);
+            form.submit();
         }
     });
 }

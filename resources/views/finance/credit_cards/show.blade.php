@@ -19,6 +19,14 @@
         <div class="content-box-header">
             <h3 class="content-box-title">{{ $creditCard->name }}</h3>
             <div class="content-box-btn flex space-x-2">
+                <a href="{{ route('credit-cards.index') }}" class="btn-secondary-md align-icon-btn">
+                    <!-- Ícone arrow-left (Heroicons) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                    </svg>
+                    <span>Voltar</span>
+                </a>
                 @can('edit-credit-card')
                     <a href="{{ route('credit-cards.edit', $creditCard) }}" class="btn-warning-md align-icon-btn">
                         <!-- Ícone pencil (Heroicons) -->
@@ -30,15 +38,6 @@
                         <span>Editar</span>
                     </a>
                 @endcan
-                
-                <a href="{{ route('credit-cards.index') }}" class="btn-secondary-md align-icon-btn">
-                    <!-- Ícone arrow-left (Heroicons) -->
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                    </svg>
-                    <span>Voltar</span>
-                </a>
             </div>
         </div>
 

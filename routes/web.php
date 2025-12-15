@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Admin\TwoFactorSettingsController;
 use App\Http\Controllers\Admin\EmailSmsSettingsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CashFlowController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\Finance\ExpenseController;
 use App\Http\Controllers\Finance\CreditCardController;
 use App\Http\Controllers\Finance\IncomeController;
@@ -177,6 +179,30 @@ Route::group(['middleware' => ['auth', 'two-factor']], function () {
 
         // Rota para alternar status recebida/pendente
         Route::post('/{income}/toggle-status', [IncomeController::class, 'toggleStatus'])->name('incomes.toggle-status')->middleware('permission:edit-income');
+    });
+
+    // Análise de Fluxo de Caixa
+    Route::prefix('cash-flow')->name('cash-flow.')->group(function () {
+        Route::get('/', [CashFlowController::class, 'index'])->name('index')->middleware('permission:dashboard');
+        Route::get('/data', [CashFlowController::class, 'getData'])->name('data')->middleware('permission:dashboard');
+        Route::get('/monthly', [CashFlowController::class, 'getMonthlyFlow'])->name('monthly')->middleware('permission:dashboard');
+        Route::get('/projections', [CashFlowController::class, 'getProjections'])->name('projections')->middleware('permission:dashboard');
+        Route::get('/yearly', [CashFlowController::class, 'getYearlySummary'])->name('yearly')->middleware('permission:dashboard');
+    });
+
+    // Wishlist Inteligente
+    Route::prefix('wishlist')->name('wishlist.')->group(function () {
+        Route::get('/', [WishlistController::class, 'index'])->name('index')->middleware('permission:dashboard');
+        Route::get('/create', [WishlistController::class, 'create'])->name('create')->middleware('permission:dashboard');
+        Route::get('/{wishlist}', [WishlistController::class, 'show'])->name('show')->middleware('permission:dashboard');
+        Route::post('/', [WishlistController::class, 'store'])->name('store')->middleware('permission:dashboard');
+        Route::get('/{wishlist}/edit', [WishlistController::class, 'edit'])->name('edit')->middleware('permission:dashboard');
+        Route::put('/{wishlist}', [WishlistController::class, 'update'])->name('update')->middleware('permission:dashboard');
+        Route::delete('/{wishlist}', [WishlistController::class, 'destroy'])->name('destroy')->middleware('permission:dashboard');
+        
+        // Rotas AJAX
+        Route::post('/{wishlist}/add-progress', [WishlistController::class, 'addProgress'])->name('add-progress')->middleware('permission:dashboard');
+        Route::get('/{wishlist}/viability', [WishlistController::class, 'getViabilityAnalysis'])->name('viability')->middleware('permission:dashboard');
     });
 
     // Rotas administrativas de 2FA

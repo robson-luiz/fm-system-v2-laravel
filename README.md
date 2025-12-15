@@ -164,6 +164,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - 💰 **Gerenciamento inteligente de despesas** com sistema de parcelas flexíveis
 - 💳 **Controle de cartões de crédito** com análise de melhor data de compra
 - 📊 **Dashboard financeiro** com gráficos e relatórios detalhados
+- 📈 **Análise de fluxo de caixa** com projeções futuras baseadas em IA
 - 🎯 **Wishlist inteligente** com análise de viabilidade financeira
 - 🔔 **Alertas proativos** de pagamentos e vencimentos
 - 👥 **Sistema completo de permissões** e auditoria de ações
@@ -232,11 +233,11 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Gráficos de uso dos cartões de crédito
 - [x] Interface responsiva com tema claro/escuro
 
-**Fase 5.1 - Análises Avançadas** 🔄 Em Andamento
+**Fase 5.1 - Análises Avançadas** ✅ Concluída (14/12/2025)
 - [x] **Modal Inteligente de Verificação**: Sistema que verifica contas pendentes no login e pergunta "Essas contas já foram pagas?" com atualização automática do status - ✅ (08/12/2025)
 - [x] **Atualização Dinâmica do Dashboard**: Recálculo automático das estatísticas após mudanças de status das contas - ✅ (08/12/2025)
-- [ ] Análise de fluxo de caixa mensal/anual com projeções
-- [ ] Wishlist inteligente com análise de viabilidade financeira
+- [x] **Análise de fluxo de caixa mensal/anual com projeções** - ✅ (14/12/2025)
+- [x] **Wishlist inteligente com análise de viabilidade financeira** - ✅ (14/12/2025)
 - [ ] Sistema de categorias para despesas (Alimentação, Transporte, Lazer, etc.)
 - [ ] Relatórios de tendências e projeções baseados em histórico
 - [ ] Comparativo de gastos por categoria com metas
@@ -594,6 +595,131 @@ Essas contas já foram pagas?
 - 🎨 **UX Moderna**: Interface responsiva com tema claro/escuro
 
 > ✅ **Status**: Funcionalidades completas e operacionais. Sistema testado e pronto para produção.
+
+### 📊 Análise de Fluxo de Caixa (Fase 5.1 - Concluída em 14/12/2025)
+
+#### **Sistema Completo de Análise Financeira**
+- ✅ **Fluxo Mensal**: Análise detalhada dos últimos 6, 12 ou 24 meses
+- ✅ **Projeções Futuras**: Previsão automática para os próximos 6 meses
+- ✅ **Análise de Tendências**: Identificação de padrões de crescimento/queda
+- ✅ **Resumo Anual**: Visão consolidada do ano com médias mensais
+
+#### **Funcionalidades Implementadas**
+
+**1. Dashboard de Análise**
+- Cards de resumo anual (Receitas, Despesas, Saldo)
+- Indicadores de tendências (crescimento, queda, estável)
+- Filtros de período configuráveis (6, 12, 24 meses)
+- Design responsivo com tema claro/escuro
+
+**2. Gráficos Interativos (Chart.js v4)**
+- **Gráfico de Histórico**: Linha comparativa receitas vs despesas vs saldo
+- **Gráfico de Projeções**: Barras com valores projetados para 6 meses
+- Tooltips informativos com valores formatados
+- Cores adaptáveis ao tema do sistema
+
+**3. Tabela de Dados Detalhados**
+- Visualização mês a mês com valores exatos
+- Status visual (positivo/negativo)
+- Ordenação cronológica
+- Formatação monetária brasileira
+
+**4. Algoritmo de Projeção**
+- Baseia-se em médias dos últimos 6 meses
+- Considera receitas fixas (salários) para maior precisão
+- Adiciona variação de ±5% para simular oscilações reais
+- Calcula meses necessários baseado em 30% de economia do saldo
+
+#### **Recursos Técnicos**
+- **CashFlowService.php**: Service com lógica de cálculos complexos
+- **CashFlowController.php**: 5 endpoints AJAX para dados
+- **cash-flow-charts.js**: JavaScript modular para gráficos interativos
+- **Consultas Otimizadas**: Agregações DB para performance
+- **Responsivo**: Mobile-first design
+
+---
+
+### 🎯 Wishlist Inteligente (Fase 5.1 - Concluída em 14/12/2025)
+
+#### **Sistema de Objetivos Financeiros com IA**
+- ✅ **CRUD Completo**: Criar, visualizar, editar e excluir objetivos
+- ✅ **Análise de Viabilidade**: Algoritmo que avalia se o objetivo é alcançável
+- ✅ **Recomendações Inteligentes**: Sugestões automáticas baseadas no orçamento
+- ✅ **Progresso Visual**: Barras e percentuais de acompanhamento
+
+#### **Funcionalidades Implementadas**
+
+**1. Gerenciamento de Objetivos**
+- Nome, descrição e notas personalizadas
+- Valor alvo e valor já economizado
+- Prioridade (Alta, Média, Baixa)
+- Data alvo opcional para planejamento
+- Status (Em Progresso, Concluída, Cancelada)
+
+**2. Análise de Viabilidade Financeira**
+
+**Cálculos Avançados:**
+- ✅ **Saldo Médio Mensal**: Baseado nos últimos 6 meses reais
+- ✅ **Meses Necessários**: Considera economizar 30% do saldo mensal
+- ✅ **Data de Conclusão**: Previsão automática baseada no ritmo atual
+- ✅ **Valor Mensal Necessário**: Quanto precisa economizar por mês
+- ✅ **Impacto no Orçamento**: Percentual do saldo comprometido
+
+**Classificação de Viabilidade:**
+```
+✅ Muito Viável (95%): Precisa de até 20% do saldo mensal
+👍 Viável (75%): Precisa de até 40% do saldo mensal
+⚠️ Moderado (50%): Precisa de até 60% do saldo mensal
+🔶 Difícil (30%): Precisa de até 80% do saldo mensal
+❌ Inviável (10%): Precisa de mais de 80% do saldo mensal
+```
+
+**3. Recomendações Inteligentes**
+
+**Sistema Dinâmico de Sugestões:**
+- **Muito Viável**: Incentiva aumentar o valor mensal
+- **Viável**: Informa percentual ideal a economizar
+- **Moderado**: Sugere reduzir despesas ou estender prazo
+- **Difícil**: Recomenda aumentar receitas ou ajustar data
+- **Inviável**: Sugere reavaliação de finanças ou redução do objetivo
+
+**Exemplos de Recomendações:**
+```
+✅ "Excelente! Este objetivo é muito viável com seu orçamento atual."
+💡 "Reserve 25.5% do seu saldo mensal para este objetivo."
+⚠️ "Considere reduzir despesas não essenciais para facilitar."
+📅 "Considere adiar a data alvo para Junho/2026."
+💰 "Um objetivo de até R$ 12.000,00 seria mais viável em 12 meses."
+```
+
+**4. Interface Visual Rica**
+- **Cards de Objetivos**: Design tipo Pinterest com informações resumidas
+- **Barras de Progresso**: Visualização intuitiva do percentual alcançado
+- **Badges Coloridos**: Prioridade e status com cores tema-aware
+- **Página de Detalhes**: Análise completa com gráficos e recomendações
+- **Filtros Avançados**: Por status e prioridade
+
+**5. Estatísticas em Tempo Real**
+- Total de objetivos cadastrados
+- Objetivos em progresso
+- Objetivos concluídos
+- Valor total em objetivos ativos
+- Valor já economizado
+
+#### **Recursos Técnicos**
+- **Wishlist Model**: Com accessors inteligentes e scopes
+- **WishlistViabilityService.php**: 300+ linhas de lógica de IA financeira
+- **WishlistController.php**: CRUD completo + endpoints AJAX
+- **WishlistRequest.php**: Validações completas frontend/backend
+- **4 Views Blade**: Index, Create, Edit, Show com tema responsivo
+- **WishlistSeeder**: Dados realísticos para testes
+
+#### **Benefícios do Sistema**
+- 🎯 **Clareza**: Usuário sabe exatamente se pode alcançar seus objetivos
+- 📊 **Dados Reais**: Análise baseada em histórico financeiro verdadeiro
+- 💡 **Educativo**: Ensina sobre planejamento financeiro pessoal
+- 🚀 **Motivador**: Visualização de progresso incentiva economia
+- 🔮 **Preditivo**: Projeções ajudam no planejamento de longo prazo
 
 ---
 
