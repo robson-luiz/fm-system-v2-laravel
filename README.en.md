@@ -238,7 +238,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] **Dynamic Dashboard Update**: Automatic statistics recalculation after account status changes - ✅ (12/08/2025)
 - [x] **Monthly/annual cash flow analysis with projections** - ✅ (12/14/2025)
 - [x] **Intelligent wishlist with financial viability analysis** - ✅ (12/14/2025)
-- [ ] Category system for expenses (Food, Transportation, Leisure, etc.)
+- [x] **Category system for expenses (Food, Transportation, Leisure, etc.)** - ✅ (12/22/2025)
 - [ ] Trend and projection reports based on history
 - [ ] Category spending comparison with goals
 - [ ] Alerts for significant changes in consumption patterns
@@ -263,11 +263,33 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 ### 📊 Expense System (Phase 1 - Completed on 10/07/2025)
 
 #### **Complete CRUD**
-- ✅ Listing with filters (status, periodicity, card, month)
+- ✅ Listing with filters (status, periodicity, card, month, **category**)
 - ✅ Registration with validations
 - ✅ Detailed viewing
 - ✅ Expense editing
 - ✅ Deletion with confirmation (SweetAlert2)
+
+#### **Category System** (Implemented on 12/22/2025)
+
+**Expense Categorization**
+- 8 default categories with emoji icons and custom colors:
+  - 🍽️ Food (#F59E0B - Amber)
+  - 🚗 Transportation (#3B82F6 - Blue)
+  - 🎮 Leisure (#8B5CF6 - Purple)
+  - 💊 Health (#10B981 - Green)
+  - 📚 Education (#06B6D4 - Cyan)
+  - 🏠 Housing (#14B8A6 - Teal)
+  - 🔧 Services (#EF4444 - Red)
+  - 📌 Others (#6B7280 - Gray)
+
+**Features**
+- ✅ Category Model with auditing
+- ✅ Relationship between Expense and Category
+- ✅ Selection dropdown in forms
+- ✅ Category filter in listing
+- ✅ Colored badges with icon and name
+- ✅ Optional system (expenses can have no category)
+- ✅ Scopes: `active()` and `orderedByName()`
 
 #### **Intelligent Installments System**
 

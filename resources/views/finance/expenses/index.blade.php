@@ -111,6 +111,15 @@
                 @endforeach
             </select>
 
+            <select name="category_id" class="form-input">
+                <option value="">Todas as categorias</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                        {{ $category->icon }} {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+
             <input type="month" name="month" class="form-input" value="{{ request('month') }}">
 
             <div class="flex gap-1">
@@ -152,7 +161,16 @@
                     @forelse($expenses as $expense)
                         <tr class="table-row-body">
                             <td class="table-body">
-                                {{ $expense->description }}
+                                <div class="flex flex-col gap-1">
+                                    <span>{{ $expense->description }}</span>
+                                    @if($expense->category)
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full w-fit" 
+                                              style="background-color: {{ $expense->category->color }}20; color: {{ $expense->category->color }}; border: 1px solid {{ $expense->category->color }}40;">
+                                            <span>{{ $expense->category->icon }}</span>
+                                            <span class="font-medium">{{ $expense->category->name }}</span>
+                                        </span>
+                                    @endif
+                                </div>
                             </td>
                             <td class="table-body">{{ $expense->amount_formatted }}</td>
                             <td class="table-body hidden lg:table-cell">{{ $expense->due_date_formatted }}</td>

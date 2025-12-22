@@ -114,21 +114,35 @@
                 </div>
             </div>
 
-            <div class="mb-4">
-                <label for="credit_card_id" class="form-label">Cartão de Crédito (Opcional)</label>
-                <select name="credit_card_id" id="credit_card_id" class="form-input">
-                    <option value="">Nenhum</option>
-                    @foreach($creditCards as $card)
-                        <option value="{{ $card->id }}" {{ old('credit_card_id') == $card->id ? 'selected' : '' }}>
-                            {{ $card->name }} - {{ $card->bank }} (Limite: {{ $card->available_limit_formatted }})
-                        </option>
-                    @endforeach
-                </select>
-                @if($creditCards->isEmpty())
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        Você ainda não possui cartões cadastrados.
-                    </p>
-                @endif
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="mb-4">
+                    <label for="credit_card_id" class="form-label">Cartão de Crédito (Opcional)</label>
+                    <select name="credit_card_id" id="credit_card_id" class="form-input">
+                        <option value="">Nenhum</option>
+                        @foreach($creditCards as $card)
+                            <option value="{{ $card->id }}" {{ old('credit_card_id') == $card->id ? 'selected' : '' }}>
+                                {{ $card->name }} - {{ $card->bank }} (Limite: {{ $card->available_limit_formatted }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @if($creditCards->isEmpty())
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            Você ainda não possui cartões cadastrados.
+                        </p>
+                    @endif
+                </div>
+
+                <div class="mb-4">
+                    <label for="category_id" class="form-label">Categoria (Opcional)</label>
+                    <select name="category_id" id="category_id" class="form-input">
+                        <option value="">Sem categoria</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->icon }} {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             <!-- Informação sobre Parcelas -->

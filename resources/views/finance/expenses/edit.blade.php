@@ -95,16 +95,30 @@
                     placeholder="Descreva o motivo...">{{ old('reason_not_paid', $expense->reason_not_paid) }}</textarea>
             </div>
 
-            <div class="mb-4">
-                <label for="credit_card_id" class="form-label">Cartão de Crédito (Opcional)</label>
-                <select name="credit_card_id" id="credit_card_id" class="form-input">
-                    <option value="">Nenhum</option>
-                    @foreach($creditCards as $card)
-                        <option value="{{ $card->id }}" {{ old('credit_card_id', $expense->credit_card_id) == $card->id ? 'selected' : '' }}>
-                            {{ $card->name }} - {{ $card->bank }}
-                        </option>
-                    @endforeach
-                </select>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="mb-4">
+                    <label for="credit_card_id" class="form-label">Cartão de Crédito (Opcional)</label>
+                    <select name="credit_card_id" id="credit_card_id" class="form-input">
+                        <option value="">Nenhum</option>
+                        @foreach($creditCards as $card)
+                            <option value="{{ $card->id }}" {{ old('credit_card_id', $expense->credit_card_id) == $card->id ? 'selected' : '' }}>
+                                {{ $card->name }} - {{ $card->bank }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="category_id" class="form-label">Categoria (Opcional)</label>
+                    <select name="category_id" id="category_id" class="form-input">
+                        <option value="">Sem categoria</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id', $expense->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->icon }} {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             <div class="flex justify-between">

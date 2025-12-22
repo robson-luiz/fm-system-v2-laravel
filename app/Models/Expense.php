@@ -20,6 +20,7 @@ class Expense extends Model implements Auditable
     protected $fillable = [
         'user_id',
         'credit_card_id',
+        'category_id',
         'description',
         'amount',
         'due_date',
@@ -58,6 +59,14 @@ class Expense extends Model implements Auditable
     public function creditCard()
     {
         return $this->belongsTo(CreditCard::class);
+    }
+
+    /**
+     * Relacionamento com categoria
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**

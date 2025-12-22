@@ -121,6 +121,11 @@
             </div>
 
             <div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Categoria</p>
+                <p class="text-lg text-gray-900 dark:text-gray-100">{{ $expense->category->name ?? 'Sem categoria' }}</p>
+            </div>
+
+            <div>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Periodicidade</p>
                 <p class="text-lg text-gray-900 dark:text-gray-100">{{ $expense->periodicity_translated }}</p>
             </div>

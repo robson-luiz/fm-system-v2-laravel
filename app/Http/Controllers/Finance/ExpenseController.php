@@ -22,7 +22,7 @@ class ExpenseController extends Controller
         $user = Auth::user();
         
         // Query base - apenas despesas do usuário logado
-        $query = $user->expenses()->with(['creditCard', 'installments']);
+        $query = $user->expenses()->with(['creditCard', 'category', 'installments']);
         
         // Filtros
         if ($request->filled('status')) {
@@ -35,6 +35,10 @@ class ExpenseController extends Controller
         
         if ($request->filled('credit_card_id')) {
             $query->where('credit_card_id', $request->credit_card_id);
+        }
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
         }
         
         if ($request->filled('month')) {
@@ -58,8 +62,11 @@ class ExpenseController extends Controller
         
         // Cartões para filtro
         $creditCards = $user->creditCards()->active()->get();
+
+        // Categorias para filtro
+        $categories = \App\Models\Category::active()->orderedByName()->get();
         
-        return view('finance.expenses.index', compact('expenses', 'stats', 'creditCards'))
+        return view('finance.expenses.index', compact('expenses', 'stats', 'creditCards', 'categories'))
             ->with('menu', 'expenses');
     }
 
@@ -71,8 +78,9 @@ class ExpenseController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
         $creditCards = $user->creditCards()->active()->get();
+        $categories = \App\Models\Category::active()->orderedByName()->get();
         
-        return view('finance.expenses.create', compact('creditCards'))
+        return view('finance.expenses.create', compact('creditCards', 'categories'))
             ->with('menu', 'expenses');
     }
 
@@ -88,6 +96,7 @@ class ExpenseController extends Controller
             'due_date' => 'required|date',
             'periodicity' => 'required|in:one-time,monthly,biweekly,bimonthly,semiannual,yearly',
             'credit_card_id' => 'nullable|exists:credit_cards,id',
+            'category_id' => 'nullable|exists:categories,id',
             'num_installments' => 'nullable|integer|min:1|max:60',
             'installment_type' => 'nullable|in:equal,custom',
         ];
@@ -175,8 +184,9 @@ class ExpenseController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
         $creditCards = $user->creditCards()->active()->get();
+        $categories = \App\Models\Category::active()->orderedByName()->get();
         
-        return view('finance.expenses.edit', compact('expense', 'creditCards'))
+        return view('finance.expenses.edit', compact('expense', 'creditCards', 'categories'))
             ->with('menu', 'expenses');
     }
 
@@ -196,6 +206,7 @@ class ExpenseController extends Controller
             'due_date' => 'required|date',
             'periodicity' => 'required|in:one-time,monthly,biweekly,bimonthly,semiannual,yearly',
             'credit_card_id' => 'nullable|exists:credit_cards,id',
+            'category_id' => 'nullable|exists:categories,id',
             'status' => 'required|in:pending,paid',
             'payment_date' => 'nullable|required_if:status,paid|date',
             'reason_not_paid' => 'nullable|string',

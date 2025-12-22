@@ -27,6 +27,7 @@ phpunit.xml (already exists)
 CUSTOM_SMS_PROVIDERS.md
 IMPLEMENTACAO_VALIDADA.md
 SMS_CONFIG_EXAMPLES.md
+CATEGORIAS_DESPESAS.md
 
 # Build artifacts
 /public/build

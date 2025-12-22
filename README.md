@@ -238,7 +238,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] **Atualização Dinâmica do Dashboard**: Recálculo automático das estatísticas após mudanças de status das contas - ✅ (08/12/2025)
 - [x] **Análise de fluxo de caixa mensal/anual com projeções** - ✅ (14/12/2025)
 - [x] **Wishlist inteligente com análise de viabilidade financeira** - ✅ (14/12/2025)
-- [ ] Sistema de categorias para despesas (Alimentação, Transporte, Lazer, etc.)
+- [x] **Sistema de categorias para despesas (Alimentação, Transporte, Lazer, etc.)** - ✅ (22/12/2025)
 - [ ] Relatórios de tendências e projeções baseados em histórico
 - [ ] Comparativo de gastos por categoria com metas
 - [ ] Alertas de mudanças significativas nos padrões de consumo
@@ -263,11 +263,33 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 ### 📊 Sistema de Despesas (Fase 1 - Concluída em 07/10/2025)
 
 #### **CRUD Completo**
-- ✅ Listagem com filtros (status, periodicidade, cartão, mês)
+- ✅ Listagem com filtros (status, periodicidade, cartão, mês, **categoria**)
 - ✅ Cadastro com validações
 - ✅ Visualização detalhada
 - ✅ Edição de despesas
 - ✅ Exclusão com confirmação (SweetAlert2)
+
+#### **Sistema de Categorias** (Implementado em 22/12/2025)
+
+**Categorização de Despesas**
+- 8 categorias padrão com ícones emoji e cores personalizadas:
+  - 🍽️ Alimentação (#F59E0B - Amber)
+  - 🚗 Transporte (#3B82F6 - Blue)
+  - 🎮 Lazer (#8B5CF6 - Purple)
+  - 💊 Saúde (#10B981 - Green)
+  - 📚 Educação (#06B6D4 - Cyan)
+  - 🏠 Moradia (#14B8A6 - Teal)
+  - 🔧 Serviços (#EF4444 - Red)
+  - 📌 Outros (#6B7280 - Gray)
+
+**Funcionalidades**
+- ✅ Model Category com auditing
+- ✅ Relacionamento entre Expense e Category
+- ✅ Dropdown de seleção nos formulários
+- ✅ Filtro por categoria na listagem
+- ✅ Badges coloridos com ícone e nome
+- ✅ Sistema opcional (despesas podem não ter categoria)
+- ✅ Scopes: `active()` e `orderedByName()`
 
 #### **Sistema de Parcelas Inteligente**
 
