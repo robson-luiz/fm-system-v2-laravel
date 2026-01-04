@@ -205,6 +205,15 @@ Route::group(['middleware' => ['auth', 'two-factor']], function () {
         Route::get('/{wishlist}/viability', [WishlistController::class, 'getViabilityAnalysis'])->name('viability')->middleware('permission:dashboard');
     });
 
+    // Relatórios de Tendências
+    Route::prefix('trends')->name('trends.')->group(function () {
+        Route::get('/', [App\Http\Controllers\TrendReportController::class, 'index'])->name('index')->middleware('permission:dashboard');
+        Route::get('/historical', [App\Http\Controllers\TrendReportController::class, 'getHistoricalData'])->name('historical')->middleware('permission:dashboard');
+        Route::get('/data', [App\Http\Controllers\TrendReportController::class, 'getTrends'])->name('data')->middleware('permission:dashboard');
+        Route::get('/projections', [App\Http\Controllers\TrendReportController::class, 'getProjections'])->name('projections')->middleware('permission:dashboard');
+        Route::get('/seasonal', [App\Http\Controllers\TrendReportController::class, 'getSeasonalPatterns'])->name('seasonal')->middleware('permission:dashboard');
+    });
+
     // Rotas administrativas de 2FA
     Route::prefix('admin/two-factor')->name('admin.two-factor.')->group(function () {
         Route::get('/', [TwoFactorSettingsController::class, 'index'])->name('index')->middleware('permission:manage-system-settings');

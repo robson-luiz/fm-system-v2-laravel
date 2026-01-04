@@ -239,13 +239,25 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] **Monthly/annual cash flow analysis with projections** - ✅ (12/14/2025)
 - [x] **Intelligent wishlist with financial viability analysis** - ✅ (12/14/2025)
 - [x] **Category system for expenses (Food, Transportation, Leisure, etc.)** - ✅ (12/22/2025)
-- [ ] Trend and projection reports based on history
-- [ ] Category spending comparison with goals
-- [ ] Alerts for significant changes in consumption patterns
-- [ ] Financial goals system by category
-- [ ] PDF/Excel report export
+- [x] **Trend and projection reports based on history** - ✅ (01/03/2026)
+
+**Phase 5.2 - Loan Management** 📋 Planned
+- [ ] **Complete loan CRUD** (loans granted and received)
+- [ ] **Type system**: lent to others, borrowed from third parties
+- [ ] **Installment control with configurable interest** (simple and compound)
+- [ ] **Integration with cash flow** and financial projections
+- [ ] **Due date alerts** for installments and critical delays
+- [ ] **Payment history** and renegotiation system
+- [ ] **Loan reports** active/settled with default analysis
+- [ ] **Automatic calculation** of simple and compound interest
+- [ ] **Complete amortization table** per loan
+- [ ] **Loan simulator** with different scenarios
 
 **Phase 6 - Advanced Features** 📋 Future
+- [ ] **Category spending comparison** with financial goals
+- [ ] **Alerts for significant changes** in consumption patterns
+- [ ] **Financial goals system** by category
+- [ ] **Report export** in PDF/Excel
 - [ ] **Multi-User System**: Complete data isolation per user
 - [ ] **Automated Daily Email**: Automatic notifications for due bills (CRON)
 - [ ] **Customizable Settings**: Enable/disable notifications and modals per user
@@ -784,12 +796,85 @@ Have these accounts been paid?
 
 ---
 
+### 📊 Trend Reports (Phase 5.1 - Completed on 01/03/2026)
+
+#### **Trend Analysis System by Category**
+- ✅ **Historical Analysis**: Evolution of spending by category over 6, 12, or 24 months
+- ✅ **Trend Calculation**: Automatic identification of growth, reduction, or stability
+- ✅ **Future Projections**: Spending forecast for the next 6 months based on moving average
+- ✅ **Interactive Charts**: Rich visualization with Chart.js v4
+
+#### **Implemented Features**
+
+**1. Analysis Dashboard**
+- Summary cards with general period statistics
+- Total spent, monthly average, and overall trend
+- Highlight of category with highest variation (growth or reduction)
+- Configurable period filters (6, 12, or 24 months)
+
+**2. Trend Analysis by Category**
+
+**Advanced Calculations:**
+- ✅ **Temporal Comparison**: First 3 months vs last 3 months
+- ✅ **Percentage Variation**: Growth or reduction in each category
+- ✅ **Automatic Classification**: High, low, or stable trend
+- ✅ **Monthly Average**: Average amount spent per month in each category
+
+**Trend Classification:**
+```
+📈 Growth: Variation > +10%
+📉 Reduction: Variation < -10%
+➡️ Stable: Variation between -10% and +10%
+```
+
+**3. Interactive Charts**
+
+**Historical Evolution Chart:**
+- Comparative lines for each category
+- Visualization of multiple periods simultaneously
+- Informative tooltips with formatted values
+- Custom colors by category
+- Light/dark theme support
+
+**Future Projections Chart:**
+- Stacked bars by category
+- Based on moving average of last 6 months
+- ±10% variation to simulate real fluctuations
+- Projection for next 6 months
+
+**4. Detailed Table**
+- Complete listing by category
+- Total spent and monthly average
+- Visual trend badge
+- Highlighted percentage variation
+- Sorting by total value (descending)
+
+**5. Projection Algorithm**
+- Intelligent moving average calculation
+- Standard deviation consideration
+- Controlled random variation
+- Always positive values (non-negative)
+
+#### **Technical Resources**
+- **TrendAnalysisService.php**: 350+ lines of analysis logic
+- **TrendReportController.php**: 5 endpoints (index, historical, trends, projections, seasonal patterns)
+- **trend-charts.js**: Modular JavaScript with Chart.js v4
+- **Optimized Queries**: DB aggregations for performance
+- **Responsive**: Mobile-first design with light/dark theme
+
+#### **System Benefits**
+- 📈 **Visibility**: User sees consumption patterns over time
+- 🎯 **Accuracy**: Calculations based on real historical data
+- 🔮 **Predictability**: Projections help with financial planning
+- 💡 **Insights**: Identification of categories that need attention
+- 📊 **Visual**: Interactive charts facilitate understanding
+
+---
+
 ## 🚀 Next Features
 
 ### Phase 5.1 - Advanced Analytics (Continuation)
 
-- [ ] Category system for expenses (Food, Transportation, Leisure, etc.)
-- [ ] Trend and projection reports based on history
 - [ ] Category spending comparison with goals
 - [ ] Alerts for significant changes in consumption patterns
 - [ ] Financial goals system by category

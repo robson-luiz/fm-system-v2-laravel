@@ -239,13 +239,25 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] **Análise de fluxo de caixa mensal/anual com projeções** - ✅ (14/12/2025)
 - [x] **Wishlist inteligente com análise de viabilidade financeira** - ✅ (14/12/2025)
 - [x] **Sistema de categorias para despesas (Alimentação, Transporte, Lazer, etc.)** - ✅ (22/12/2025)
-- [ ] Relatórios de tendências e projeções baseados em histórico
-- [ ] Comparativo de gastos por categoria com metas
-- [ ] Alertas de mudanças significativas nos padrões de consumo
-- [ ] Sistema de metas financeiras por categoria
-- [ ] Export de relatórios em PDF/Excel
+- [x] **Relatórios de tendências e projeções baseados em histórico** - ✅ (03/01/2026)
+
+**Fase 5.2 - Gestão de Empréstimos** 📋 Planejada
+- [ ] **CRUD completo de empréstimos** (empréstimos concedidos e recebidos)
+- [ ] **Sistema de tipos**: emprestado para outros, recebido de terceiros
+- [ ] **Controle de parcelas com juros** configuráveis (simples e compostos)
+- [ ] **Integração com fluxo de caixa** e projeções financeiras
+- [ ] **Alertas de vencimento** de parcelas e atrasos críticos
+- [ ] **Histórico de quitação** e sistema de renegociação
+- [ ] **Relatório de empréstimos** ativos/quitados com análise de inadimplência
+- [ ] **Cálculo automático** de juros simples e compostos
+- [ ] **Tabela de amortização** completa por empréstimo
+- [ ] **Simulador de empréstimo** com diferentes cenários
 
 **Fase 6 - Recursos Avançados** 📋 Futuro
+- [ ] **Comparativo de gastos** por categoria com metas financeiras
+- [ ] **Alertas de mudanças** significativas nos padrões de consumo
+- [ ] **Sistema de metas** financeiras por categoria
+- [ ] **Export de relatórios** em PDF/Excel
 - [ ] **Sistema Multiusuário**: Isolamento completo de dados por usuário
 - [ ] **E-mail Diário Automatizado**: Notificações automáticas de contas a vencer (CRON)
 - [ ] **Configurações Personalizáveis**: Ativar/desativar notificações e modais por usuário
@@ -745,9 +757,89 @@ Essas contas já foram pagas?
 
 ---
 
+### 📊 Relatórios de Tendências (Fase 5.1 - Concluída em 03/01/2026)
+
+#### **Sistema de Análise de Tendências por Categoria**
+- ✅ **Análise Histórica**: Evolução de gastos por categoria ao longo de 6, 12 ou 24 meses
+- ✅ **Cálculo de Tendências**: Identificação automática de crescimento, redução ou estabilidade
+- ✅ **Projeções Futuras**: Previsão de gastos para os próximos 6 meses baseada em média móvel
+- ✅ **Gráficos Interativos**: Visualização rica com Chart.js v4
+
+#### **Funcionalidades Implementadas**
+
+**1. Dashboard de Análise**
+- Cards de resumo com estatísticas gerais do período
+- Total gasto, média mensal e tendência geral
+- Destaque de categoria com maior variação (crescimento ou redução)
+- Filtros configuráveis por período (6, 12 ou 24 meses)
+
+**2. Análise de Tendências por Categoria**
+
+**Cálculos Avançados:**
+- ✅ **Comparação Temporal**: Primeiros 3 meses vs últimos 3 meses
+- ✅ **Variação Percentual**: Crescimento ou redução em cada categoria
+- ✅ **Classificação Automática**: Tendência de alta, baixa ou estável
+- ✅ **Média Mensal**: Valor médio gasto por mês em cada categoria
+
+**Classificação de Tendências:**
+```
+📈 Crescimento: Variação > +10%
+📉 Redução: Variação < -10%
+➡️ Estável: Variação entre -10% e +10%
+```
+
+**3. Gráficos Interativos**
+
+**Gráfico de Evolução Histórica:**
+- Linhas comparativas para cada categoria
+- Visualização de múltiplos períodos simultaneamente
+- Tooltips informativos com valores formatados
+- Cores personalizadas por categoria
+- Suporte a tema claro/escuro
+
+**Gráfico de Projeções Futuras:**
+- Barras empilhadas por categoria
+- Baseado em média móvel dos últimos 6 meses
+- Variação de ±10% para simular oscilações reais
+- Projeção para os próximos 6 meses
+
+**4. Tabela Detalhada**
+- Listagem completa por categoria
+- Total gasto e média mensal
+- Badge visual de tendência
+- Variação percentual destacada
+- Ordenação por valor total (decrescente)
+
+**5. Algoritmo de Projeção**
+- Cálculo de média móvel inteligente
+- Consideração do desvio padrão
+- Variação aleatória controlada
+- Valores sempre positivos (não negativos)
+
+#### **Recursos Técnicos**
+- **TrendAnalysisService.php**: 350+ linhas de lógica de análise
+- **TrendReportController.php**: 5 endpoints (index, histórico, tendências, projeções, padrões sazonais)
+- **trend-charts.js**: JavaScript modular com Chart.js v4
+- **Consultas Otimizadas**: Agregações DB para performance
+- **Responsivo**: Design mobile-first com tema claro/escuro
+
+#### **Benefícios do Sistema**
+- 📈 **Visibilidade**: Usuário enxerga padrões de consumo ao longo do tempo
+- 🎯 **Precisão**: Cálculos baseados em dados reais do histórico
+- 🔮 **Previsibilidade**: Projeções ajudam no planejamento financeiro
+- 💡 **Insights**: Identificação de categorias que precisam de atenção
+- 📊 **Visual**: Gráficos interativos facilitam compreensão
+
+---
+
 ## 🚀 Próximas Funcionalidades
 
 ### Fase 5.1 - Análises Avançadas (Continuação)
+
+- [ ] Comparativo de gastos por categoria com metas
+- [ ] Alertas de mudanças significativas nos padrões de consumo
+- [ ] Sistema de metas financeiras por categoria
+- [ ] Export de relatórios em PDF/Excel
 
 ---
 

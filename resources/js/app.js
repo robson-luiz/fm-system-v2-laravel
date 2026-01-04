@@ -4,6 +4,7 @@ import './money-mask';
 import './overdue-verification-modal';
 import './chart-dashboard';
 import './cash-flow-charts';
+import './trend-charts';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
