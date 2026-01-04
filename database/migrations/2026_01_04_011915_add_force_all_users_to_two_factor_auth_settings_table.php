@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('two_factor_auth_settings', function (Blueprint $table) {
-            // Remover campos SMS que agora estão na tabela email_sms_settings
-            $table->dropColumn(['sms_provider', 'sms_config']);
+            $table->boolean('force_all_users')->default(false)->after('force_for_admins');
         });
     }
 
@@ -23,9 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('two_factor_auth_settings', function (Blueprint $table) {
-            // Restaurar campos SMS caso precise fazer rollback
-            $table->string('sms_provider')->nullable();
-            $table->json('sms_config')->nullable();
+            $table->dropColumn('force_all_users');
         });
     }
 };

@@ -163,6 +163,11 @@ class User extends Authenticatable implements Auditable
             return false;
         }
 
+        // Se é obrigatório para todos os usuários
+        if (TwoFactorAuthSetting::isRequiredForAllUsers()) {
+            return true;
+        }
+
         // Se é obrigatório para admins e o usuário é admin
         if (TwoFactorAuthSetting::isRequiredForAdmins() && $this->hasRole('admin')) {
             return true;

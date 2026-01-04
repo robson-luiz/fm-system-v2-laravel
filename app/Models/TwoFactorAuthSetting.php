@@ -10,6 +10,7 @@ class TwoFactorAuthSetting extends Model
         'enabled',
         'default_method',
         'force_for_admins',
+        'force_all_users',
         'allow_user_choice',
         'code_expiry_minutes',
         'max_attempts',
@@ -18,6 +19,7 @@ class TwoFactorAuthSetting extends Model
     protected $casts = [
         'enabled' => 'boolean',
         'force_for_admins' => 'boolean',
+        'force_all_users' => 'boolean',
         'allow_user_choice' => 'boolean',
     ];
 
@@ -50,6 +52,14 @@ class TwoFactorAuthSetting extends Model
     public static function isRequiredForAdmins(): bool
     {
         return static::getSettings()->force_for_admins;
+    }
+
+    /**
+     * Verificar se é obrigatório para todos os usuários
+     */
+    public static function isRequiredForAllUsers(): bool
+    {
+        return static::getSettings()->force_all_users;
     }
 
     /**

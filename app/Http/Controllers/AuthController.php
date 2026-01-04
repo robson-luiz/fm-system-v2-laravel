@@ -47,7 +47,14 @@ class AuthController extends Controller
             // Salvar log
             Log::info('Login', ['action_user_id' => Auth::id()]);
 
-            // Redirecionar o usuário
+            // Verificar se o usuário precisa de autenticação de 2 fatores
+            $user = Auth::user();
+            if ($user->requiresTwoFactor()) {
+                // Redirecionar para a página de verificação 2FA
+                return redirect()->route('two-factor.show');
+            }
+
+            // Redirecionar o usuário para o dashboard
             return redirect()->route('dashboard.index');
 
             /************** Fim só validade o usuário e senha e redirecionar o usuário ****************/
