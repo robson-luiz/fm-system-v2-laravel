@@ -48,6 +48,9 @@ Thumbs.db
 .phpunit.result.cache
 
 # Backup files
+*.backup
+copilot-instructions.md.backup
+copilot-rules.md.backup
 *.bak
 *.swp
 *~
