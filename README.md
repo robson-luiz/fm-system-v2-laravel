@@ -14,36 +14,42 @@
 ## Screenshots
 
 ### Dashboard
+
 ![Screenshot do Dashboard](docs/fm_system_dashboard.png)
-*Dashboard financeiro completo com estatísticas, gráficos e alertas inteligentes*
+_Dashboard financeiro completo com estatísticas, gráficos e alertas inteligentes_
 
 ### Gerenciamento de Despesas
+
 ![Screenshot do Gerenciamento de Despesas](docs/fm_system_despesas.png)
-*Gerenciamento avançado de despesas com sistema de parcelas flexíveis*
+_Gerenciamento avançado de despesas com sistema de parcelas flexíveis_
 
 ### Controle de Cartões de Crédito
+
 ![Screenshot dos Cartões de Crédito](docs/fm_system_cartao_credito.png)
-*Controle inteligente de cartões de crédito com monitoramento de limite em tempo real*
+_Controle inteligente de cartões de crédito com monitoramento de limite em tempo real_
 
 ### Sistema de Receitas
+
 ![Screenshot das Receitas](docs/fm_system_receitas.png)
-*Gerenciamento completo de receitas com categorização e filtros inteligentes*
+_Gerenciamento completo de receitas com categorização e filtros inteligentes_
 
 ## Requisitos
 
-* PHP 8.2 ou superior - Conferir a versão: php -v
-* MySQL 8.0 ou superior - Conferir a versão: mysql --version
-* Composer - Conferir a instalação: composer --version
-* Node.js 22 ou superior - Conferir a versão: node -v
-* NPM ou Yarn - Para gerenciar dependências do Node.js e compilar assets
-* GIT - Conferir se está instalado o GIT: git -v
+- PHP 8.2 ou superior - Conferir a versão: php -v
+- MySQL 8.0 ou superior - Conferir a versão: mysql --version
+- Composer - Conferir a instalação: composer --version
+- Node.js 22 ou superior - Conferir a versão: node -v
+- NPM ou Yarn - Para gerenciar dependências do Node.js e compilar assets
+- GIT - Conferir se está instalado o GIT: git -v
 
 **Frontend:**
-* Tailwind CSS v4 - Incluído como dependência do projeto (instalado via npm)
+
+- Tailwind CSS v4 - Incluído como dependência do projeto (instalado via npm)
 
 ## Como rodar o projeto baixado
 
 Primeiro, baixe o projeto do repositório GitHub:
+
 ```
 git clone https://github.com/robson-luiz/fm-system-v2-laravel.git
 cd fm-system-v2-laravel
@@ -51,6 +57,7 @@ cd fm-system-v2-laravel
 
 - Duplicar o arquivo ".env.example" e renomear para ".env".
 - Alterar as credenciais do banco de dados.
+
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -62,6 +69,7 @@ DB_PASSWORD=
 
 - Para a funcionalidade enviar e-mail funcionar, necessário alterar as credenciais do servidor de envio de e-mail no arquivo .env.
 - Utilizar o servidor fake durante o desenvolvimento: [Acessar envio gratuito de e-mail](https://mailtrap.io)
+
 ```
 MAIL_MAILER=smtp
 MAIL_SCHEME=null
@@ -74,46 +82,55 @@ MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 Instalar as dependências do PHP.
+
 ```
 composer install
 ```
 
 Instalar as dependências do Node.js.
+
 ```
 npm install
 ```
 
 Gerar a chave no arquivo .env.
+
 ```
 php artisan key:generate
 ```
 
 Executar as migrations para criar as tabelas e as colunas.
+
 ```
 php artisan migrate
 ```
 
 Executar seed com php artisan para cadastrar registros de testes.
+
 ```
 php artisan db:seed
 ```
 
 Iniciar o projeto criado com Laravel.
+
 ```
 php artisan serve
 ```
 
 Executar as bibliotecas Node.js.
+
 ```
 npm run dev
 ```
 
 Executar os Jobs no PC local.
+
 ```
 php artisan queue:work
 ```
 
 Acessar a página criada com Laravel.
+
 ```
 http://127.0.0.1:8000
 ```
@@ -123,18 +140,21 @@ http://127.0.0.1:8000
 O projeto já vem com as seguintes bibliotecas pré-instaladas:
 
 **Frontend:**
+
 - **Tailwind CSS v4** - Framework CSS utilitário
 - **Alpine.js v3** - Framework JavaScript reativo
 - **Chart.js v4** - Biblioteca para gráficos
 - **SweetAlert2** - Alertas personalizados elegantes
 
 **Backend:**
+
 - **Spatie Laravel Permission** - Sistema de permissões e roles
 - **OwenIt Laravel Auditing** - Auditoria de ações do sistema
 - **Intervention Image** - Manipulação de imagens
 - **Laravel Tinker** - REPL interativo do Laravel
 
 **Desenvolvimento:**
+
 - **Laravel Pint** - Formatador de código PHP
 - **Laravel Sail** - Ambiente Docker (opcional)
 - **Faker** - Geração de dados fake para testes
@@ -173,6 +193,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 ### Roadmap
 
 **Base Inicial do Sistema** ✅ Concluída
+
 - [x] Sistema de autenticação e permissões (Spatie)
 - [x] Gerenciamento de usuários com roles
 - [x] Sistema de auditoria (OwenIt/laravel-auditing)
@@ -180,6 +201,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Suporte a tema claro/escuro
 
 **Fase 1 - Gestão de Despesas** ✅ Concluída (07/10/2025)
+
 - [x] CRUD completo de despesas
 - [x] Sistema de parcelas com tabela separada
 - [x] Parcelas fixas (valores iguais)
@@ -189,6 +211,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Histórico de pagamentos
 
 **Fase 2 - Login com 2 Fatores** ✅ Concluída (25/10/2025)
+
 - [x] Implementação de autenticação de dois fatores (2FA)
 - [x] Configuração administrativa para escolha do método de envio
 - [x] Envio de código via e-mail
@@ -201,6 +224,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] **Verificação completa do sistema 2FA** - (09/11/2025)
 
 **Fase 3 - Cartões de Crédito** ✅ Concluída (09/11/2025)
+
 - [x] CRUD de cartões de crédito
 - [x] Vinculação de despesas com cartões
 - [x] Controle de limite e fatura
@@ -210,6 +234,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Ajustes de UI/UX e responsividade móvel
 
 **Fase 4 - Sistema de Receitas** ✅ Concluída (16/11/2025)
+
 - [x] CRUD completo de receitas
 - [x] Sistema de categorização (Salário, Freelance, Vendas, Investimentos, Aluguel, Comissões, Outros)
 - [x] Tipos de receita (Fixa e Variável)
@@ -224,6 +249,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] **Refinamentos (16/11/2025)**: Correções no formulário de edição, máscaras centralizadas, SweetAlert2 e ajustes de tema
 
 **Fase 5 - Dashboard e Relatórios** ✅ Concluída (30/11/2025)
+
 - [x] Dashboard financeiro principal com estatísticas gerais
 - [x] Gráficos interativos (Chart.js) de receitas vs despesas
 - [x] Verificação automática de pagamentos pendentes
@@ -234,6 +260,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] Interface responsiva com tema claro/escuro
 
 **Fase 5.1 - Análises Avançadas** ✅ Concluída (14/12/2025)
+
 - [x] **Modal Inteligente de Verificação**: Sistema que verifica contas pendentes no login e pergunta "Essas contas já foram pagas?" com atualização automática do status - ✅ (08/12/2025)
 - [x] **Atualização Dinâmica do Dashboard**: Recálculo automático das estatísticas após mudanças de status das contas - ✅ (08/12/2025)
 - [x] **Análise de fluxo de caixa mensal/anual com projeções** - ✅ (14/12/2025)
@@ -242,6 +269,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [x] **Relatórios de tendências e projeções baseados em histórico** - ✅ (03/01/2026)
 
 **Fase 5.2 - Gestão de Empréstimos** 📋 Planejada
+
 - [ ] **CRUD completo de empréstimos** (empréstimos concedidos e recebidos)
 - [ ] **Sistema de tipos**: emprestado para outros, recebido de terceiros
 - [ ] **Controle de parcelas com juros** configuráveis (simples e compostos)
@@ -254,19 +282,30 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 - [ ] **Simulador de empréstimo** com diferentes cenários
 
 **Fase 6 - Recursos Avançados** 📋 Futuro
+
+> 💡 **Nota**: Esta fase foi reorganizada para incluir as funcionalidades planejadas originalmente e novas sugestões incorporadas ao projeto.
+
 - [ ] **Comparativo de gastos** por categoria com metas financeiras
 - [ ] **Alertas de mudanças** significativas nos padrões de consumo
 - [ ] **Sistema de metas** financeiras por categoria
-- [ ] **Export de relatórios** em PDF/Excel
-- [ ] **Sistema Multiusuário**: Isolamento completo de dados por usuário
-- [ ] **E-mail Diário Automatizado**: Notificações automáticas de contas a vencer (CRON)
-- [ ] **Configurações Personalizáveis**: Ativar/desativar notificações e modais por usuário
-- [ ] **Notificações por e-mail/SMS avançadas e personalizáveis**: Expansão do sistema SMS customizável existente
-- [ ] Integração com IA para análises preditivas
-- [ ] Open Banking para sincronização automática
-- [ ] Sistema multi-moeda com conversão automática
-- [ ] Integração com APIs de investimentos
-- [ ] Sistema de backup automático na nuvem
+- [ ] **Export de relatórios** em PDF/Excel (usando Laravel DomPDF)
+- [ ] **Sistema Multiusuário Refinado**: Isolamento completo de dados por usuário (revisão de segurança)
+- [ ] **E-mail Diário Automatizado**: Notificações automáticas de contas a vencer (Laravel Scheduler + CRON)
+- [ ] **Configurações Personalizáveis**: Tabela `user_settings` para ativar/desativar notificações e modais por usuário
+- [ ] **Sistema de Papéis Aprimorado**: Roles específicos do FM System (Admin, Usuário Premium, Usuário Básico) via Spatie
+- [ ] **Melhorias no Perfil do Usuário**: Upload de foto de perfil (Intervention Image) e histórico de atividades
+- [ ] **Segurança em Ambiente de Desenvolvimento**: Exibir credenciais de teste apenas quando `APP_ENV=local`
+
+---
+
+## 🐛 Bugs Conhecidos
+
+### Bugs Reportados e Pendentes de Correção
+
+- 🔴 **Formulário de Cadastro**: Erro ao aceitar termos de uso - "Você deve aceitar os Termos de Uso" aparece mesmo quando checkbox está marcado
+  - **URL**: `/register`
+  - **Status**: 🚧 Pendente correção
+  - **Prioridade**: Alta (impede novos cadastros)
 
 ---
 
@@ -275,6 +314,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 ### 📊 Sistema de Despesas (Fase 1 - Concluída em 07/10/2025)
 
 #### **CRUD Completo**
+
 - ✅ Listagem com filtros (status, periodicidade, cartão, mês, **categoria**)
 - ✅ Cadastro com validações
 - ✅ Visualização detalhada
@@ -284,6 +324,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 #### **Sistema de Categorias** (Implementado em 22/12/2025)
 
 **Categorização de Despesas**
+
 - 8 categorias padrão com ícones emoji e cores personalizadas:
   - 🍽️ Alimentação (#F59E0B - Amber)
   - 🚗 Transporte (#3B82F6 - Blue)
@@ -295,6 +336,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
   - 📌 Outros (#6B7280 - Gray)
 
 **Funcionalidades**
+
 - ✅ Model Category com auditing
 - ✅ Relacionamento entre Expense e Category
 - ✅ Dropdown de seleção nos formulários
@@ -306,6 +348,7 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 #### **Sistema de Parcelas Inteligente**
 
 **1. Arquitetura Refatorada**
+
 - Tabela separada `installments` para gerenciar parcelas
 - Cada despesa pode ter múltiplas parcelas independentes
 - Relacionamento `hasMany` entre Expense e Installment
@@ -313,15 +356,18 @@ A versão 1 (PHP puro) permanece como projeto pessoal de aprendizado e não est�
 **2. Tipos de Parcelamento**
 
 **Parcelas Fixas (Automático)**
+
 ```
 Valor: R$ 3.000,00 | Parcelas: 3
 Resultado: 3x de R$ 1.000,00
 ```
+
 - Sistema divide automaticamente
 - Última parcela ajusta arredondamento
 - Datas calculadas mensalmente
 
 **Parcelas Flexíveis (Personalizado)**
+
 ```
 Exemplo: Entrada + Parcelas diferentes
 - Entrada: R$ 500,00 (Nov/2025)
@@ -329,12 +375,14 @@ Exemplo: Entrada + Parcelas diferentes
 - Parcela 3: R$ 400,00 (Jan/2026)
 - Parcela 4: R$ 300,00 (Fev/2026)
 ```
+
 - Valores personalizados para cada parcela
 - Datas de vencimento individuais
 - Validação em tempo real da soma
 - Feedback visual: ✓ (confere) | ⚠ (diferença)
 
 **3. Gerenciamento Individual de Parcelas**
+
 - Visualização em tabela na página de detalhes
 - Estatísticas: Total, Pagas, Pendentes, Vencidas
 - Marcar parcela individual como paga (via AJAX)
@@ -342,6 +390,7 @@ Exemplo: Entrada + Parcelas diferentes
 - Modais interativos com SweetAlert2
 
 **4. Interface e UX**
+
 - Toggle intuitivo: "Parcelas Iguais" ↔ "Parcelas Personalizadas"
 - Gerador dinâmico de campos
 - Máscara de dinheiro (R$ 1.000,00)
@@ -350,6 +399,7 @@ Exemplo: Entrada + Parcelas diferentes
 - Responsivo (mobile-first)
 
 **5. Recursos Técnicos**
+
 - **Transações DB**: Atomicidade garantida
 - **Eager Loading**: Performance otimizada
 - **AJAX**: Ações sem reload de página
@@ -358,12 +408,14 @@ Exemplo: Entrada + Parcelas diferentes
 - **Permissões**: Controle granular por ação
 
 #### **Alertas e Feedback**
+
 - Despesas vencidas (badge vermelho)
 - Vencimento próximo (7 dias - badge laranja)
 - Status visual por cores
 - Mensagens de sucesso/erro com SweetAlert2
 
 #### **Filtros e Pesquisa**
+
 - Filtro por status (pendente, paga)
 - Filtro por periodicidade
 - Filtro por cartão de crédito
@@ -373,21 +425,25 @@ Exemplo: Entrada + Parcelas diferentes
 ### 🔐 Sistema de Autenticação 2FA (Fase 2 - Concluída em 25/10/2025)
 
 #### **Autenticação de Dois Fatores**
+
 - ✅ **Verificação por E-mail**: Códigos de 6 dígitos via SMTP
 - ✅ **Verificação por SMS**: Integração com provedores SMS
 - ✅ **Backup Codes**: Códigos de recuperação para emergências
 - ✅ **Configuração Flexível**: Admin escolhe método padrão por usuário
 
 #### **Painel Administrativo Completo**
+
 - ✅ **Configurações de E-mail**: SMTP configurável via interface
 - ✅ **Configurações de SMS**: Múltiplos provedores suportados
 - ✅ **Teste Integrado**: Teste de envio direto no painel
 - ✅ **Estatísticas**: Monitoramento de códigos enviados/validados
 
 #### **Provedores SMS Customizados** 🇧🇷
+
 **Sistema revolucionário que permite configurar QUALQUER provedor SMS**
 
 **Características:**
+
 - ✅ **Flexibilidade Total**: Configure qualquer API REST
 - ✅ **Provedores Brasileiros**: Iagente, ZenviaNow, TotalVoice
 - ✅ **Provedores Internacionais**: Twilio, Nexmo, etc
@@ -395,6 +451,7 @@ Exemplo: Entrada + Parcelas diferentes
 - ✅ **Teste em Tempo Real**: Validação antes de ativar
 
 **Configuração Simples:**
+
 ```
 Nome: Iagente
 URL: https://api.iagente.com.br/v1/sms/send
@@ -406,6 +463,7 @@ Indicadores: status: success
 ```
 
 **Benefícios:**
+
 - 🚫 **Sem Vendor Lock-in**: Mude de provedor quando quiser
 - 🇧🇷 **Suporte Nacional**: Use empresas brasileiras
 - 💰 **Economia**: Escolha o provedor mais barato
@@ -413,6 +471,7 @@ Indicadores: status: success
 - 📊 **Logs Detalhados**: Monitore todos os envios
 
 #### **Recursos Técnicos 2FA**
+
 - **Guzzle HTTP**: Cliente HTTP robusto para APIs SMS
 - **Validação Dinâmica**: Headers e campos personalizáveis
 - **Rate Limiting**: Proteção contra spam de códigos
@@ -422,30 +481,35 @@ Indicadores: status: success
 ### 💳 Sistema de Cartões de Crédito (Fase 3 - Concluída em 02/11/2025)
 
 #### **CRUD Completo de Cartões**
+
 - ✅ **Listagem Inteligente**: Cards visuais com estatísticas em tempo real
 - ✅ **Cadastro Avançado**: Validações, máscaras de dinheiro e cálculos automáticos
 - ✅ **Visualização Detalhada**: Interface tipo "cartão físico" com informações completas
 - ✅ **Edição Flexível**: Atualização com controle de limite automático/manual
 
 #### **Controle de Limite Inteligente**
+
 - ✅ **Cálculo Automático**: Observer atualiza limite em tempo real baseado nas despesas
 - ✅ **Modo Manual**: Controle direto do usuário sobre limite disponível
 - ✅ **Validações**: Previne limite disponível maior que limite total
 - ✅ **Feedback Visual**: Gráficos circulares e barras de progresso do uso
 
 #### **Integração com Despesas**
+
 - ✅ **Vinculação Automática**: Despesas ligadas a cartões específicos
 - ✅ **Atualização em Tempo Real**: Observer monitora criação/edição/exclusão de despesas
 - ✅ **Histórico de Transações**: Visualização das despesas recentes por cartão
 - ✅ **Estatísticas Detalhadas**: Total de despesas, valores pendentes e pagos
 
 #### **Análise de Melhor Dia para Compra**
+
 - ✅ **Cálculo Automático**: Sistema identifica melhor data baseado no fechamento
 - ✅ **Configuração Manual**: Usuário pode definir dia preferido
 - ✅ **Alertas Visuais**: Destaque do próximo vencimento e dias restantes
 - ✅ **Planejamento Financeiro**: Informações para maximizar prazo de pagamento
 
 #### **Interface e UX**
+
 - ✅ **Design Responsivo**: Adaptado para mobile e desktop
 - ✅ **Tema Claro/Escuro**: Suporte completo aos dois temas
 - ✅ **Máscaras de Dinheiro**: Formatação automática de valores monetários
@@ -453,6 +517,7 @@ Indicadores: status: success
 - ✅ **Navegação Intuitiva**: Breadcrumbs e botões de ação contextuais
 
 #### **Recursos Técnicos**
+
 - **Observer Pattern**: ExpenseObserver para atualização automática de limites
 - **Eloquent Relationships**: Relacionamentos otimizados entre cartões e despesas
 - **JavaScript Modular**: Máscaras de dinheiro e validações em tempo real
@@ -465,26 +530,30 @@ Indicadores: status: success
 ### 💰 Sistema de Receitas (Fase 4 - Concluída em 16/11/2025)
 
 #### **CRUD Completo de Receitas**
+
 - ✅ **Listagem Inteligente**: Interface tabular padronizada seguindo o padrão de despesas
 - ✅ **Cadastro Avançado**: Formulário com validações completas e máscara de dinheiro centralizada
 - ✅ **Visualização Detalhada**: Cards informativos com todas as informações da receita
 - ✅ **Edição Refinada**: Formulário corrigido com dados pré-preenchidos e categorias funcionais
 
 #### **Sistema de Categorização**
+
 - ✅ **Categorias Padrão**: Salário, Freelance, Vendas, Investimentos, Aluguel, Comissões, Outros
-- ✅ **Tipos de Receita**: 
+- ✅ **Tipos de Receita**:
   - **Fixa**: Receitas regulares e previsíveis (salário, aluguel)
   - **Variável**: Receitas ocasionais e variáveis (freelance, vendas)
 - ✅ **Fonte/Origem**: Campo opcional para identificar a fonte da receita
 - ✅ **Status de Recebimento**: Pendente (laranja) e Recebida (verde)
 
 #### **Estatísticas em Tempo Real**
+
 - ✅ **Pendentes**: Valor total em receitas pendentes (R$)
 - ✅ **Recebidas no Mês**: Total recebido no mês atual (R$)
 - ✅ **Total de Receitas**: Contador total de receitas cadastradas
 - ✅ **Receitas Fixas**: Contador de receitas do tipo fixa
 
 #### **Sistema de Filtros e Pesquisa**
+
 - ✅ **Filtro por Status**: Todos, Pendentes, Recebidas
 - ✅ **Filtro por Tipo**: Todos, Receita Fixa, Receita Variável
 - ✅ **Filtro por Categoria**: Todas as categorias disponíveis
@@ -492,6 +561,7 @@ Indicadores: status: success
 - ✅ **Botões de Ação**: Pesquisar (azul) e Limpar filtros (amarelo)
 
 #### **Interface e Experiência do Usuário**
+
 - ✅ **Design Consistente**: Segue exatamente o padrão visual de despesas
 - ✅ **Tabela Responsiva**: Colunas ocultas em mobile, informações adaptadas
 - ✅ **Ações Contextuais**: Visualizar, Editar e Excluir com ícones intuitivos
@@ -500,6 +570,7 @@ Indicadores: status: success
 - ✅ **Tema Claro/Escuro**: Ajustes de legibilidade em cores de texto
 
 #### **Recursos Técnicos**
+
 - **Eloquent Scopes**: `forUser()`, `byStatus()`, `byCategory()`, `byType()`, `currentMonth()`
 - **Request Validation**: `IncomeRequest` com validações completas
 - **Seeder Inteligente**: `IncomeSeeder` com dados realísticos dos últimos 6 meses
@@ -508,6 +579,7 @@ Indicadores: status: success
 - **JavaScript Modular**: Scripts centralizados para máscaras de dinheiro
 
 #### **Refinamentos Técnicos (16/11/2025)**
+
 - ✅ **Formulário de Edição**: Corrigido problema com `getDefaultCategories()` substituído por `$categories`
 - ✅ **Máscaras de Dinheiro**: Centralizadas no `money-mask.js`, removidos scripts duplicados
 - ✅ **SweetAlert2**: Implementado para exclusão de receitas com modais elegantes
@@ -515,6 +587,7 @@ Indicadores: status: success
 - ✅ **Testes**: Corrigidos 2 testes com falhas, todos os 9 testes agora passam
 
 #### **Dados de Teste Realísticos**
+
 - ✅ **Período Abrangente**: Receitas dos últimos 6 meses + próximos 3 meses
 - ✅ **Variedade de Valores**: Baseados na categoria (salário: R$ 2.800-12.000)
 - ✅ **Receitas Recorrentes**: Salário e aluguel fixos mensais
@@ -524,12 +597,14 @@ Indicadores: status: success
 ### 📊 Dashboard e Relatórios (Fase 5 - Concluída em 30/11/2025)
 
 #### **Dashboard Financeiro Completo**
+
 - ✅ **Cards Estatísticos**: Receitas do mês, despesas, cartões de crédito e saldo geral
 - ✅ **DashboardController**: Sistema otimizado com consultas agregadas para performance
 - ✅ **AlertService**: Serviço dedicado para análise e geração de alertas inteligentes
 - ✅ **Estatísticas em Tempo Real**: Todos os dados atualizados dinamicamente
 
 #### **Sistema de Alertas Inteligentes**
+
 - ✅ **Central de Alertas**: Interface dedicada com cores tema-aware (vermelho suave)
 - ✅ **Prioridades**: Sistema de alta, média e baixa prioridade com contadores
 - ✅ **Alertas Financeiros**: Detecção automática de déficit, oportunidades de investimento
@@ -538,18 +613,21 @@ Indicadores: status: success
 - ✅ **Sugestões Inteligentes**: Ações recomendadas para cada tipo de alerta
 
 #### **Gráficos Interativos com Chart.js v4**
+
 - ✅ **Receitas vs Despesas**: Gráfico de linha comparativo dos últimos 6 meses
 - ✅ **Uso dos Cartões**: Gráfico de rosca mostrando percentual de uso por cartão
 - ✅ **Tema Compatível**: Cores que se adaptam ao tema claro/escuro automaticamente
 - ✅ **Responsividade**: Gráficos otimizados para mobile e desktop
 
 #### **Interface e Experiência do Usuário**
+
 - ✅ **Design Responsivo**: Mobile-first com adaptação perfeita para todos os dispositivos
 - ✅ **Tema Claro/Escuro**: Suporte completo com cores balanceadas
 - ✅ **Performance**: Consultas otimizadas com eager loading e agregações
 - ✅ **Navegação Intuitiva**: Layout organizado com informações hierarquizadas
 
 #### **Recursos Técnicos Implementados**
+
 - **DashboardController.php**: Métodos otimizados para estatísticas (receitas, despesas, cartões)
 - **AlertService.php**: 200+ linhas de lógica inteligente para detecção de padrões
 - **Consultas Otimizadas**: Uso de `selectRaw()` e agregações para performance
@@ -562,6 +640,7 @@ Indicadores: status: success
 ### 🧠 Modal Inteligente de Verificação (Fase 5.1 - Concluída em 08/12/2025)
 
 #### **Sistema de Verificação Automática de Contas Vencidas**
+
 - ✅ **Detecção Automática**: Sistema analisa contas vencidas ao acessar o dashboard
 - ✅ **Modal Inteligente**: Interface interativa com SweetAlert2 listando todas as contas vencidas
 - ✅ **Atualização em Lote**: Marcar múltiplas despesas e parcelas como pagas simultaneamente
@@ -571,12 +650,14 @@ Indicadores: status: success
 #### **Funcionalidades Implementadas**
 
 **1. Análise Automática**
+
 - Detecção de despesas simples vencidas (sem parcelas)
 - Detecção de parcelas vencidas de despesas parceladas
 - Filtro por usuário autenticado com segurança
 - Cálculo de dias de atraso para priorização
 
 **2. Modal Interativo**
+
 ```
 🔔 Contas Vencidas Detectadas
 
@@ -585,13 +666,14 @@ Essas contas já foram pagas?
 
 [Lista visual das contas com badges de prioridade]
 - Crítico (>30 dias): Badge vermelho
-- Atenção (>7 dias): Badge amarelo  
+- Atenção (>7 dias): Badge amarelo
 - Pendente: Badge cinza
 
 [✓ Marcar Todas como Pagas] [⊘ Deixar Pendentes] [× Fechar]
 ```
 
 **3. Atualização em Lote (AJAX)**
+
 - Endpoint: `POST /dashboard/mark-accounts-paid`
 - Validação de propriedade (segurança)
 - Transações DB para atomicidade
@@ -599,6 +681,7 @@ Essas contas já foram pagas?
 - Log de auditoria completo
 
 **4. Recálculo Dinâmico do Dashboard**
+
 - Endpoint: `GET /dashboard/updated-stats`
 - Recálculo de estatísticas de receitas
 - Recálculo de estatísticas de despesas
@@ -606,12 +689,14 @@ Essas contas já foram pagas?
 - Atualização da UI sem reload da página
 
 **5. Controle de Exibição**
+
 - SessionStorage para controlar exibição
 - Modal exibido apenas uma vez por sessão
 - Não mostra se não houver contas vencidas
 - Sistema inteligente de priorização
 
 #### **Recursos Técnicos Avançados**
+
 - **OverdueExpenseService.php**: Serviço dedicado para lógica de contas vencidas
 - **DashboardController**: 3 novos endpoints AJAX (getOverdueAccounts, markAccountsAsPaid, getUpdatedStats)
 - **overdue-verification-modal.js**: JavaScript modular com funções assíncronas
@@ -621,6 +706,7 @@ Essas contas já foram pagas?
 - **Transações DB**: Garantia de integridade nas atualizações em lote
 
 #### **Benefícios Implementados**
+
 - 🎯 **Proatividade**: Sistema antecipa necessidades do usuário
 - ⚡ **Agilidade**: Atualização rápida de múltiplas contas simultaneamente
 - 📊 **Precisão**: Dashboard sempre atualizado com dados reais em tempo real
@@ -633,6 +719,7 @@ Essas contas já foram pagas?
 ### 📊 Análise de Fluxo de Caixa (Fase 5.1 - Concluída em 14/12/2025)
 
 #### **Sistema Completo de Análise Financeira**
+
 - ✅ **Fluxo Mensal**: Análise detalhada dos últimos 6, 12 ou 24 meses
 - ✅ **Projeções Futuras**: Previsão automática para os próximos 6 meses
 - ✅ **Análise de Tendências**: Identificação de padrões de crescimento/queda
@@ -641,30 +728,35 @@ Essas contas já foram pagas?
 #### **Funcionalidades Implementadas**
 
 **1. Dashboard de Análise**
+
 - Cards de resumo anual (Receitas, Despesas, Saldo)
 - Indicadores de tendências (crescimento, queda, estável)
 - Filtros de período configuráveis (6, 12, 24 meses)
 - Design responsivo com tema claro/escuro
 
 **2. Gráficos Interativos (Chart.js v4)**
+
 - **Gráfico de Histórico**: Linha comparativa receitas vs despesas vs saldo
 - **Gráfico de Projeções**: Barras com valores projetados para 6 meses
 - Tooltips informativos com valores formatados
 - Cores adaptáveis ao tema do sistema
 
 **3. Tabela de Dados Detalhados**
+
 - Visualização mês a mês com valores exatos
 - Status visual (positivo/negativo)
 - Ordenação cronológica
 - Formatação monetária brasileira
 
 **4. Algoritmo de Projeção**
+
 - Baseia-se em médias dos últimos 6 meses
 - Considera receitas fixas (salários) para maior precisão
 - Adiciona variação de ±5% para simular oscilações reais
 - Calcula meses necessários baseado em 30% de economia do saldo
 
 #### **Recursos Técnicos**
+
 - **CashFlowService.php**: Service com lógica de cálculos complexos
 - **CashFlowController.php**: 5 endpoints AJAX para dados
 - **cash-flow-charts.js**: JavaScript modular para gráficos interativos
@@ -676,6 +768,7 @@ Essas contas já foram pagas?
 ### 🎯 Wishlist Inteligente (Fase 5.1 - Concluída em 14/12/2025)
 
 #### **Sistema de Objetivos Financeiros com IA**
+
 - ✅ **CRUD Completo**: Criar, visualizar, editar e excluir objetivos
 - ✅ **Análise de Viabilidade**: Algoritmo que avalia se o objetivo é alcançável
 - ✅ **Recomendações Inteligentes**: Sugestões automáticas baseadas no orçamento
@@ -684,6 +777,7 @@ Essas contas já foram pagas?
 #### **Funcionalidades Implementadas**
 
 **1. Gerenciamento de Objetivos**
+
 - Nome, descrição e notas personalizadas
 - Valor alvo e valor já economizado
 - Prioridade (Alta, Média, Baixa)
@@ -693,6 +787,7 @@ Essas contas já foram pagas?
 **2. Análise de Viabilidade Financeira**
 
 **Cálculos Avançados:**
+
 - ✅ **Saldo Médio Mensal**: Baseado nos últimos 6 meses reais
 - ✅ **Meses Necessários**: Considera economizar 30% do saldo mensal
 - ✅ **Data de Conclusão**: Previsão automática baseada no ritmo atual
@@ -700,6 +795,7 @@ Essas contas já foram pagas?
 - ✅ **Impacto no Orçamento**: Percentual do saldo comprometido
 
 **Classificação de Viabilidade:**
+
 ```
 ✅ Muito Viável (95%): Precisa de até 20% do saldo mensal
 👍 Viável (75%): Precisa de até 40% do saldo mensal
@@ -711,6 +807,7 @@ Essas contas já foram pagas?
 **3. Recomendações Inteligentes**
 
 **Sistema Dinâmico de Sugestões:**
+
 - **Muito Viável**: Incentiva aumentar o valor mensal
 - **Viável**: Informa percentual ideal a economizar
 - **Moderado**: Sugere reduzir despesas ou estender prazo
@@ -718,6 +815,7 @@ Essas contas já foram pagas?
 - **Inviável**: Sugere reavaliação de finanças ou redução do objetivo
 
 **Exemplos de Recomendações:**
+
 ```
 ✅ "Excelente! Este objetivo é muito viável com seu orçamento atual."
 💡 "Reserve 25.5% do seu saldo mensal para este objetivo."
@@ -727,6 +825,7 @@ Essas contas já foram pagas?
 ```
 
 **4. Interface Visual Rica**
+
 - **Cards de Objetivos**: Design tipo Pinterest com informações resumidas
 - **Barras de Progresso**: Visualização intuitiva do percentual alcançado
 - **Badges Coloridos**: Prioridade e status com cores tema-aware
@@ -734,6 +833,7 @@ Essas contas já foram pagas?
 - **Filtros Avançados**: Por status e prioridade
 
 **5. Estatísticas em Tempo Real**
+
 - Total de objetivos cadastrados
 - Objetivos em progresso
 - Objetivos concluídos
@@ -741,6 +841,7 @@ Essas contas já foram pagas?
 - Valor já economizado
 
 #### **Recursos Técnicos**
+
 - **Wishlist Model**: Com accessors inteligentes e scopes
 - **WishlistViabilityService.php**: 300+ linhas de lógica de IA financeira
 - **WishlistController.php**: CRUD completo + endpoints AJAX
@@ -749,6 +850,7 @@ Essas contas já foram pagas?
 - **WishlistSeeder**: Dados realísticos para testes
 
 #### **Benefícios do Sistema**
+
 - 🎯 **Clareza**: Usuário sabe exatamente se pode alcançar seus objetivos
 - 📊 **Dados Reais**: Análise baseada em histórico financeiro verdadeiro
 - 💡 **Educativo**: Ensina sobre planejamento financeiro pessoal
@@ -760,6 +862,7 @@ Essas contas já foram pagas?
 ### 📊 Relatórios de Tendências (Fase 5.1 - Concluída em 03/01/2026)
 
 #### **Sistema de Análise de Tendências por Categoria**
+
 - ✅ **Análise Histórica**: Evolução de gastos por categoria ao longo de 6, 12 ou 24 meses
 - ✅ **Cálculo de Tendências**: Identificação automática de crescimento, redução ou estabilidade
 - ✅ **Projeções Futuras**: Previsão de gastos para os próximos 6 meses baseada em média móvel
@@ -768,6 +871,7 @@ Essas contas já foram pagas?
 #### **Funcionalidades Implementadas**
 
 **1. Dashboard de Análise**
+
 - Cards de resumo com estatísticas gerais do período
 - Total gasto, média mensal e tendência geral
 - Destaque de categoria com maior variação (crescimento ou redução)
@@ -776,12 +880,14 @@ Essas contas já foram pagas?
 **2. Análise de Tendências por Categoria**
 
 **Cálculos Avançados:**
+
 - ✅ **Comparação Temporal**: Primeiros 3 meses vs últimos 3 meses
 - ✅ **Variação Percentual**: Crescimento ou redução em cada categoria
 - ✅ **Classificação Automática**: Tendência de alta, baixa ou estável
 - ✅ **Média Mensal**: Valor médio gasto por mês em cada categoria
 
 **Classificação de Tendências:**
+
 ```
 📈 Crescimento: Variação > +10%
 📉 Redução: Variação < -10%
@@ -791,6 +897,7 @@ Essas contas já foram pagas?
 **3. Gráficos Interativos**
 
 **Gráfico de Evolução Histórica:**
+
 - Linhas comparativas para cada categoria
 - Visualização de múltiplos períodos simultaneamente
 - Tooltips informativos com valores formatados
@@ -798,12 +905,14 @@ Essas contas já foram pagas?
 - Suporte a tema claro/escuro
 
 **Gráfico de Projeções Futuras:**
+
 - Barras empilhadas por categoria
 - Baseado em média móvel dos últimos 6 meses
 - Variação de ±10% para simular oscilações reais
 - Projeção para os próximos 6 meses
 
 **4. Tabela Detalhada**
+
 - Listagem completa por categoria
 - Total gasto e média mensal
 - Badge visual de tendência
@@ -811,12 +920,14 @@ Essas contas já foram pagas?
 - Ordenação por valor total (decrescente)
 
 **5. Algoritmo de Projeção**
+
 - Cálculo de média móvel inteligente
 - Consideração do desvio padrão
 - Variação aleatória controlada
 - Valores sempre positivos (não negativos)
 
 #### **Recursos Técnicos**
+
 - **TrendAnalysisService.php**: 350+ linhas de lógica de análise
 - **TrendReportController.php**: 5 endpoints (index, histórico, tendências, projeções, padrões sazonais)
 - **trend-charts.js**: JavaScript modular com Chart.js v4
@@ -824,6 +935,7 @@ Essas contas já foram pagas?
 - **Responsivo**: Design mobile-first com tema claro/escuro
 
 #### **Benefícios do Sistema**
+
 - 📈 **Visibilidade**: Usuário enxerga padrões de consumo ao longo do tempo
 - 🎯 **Precisão**: Cálculos baseados em dados reais do histórico
 - 🔮 **Previsibilidade**: Projeções ajudam no planejamento financeiro
@@ -846,6 +958,7 @@ Essas contas já foram pagas?
 ## Estrutura de Banco de Dados
 
 ### Tabela: `expenses`
+
 ```sql
 - id, user_id, credit_card_id
 - description, amount
@@ -856,6 +969,7 @@ Essas contas já foram pagas?
 ```
 
 ### Tabela: `installments`
+
 ```sql
 - id, expense_id
 - installment_number
@@ -865,6 +979,7 @@ Essas contas já foram pagas?
 ```
 
 ### Tabela: `incomes`
+
 ```sql
 - id, user_id
 - description, amount
@@ -874,6 +989,7 @@ Essas contas já foram pagas?
 ```
 
 ### Tabela: `credit_cards`
+
 ```sql
 - id, user_id
 - name, bank, last_four_digits
@@ -885,6 +1001,7 @@ Essas contas já foram pagas?
 ```
 
 **Relacionamentos:**
+
 - 1 Expense → N Installments (cascade delete)
 - 1 CreditCard → N Expenses (nullable foreign key)
 - 1 User → N CreditCards (user ownership)

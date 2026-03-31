@@ -14,36 +14,42 @@
 ## Screenshots
 
 ### Dashboard
+
 ![Dashboard Screenshot](docs/fm_system_dashboard.png)
-*Complete financial dashboard with statistics, charts, and intelligent alerts*
+_Complete financial dashboard with statistics, charts, and intelligent alerts_
 
 ### Expense Management
+
 ![Expense Management Screenshot](docs/fm_system_despesas.png)
-*Advanced expense management with flexible installments system*
+_Advanced expense management with flexible installments system_
 
 ### Credit Card Control
+
 ![Credit Card Screenshot](docs/fm_system_cartao_credito.png)
-*Intelligent credit card management with real-time limit control*
+_Intelligent credit card management with real-time limit control_
 
 ### Income System
+
 ![Income Screenshot](docs/fm_system_receitas.png)
-*Complete income management with categorization and smart filters*
+_Complete income management with categorization and smart filters_
 
 ## Requirements
 
-* PHP 8.2 or higher - Check version: php -v
-* MySQL 8.0 or higher - Check version: mysql --version
-* Composer - Check installation: composer --version
-* Node.js 22 or higher - Check version: node -v
-* NPM or Yarn - To manage Node.js dependencies and compile assets
-* GIT - Check if GIT is installed: git -v
+- PHP 8.2 or higher - Check version: php -v
+- MySQL 8.0 or higher - Check version: mysql --version
+- Composer - Check installation: composer --version
+- Node.js 22 or higher - Check version: node -v
+- NPM or Yarn - To manage Node.js dependencies and compile assets
+- GIT - Check if GIT is installed: git -v
 
 **Frontend:**
-* Tailwind CSS v4 - Included as project dependency (installed via npm)
+
+- Tailwind CSS v4 - Included as project dependency (installed via npm)
 
 ## How to Run the Downloaded Project
 
 First, download the project from GitHub repository:
+
 ```
 git clone https://github.com/robson-luiz/fm-system-v2-laravel.git
 cd fm-system-v2-laravel
@@ -51,6 +57,7 @@ cd fm-system-v2-laravel
 
 - Duplicate the ".env.example" file and rename to ".env".
 - Change the database credentials.
+
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -62,6 +69,7 @@ DB_PASSWORD=
 
 - For email functionality to work, you need to change the email server credentials in the .env file.
 - Use fake server during development: [Access free email sending](https://mailtrap.io)
+
 ```
 MAIL_MAILER=smtp
 MAIL_SCHEME=null
@@ -74,46 +82,55 @@ MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 Install PHP dependencies.
+
 ```
 composer install
 ```
 
 Install Node.js dependencies.
+
 ```
 npm install
 ```
 
 Generate key in .env file.
+
 ```
 php artisan key:generate
 ```
 
 Run migrations to create tables and columns.
+
 ```
 php artisan migrate
 ```
 
 Run seeder with php artisan to register test records.
+
 ```
 php artisan db:seed
 ```
 
 Start the Laravel project.
+
 ```
 php artisan serve
 ```
 
 Run Node.js libraries.
+
 ```
 npm run dev
 ```
 
 Run Jobs on local PC.
+
 ```
 php artisan queue:work
 ```
 
 Access the page created with Laravel.
+
 ```
 http://127.0.0.1:8000
 ```
@@ -123,18 +140,21 @@ http://127.0.0.1:8000
 The project comes with the following pre-installed libraries:
 
 **Frontend:**
+
 - **Tailwind CSS v4** - Utility-first CSS framework
 - **Alpine.js v3** - Reactive JavaScript framework
 - **Chart.js v4** - Chart library
 - **SweetAlert2** - Elegant custom alerts
 
 **Backend:**
+
 - **Spatie Laravel Permission** - Permissions and roles system
 - **OwenIt Laravel Auditing** - System action auditing
 - **Intervention Image** - Image manipulation
 - **Laravel Tinker** - Laravel interactive REPL
 
 **Development:**
+
 - **Laravel Pint** - PHP code formatter
 - **Laravel Sail** - Docker environment (optional)
 - **Faker** - Fake data generation for testing
@@ -173,6 +193,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 ### Roadmap
 
 **Initial System Base** ✅ Completed
+
 - [x] Authentication and permissions system (Spatie)
 - [x] User management with roles
 - [x] Auditing system (OwenIt/laravel-auditing)
@@ -180,6 +201,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] Light/dark theme support
 
 **Phase 1 - Expense Management** ✅ Completed (10/07/2025)
+
 - [x] Complete expense CRUD
 - [x] Installments system with separate table
 - [x] Fixed installments (equal values)
@@ -189,6 +211,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] Payment history
 
 **Phase 2 - Two-Factor Login** ✅ Completed (10/25/2025)
+
 - [x] Two-factor authentication (2FA) implementation
 - [x] Administrative configuration for sending method choice
 - [x] Code sending via email
@@ -201,6 +224,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] **Complete 2FA system verification** - (11/09/2025)
 
 **Phase 3 - Credit Cards** ✅ Completed (11/09/2025)
+
 - [x] Credit card CRUD
 - [x] Expense linking with cards
 - [x] Limit and invoice control
@@ -210,6 +234,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] UI/UX adjustments and mobile responsiveness
 
 **Phase 4 - Income System** ✅ Completed (11/16/2025)
+
 - [x] Complete income CRUD
 - [x] Categorization system (Salary, Freelance, Sales, Investments, Rent, Commissions, Others)
 - [x] Income types (Fixed and Variable)
@@ -224,6 +249,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] **Refinements (11/16/2025)**: Edit form corrections, centralized masks, SweetAlert2 and theme adjustments
 
 **Phase 5 - Dashboard and Reports** ✅ Completed (11/30/2025)
+
 - [x] Main financial dashboard with general statistics
 - [x] Interactive charts (Chart.js) of income vs expenses
 - [x] Automatic pending payment verification
@@ -234,6 +260,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] Responsive interface with light/dark theme
 
 **Phase 5.1 - Advanced Analytics** ✅ Completed (12/14/2025)
+
 - [x] **Intelligent Verification Modal**: System that checks pending accounts on login and asks "Have these accounts been paid?" with automatic status update - ✅ (12/08/2025)
 - [x] **Dynamic Dashboard Update**: Automatic statistics recalculation after account status changes - ✅ (12/08/2025)
 - [x] **Monthly/annual cash flow analysis with projections** - ✅ (12/14/2025)
@@ -242,6 +269,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [x] **Trend and projection reports based on history** - ✅ (01/03/2026)
 
 **Phase 5.2 - Loan Management** 📋 Planned
+
 - [ ] **Complete loan CRUD** (loans granted and received)
 - [ ] **Type system**: lent to others, borrowed from third parties
 - [ ] **Installment control with configurable interest** (simple and compound)
@@ -254,19 +282,30 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 - [ ] **Loan simulator** with different scenarios
 
 **Phase 6 - Advanced Features** 📋 Future
+
+> 💡 **Note**: This phase was reorganized to include originally planned features and new suggestions incorporated into the project.
+
 - [ ] **Category spending comparison** with financial goals
 - [ ] **Alerts for significant changes** in consumption patterns
 - [ ] **Financial goals system** by category
-- [ ] **Report export** in PDF/Excel
-- [ ] **Multi-User System**: Complete data isolation per user
-- [ ] **Automated Daily Email**: Automatic notifications for due bills (CRON)
-- [ ] **Customizable Settings**: Enable/disable notifications and modals per user
-- [ ] **Advanced and customizable email/SMS notifications**: Expansion of existing custom SMS system
-- [ ] AI integration for predictive analytics
-- [ ] Open Banking for automatic synchronization
-- [ ] Multi-currency system with automatic conversion
-- [ ] Investment API integration
-- [ ] Automatic cloud backup system
+- [ ] **Report export** in PDF/Excel (using Laravel DomPDF)
+- [ ] **Refined Multi-User System**: Complete data isolation per user (security review)
+- [ ] **Automated Daily Email**: Automatic notifications for due bills (Laravel Scheduler + CRON)
+- [ ] **Customizable Settings**: `user_settings` table to enable/disable notifications and modals per user
+- [ ] **Enhanced Role System**: FM System specific roles (Admin, Premium User, Basic User) via Spatie
+- [ ] **User Profile Improvements**: Profile photo upload (Intervention Image) and activity history
+- [ ] **Development Environment Security**: Display test credentials only when `APP_ENV=local`
+
+---
+
+## 🐛 Known Bugs
+
+### Reported Bugs Pending Fix
+
+- 🔴 **Registration Form**: Error accepting terms of use - "You must accept the Terms of Use" appears even when checkbox is marked
+  - **URL**: `/register`
+  - **Status**: 🚧 Pending fix
+  - **Priority**: High (prevents new registrations)
 
 ---
 
@@ -275,6 +314,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 ### 📊 Expense System (Phase 1 - Completed on 10/07/2025)
 
 #### **Complete CRUD**
+
 - ✅ Listing with filters (status, periodicity, card, month, **category**)
 - ✅ Registration with validations
 - ✅ Detailed viewing
@@ -284,6 +324,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 #### **Category System** (Implemented on 12/22/2025)
 
 **Expense Categorization**
+
 - 8 default categories with emoji icons and custom colors:
   - 🍽️ Food (#F59E0B - Amber)
   - 🚗 Transportation (#3B82F6 - Blue)
@@ -295,6 +336,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
   - 📌 Others (#6B7280 - Gray)
 
 **Features**
+
 - ✅ Category Model with auditing
 - ✅ Relationship between Expense and Category
 - ✅ Selection dropdown in forms
@@ -306,6 +348,7 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 #### **Intelligent Installments System**
 
 **1. Refactored Architecture**
+
 - Separate `installments` table to manage installments
 - Each expense can have multiple independent installments
 - `hasMany` relationship between Expense and Installment
@@ -313,15 +356,18 @@ Version 1 (pure PHP) remains as a personal learning project and is not publicly 
 **2. Installment Types**
 
 **Fixed Installments (Automatic)**
+
 ```
 Amount: R$ 3,000.00 | Installments: 3
 Result: 3x of R$ 1,000.00
 ```
+
 - System divides automatically
 - Last installment adjusts rounding
 - Monthly calculated dates
 
 **Flexible Installments (Custom)**
+
 ```
 Example: Down payment + Different installments
 - Down payment: R$ 500.00 (Nov/2025)
@@ -329,12 +375,14 @@ Example: Down payment + Different installments
 - Installment 3: R$ 400.00 (Jan/2026)
 - Installment 4: R$ 300.00 (Feb/2026)
 ```
+
 - Custom values for each installment
 - Individual due dates
 - Real-time sum validation
 - Visual feedback: ✓ (correct) | ⚠ (difference)
 
 **3. Individual Installment Management**
+
 - Table view on details page
 - Statistics: Total, Paid, Pending, Overdue
 - Mark individual installment as paid (via AJAX)
@@ -342,6 +390,7 @@ Example: Down payment + Different installments
 - Interactive modals with SweetAlert2
 
 **4. Interface and UX**
+
 - Intuitive toggle: "Equal Installments" ↔ "Custom Installments"
 - Dynamic field generator
 - Money mask (R$ 1,000.00)
@@ -350,6 +399,7 @@ Example: Down payment + Different installments
 - Responsive (mobile-first)
 
 **5. Technical Features**
+
 - **DB Transactions**: Guaranteed atomicity
 - **Eager Loading**: Optimized performance
 - **AJAX**: Actions without page reload
@@ -358,12 +408,14 @@ Example: Down payment + Different installments
 - **Permissions**: Granular control per action
 
 #### **Alerts and Feedback**
+
 - Overdue expenses (red badge)
 - Due soon (7 days - orange badge)
 - Visual status by colors
 - Success/error messages with SweetAlert2
 
 #### **Filters and Search**
+
 - Filter by status (pending, paid)
 - Filter by periodicity
 - Filter by credit card
@@ -373,21 +425,25 @@ Example: Down payment + Different installments
 ### 🔐 2FA Authentication System (Phase 2 - Completed on 10/25/2025)
 
 #### **Two-Factor Authentication**
+
 - ✅ **Email Verification**: 6-digit codes via SMTP
 - ✅ **SMS Verification**: SMS provider integration
 - ✅ **Backup Codes**: Emergency recovery codes
 - ✅ **Flexible Configuration**: Admin chooses default method per user
 
 #### **Complete Administrative Panel**
+
 - ✅ **Email Settings**: Configurable SMTP via interface
 - ✅ **SMS Settings**: Multiple supported providers
 - ✅ **Integrated Testing**: Direct sending test in panel
 - ✅ **Statistics**: Monitoring of sent/validated codes
 
 #### **Custom SMS Providers** 🇧🇷
+
 **Revolutionary system that allows configuring ANY SMS provider**
 
 **Features:**
+
 - ✅ **Total Flexibility**: Configure any REST API
 - ✅ **Brazilian Providers**: Iagente, ZenviaNow, TotalVoice
 - ✅ **International Providers**: Twilio, Nexmo, etc
@@ -395,6 +451,7 @@ Example: Down payment + Different installments
 - ✅ **Real-Time Testing**: Validation before activation
 
 **Simple Configuration:**
+
 ```
 Name: Iagente
 URL: https://api.iagente.com.br/v1/sms/send
@@ -406,6 +463,7 @@ Indicators: status: success
 ```
 
 **Benefits:**
+
 - 🚫 **No Vendor Lock-in**: Change provider whenever you want
 - 🇧🇷 **National Support**: Use Brazilian companies
 - 💰 **Economy**: Choose the cheapest provider
@@ -413,6 +471,7 @@ Indicators: status: success
 - 📊 **Detailed Logs**: Monitor all sends
 
 #### **2FA Technical Features**
+
 - **Guzzle HTTP**: Robust HTTP client for SMS APIs
 - **Dynamic Validation**: Customizable headers and fields
 - **Rate Limiting**: Protection against code spam
@@ -422,30 +481,35 @@ Indicators: status: success
 ### 💳 Credit Card System (Phase 3 - Completed on 11/02/2025)
 
 #### **Complete Card CRUD**
+
 - ✅ **Intelligent Listing**: Visual cards with real-time statistics
 - ✅ **Advanced Registration**: Validations, money masks and automatic calculations
 - ✅ **Detailed Viewing**: "Physical card" type interface with complete information
 - ✅ **Flexible Editing**: Updates with automatic/manual limit control
 
 #### **Intelligent Limit Control**
+
 - ✅ **Automatic Calculation**: Observer updates limit in real-time based on expenses
 - ✅ **Manual Mode**: Direct user control over available limit
 - ✅ **Validations**: Prevents available limit greater than total limit
 - ✅ **Visual Feedback**: Circular charts and usage progress bars
 
 #### **Expense Integration**
+
 - ✅ **Automatic Linking**: Expenses linked to specific cards
 - ✅ **Real-Time Updates**: Observer monitors expense creation/editing/deletion
 - ✅ **Transaction History**: View of recent expenses by card
 - ✅ **Detailed Statistics**: Total expenses, pending and paid amounts
 
 #### **Best Purchase Day Analysis**
+
 - ✅ **Automatic Calculation**: System identifies best date based on closing
 - ✅ **Manual Configuration**: User can define preferred day
 - ✅ **Visual Alerts**: Highlight of next due date and remaining days
 - ✅ **Financial Planning**: Information to maximize payment term
 
 #### **Interface and UX**
+
 - ✅ **Responsive Design**: Adapted for mobile and desktop
 - ✅ **Light/Dark Theme**: Complete support for both themes
 - ✅ **Money Masks**: Automatic formatting of monetary values
@@ -453,6 +517,7 @@ Indicators: status: success
 - ✅ **Intuitive Navigation**: Breadcrumbs and contextual action buttons
 
 #### **Technical Features**
+
 - **Observer Pattern**: ExpenseObserver for automatic limit updates
 - **Eloquent Relationships**: Optimized relationships between cards and expenses
 - **Modular JavaScript**: Money masks and real-time validations
@@ -465,26 +530,30 @@ Indicators: status: success
 ### 💰 Income System (Phase 4 - Completed on 11/16/2025)
 
 #### **Complete Income CRUD**
+
 - ✅ **Intelligent Listing**: Standardized tabular interface following expense pattern
 - ✅ **Advanced Registration**: Form with complete validations and centralized money mask
 - ✅ **Detailed Viewing**: Informative cards with all income information
 - ✅ **Refined Editing**: Fixed form with pre-filled data and functional categories
 
 #### **Categorization System**
+
 - ✅ **Default Categories**: Salary, Freelance, Sales, Investments, Rent, Commissions, Others
-- ✅ **Income Types**: 
+- ✅ **Income Types**:
   - **Fixed**: Regular and predictable income (salary, rent)
   - **Variable**: Occasional and variable income (freelance, sales)
 - ✅ **Source/Origin**: Optional field to identify income source
 - ✅ **Receipt Status**: Pending (orange) and Received (green)
 
 #### **Real-Time Statistics**
+
 - ✅ **Pending**: Total amount in pending income (R$)
 - ✅ **Received in Month**: Total received in current month (R$)
 - ✅ **Total Income**: Total count of registered income
 - ✅ **Fixed Income**: Count of fixed type income
 
 #### **Filter and Search System**
+
 - ✅ **Status Filter**: All, Pending, Received
 - ✅ **Type Filter**: All, Fixed Income, Variable Income
 - ✅ **Category Filter**: All available categories
@@ -492,6 +561,7 @@ Indicators: status: success
 - ✅ **Action Buttons**: Search (blue) and Clear filters (yellow)
 
 #### **Interface and User Experience**
+
 - ✅ **Consistent Design**: Follows exactly the visual pattern of expenses
 - ✅ **Responsive Table**: Hidden columns on mobile, adapted information
 - ✅ **Contextual Actions**: View, Edit and Delete with intuitive icons
@@ -500,6 +570,7 @@ Indicators: status: success
 - ✅ **Light/Dark Theme**: Text color readability adjustments
 
 #### **Technical Features**
+
 - **Eloquent Scopes**: `forUser()`, `byStatus()`, `byCategory()`, `byType()`, `currentMonth()`
 - **Request Validation**: `IncomeRequest` with complete validations
 - **Intelligent Seeder**: `IncomeSeeder` with realistic data from last 6 months
@@ -508,6 +579,7 @@ Indicators: status: success
 - **Modular JavaScript**: Centralized scripts for money masks
 
 #### **Technical Refinements (11/16/2025)**
+
 - ✅ **Edit Form**: Fixed problem with `getDefaultCategories()` replaced by `$categories`
 - ✅ **Money Masks**: Centralized in `money-mask.js`, removed duplicate scripts
 - ✅ **SweetAlert2**: Implemented for income deletion with elegant modals
@@ -515,6 +587,7 @@ Indicators: status: success
 - ✅ **Tests**: Fixed 2 failing tests, all 9 tests now pass
 
 #### **Realistic Test Data**
+
 - ✅ **Comprehensive Period**: Income from last 6 months + next 3 months
 - ✅ **Value Variety**: Based on category (salary: R$ 2,800-12,000)
 - ✅ **Recurring Income**: Fixed monthly salary and rent
@@ -524,12 +597,14 @@ Indicators: status: success
 ### 📊 Dashboard and Reports (Phase 5 - Completed on 11/30/2025)
 
 #### **Complete Financial Dashboard**
+
 - ✅ **Statistical Cards**: Monthly income, expenses, credit cards and general balance
 - ✅ **DashboardController**: Optimized system with aggregated queries for performance
 - ✅ **AlertService**: Dedicated service for analysis and intelligent alert generation
 - ✅ **Real-Time Statistics**: All data updated dynamically
 
 #### **Intelligent Alert System**
+
 - ✅ **Alert Center**: Dedicated interface with theme-aware colors (soft red)
 - ✅ **Priorities**: High, medium and low priority system with counters
 - ✅ **Financial Alerts**: Automatic detection of deficit, investment opportunities
@@ -538,18 +613,21 @@ Indicators: status: success
 - ✅ **Intelligent Suggestions**: Recommended actions for each alert type
 
 #### **Interactive Charts with Chart.js v4**
+
 - ✅ **Income vs Expenses**: Comparative line chart of last 6 months
 - ✅ **Card Usage**: Donut chart showing usage percentage per card
 - ✅ **Theme Compatible**: Colors that automatically adapt to light/dark theme
 - ✅ **Responsiveness**: Charts optimized for mobile and desktop
 
 #### **Interface and User Experience**
+
 - ✅ **Responsive Design**: Mobile-first with perfect adaptation for all devices
 - ✅ **Light/Dark Theme**: Complete support with balanced colors
 - ✅ **Performance**: Optimized queries with eager loading and aggregations
 - ✅ **Intuitive Navigation**: Organized layout with hierarchical information
 
 #### **Implemented Technical Features**
+
 - **DashboardController.php**: Optimized methods for statistics (income, expenses, cards)
 - **AlertService.php**: 200+ lines of intelligent logic for pattern detection
 - **Optimized Queries**: Use of `selectRaw()` and aggregations for performance
@@ -562,6 +640,7 @@ Indicators: status: success
 ### 🧠 Intelligent Verification Modal (Phase 5.1 - Completed on 12/08/2025)
 
 #### **Automatic Overdue Account Verification System**
+
 - ✅ **Automatic Detection**: System analyzes overdue accounts when accessing dashboard
 - ✅ **Intelligent Modal**: Interactive interface with SweetAlert2 listing all overdue accounts
 - ✅ **Batch Update**: Mark multiple expenses and installments as paid simultaneously
@@ -571,12 +650,14 @@ Indicators: status: success
 #### **Implemented Features**
 
 **1. Automatic Analysis**
+
 - Detection of simple overdue expenses (without installments)
 - Detection of overdue installments of installment expenses
 - Filter by authenticated user with security
 - Calculation of overdue days for prioritization
 
 **2. Interactive Modal**
+
 ```
 🔔 Overdue Accounts Detected
 
@@ -592,6 +673,7 @@ Have these accounts been paid?
 ```
 
 **3. Batch Update (AJAX)**
+
 - Endpoint: `POST /dashboard/mark-accounts-paid`
 - Ownership validation (security)
 - DB transactions for atomicity
@@ -599,6 +681,7 @@ Have these accounts been paid?
 - Complete audit log
 
 **4. Dynamic Dashboard Recalculation**
+
 - Endpoint: `GET /dashboard/updated-stats`
 - Recalculation of income statistics
 - Recalculation of expense statistics
@@ -606,12 +689,14 @@ Have these accounts been paid?
 - UI update without page reload
 
 **5. Display Control**
+
 - SessionStorage to control display
 - Modal shown only once per session
 - Not shown if there are no overdue accounts
 - Intelligent prioritization system
 
 #### **Advanced Technical Features**
+
 - **OverdueExpenseService.php**: Dedicated service for overdue accounts logic
 - **DashboardController**: 3 new AJAX endpoints (getOverdueAccounts, markAccountsAsPaid, getUpdatedStats)
 - **overdue-verification-modal.js**: Modular JavaScript with asynchronous functions (compiled with Vite)
@@ -621,6 +706,7 @@ Have these accounts been paid?
 - **DB Transactions**: Integrity guarantee in batch updates
 
 #### **Implemented Benefits**
+
 - 🎯 **Proactivity**: System anticipates user needs
 - ⚡ **Agility**: Quick update of multiple accounts simultaneously
 - 📊 **Accuracy**: Dashboard always updated with real-time data
@@ -633,6 +719,7 @@ Have these accounts been paid?
 ### 📊 Cash Flow Analysis (Phase 5.1 - Completed on 12/14/2025)
 
 #### **Complete Financial Analysis System**
+
 - ✅ **Monthly Flow**: Detailed analysis of the last 6, 12, or 24 months
 - ✅ **Future Projections**: Automatic forecasting for the next 6 months
 - ✅ **Trend Analysis**: Identification of growth/decline patterns
@@ -641,6 +728,7 @@ Have these accounts been paid?
 #### **Implemented Features**
 
 **1. Historical Analysis Dashboard**
+
 - Interactive period filter (6, 12, or 24 months)
 - Statistical cards (average income, expenses, balance)
 - 2 interactive charts with Chart.js v4:
@@ -650,24 +738,28 @@ Have these accounts been paid?
 - Visual trend indicators (↗ growth, ↘ decline, → stable)
 
 **2. Intelligent Projections**
+
 - **Algorithm based on 6-month average**: Uses real historical data
 - **Linear trend**: Considers recent growth/decline patterns
 - **Realistic forecasts**: Projects income and expenses separately
 - **Visualization**: Dashed lines for projections vs solid for historical
 
 **3. Financial Metrics**
+
 - **Monthly average**: Calculation of average income/expense over the period
 - **Positive/negative balance**: Identification of surplus or deficit months
 - **Percentage variation**: Monthly comparison with previous period
 - **Trend analysis**: Growth, decline or stability detection
 
 **4. Interactive Charts**
+
 - **Theme-aware colors**: Automatic adaptation to light/dark theme
 - **Responsive design**: Optimized for mobile and desktop
 - **Hover tooltips**: Detailed information on mouseover
 - **Graph legends**: Clear identification of each data series
 
 #### **Technical Architecture**
+
 - **CashFlowService.php**: 244 lines of business logic
   - `getMonthlyFlow($userId, $months)`: Historical data
   - `getProjections($userId)`: 6-month forecasts
@@ -687,6 +779,7 @@ Have these accounts been paid?
 - **Routes**: `/cash-flow` and 4 AJAX routes
 
 #### **Key Benefits**
+
 - 📊 **Visual clarity**: Graphs that facilitate understanding
 - 🔮 **Predictability**: Anticipate future financial behavior
 - 📈 **Strategic insights**: Identify growth or decline patterns
@@ -698,6 +791,7 @@ Have these accounts been paid?
 ### 🎯 Intelligent Wishlist (Phase 5.1 - Completed on 12/14/2025)
 
 #### **Financial Goals System with AI**
+
 - ✅ **Complete CRUD**: Create, view, edit, and delete goals
 - ✅ **Viability Analysis**: Algorithm that assesses if goal is achievable
 - ✅ **Smart Recommendations**: Automatic suggestions based on budget
@@ -707,6 +801,7 @@ Have these accounts been paid?
 #### **Implemented Features**
 
 **1. Goals Management**
+
 - **Index page**: Visual cards with statistics and filters
   - Total goals, in progress, completed, total amount
   - Filter by status (in progress, completed, canceled)
@@ -726,6 +821,7 @@ Have these accounts been paid?
 **2. Viability Analysis Algorithm**
 
 **Advanced Calculations:**
+
 - ✅ **Average Monthly Balance**: Based on last 6 real months
 - ✅ **Months Needed**: Considers saving 30% of monthly balance
 - ✅ **Completion Date**: Automatic prediction based on current pace
@@ -733,6 +829,7 @@ Have these accounts been paid?
 - ✅ **Budget Impact**: Percentage of balance committed
 
 **Viability Classification:**
+
 ```
 ✅ Very Viable (95%): Needs up to 20% of monthly balance
 👍 Viable (75%): Needs up to 40% of monthly balance
@@ -742,6 +839,7 @@ Have these accounts been paid?
 ```
 
 **Smart Recommendations Examples:**
+
 - ✅ "Excellent! This goal is very viable with your current budget."
 - 💡 "Set aside 25.5% of your monthly balance for this goal."
 - ⚠️ "Consider reducing non-essential expenses to facilitate."
@@ -749,18 +847,21 @@ Have these accounts been paid?
 - 💰 "A goal of up to R$ 12,000.00 would be more viable in 12 months."
 
 **3. Visual Progress System**
+
 - **Interactive progress bar**: Real-time percentage
 - **Formatted amounts**: Current, remaining, and target
 - **Priority badges**: Colored classification (red/yellow/gray)
 - **Status indicators**: In progress, completed, canceled
 
 **4. Financial Integration**
+
 - **CashFlowService**: Uses existing cash flow data
 - **Real historical data**: Based on actual income and expenses
 - **Realistic projections**: Considers 30% safe saving capacity
 - **Impact analysis**: Calculates commitment to monthly budget
 
 #### **Technical Architecture**
+
 - **Database**: `wishlists` table with complete structure
   - Fields: name, description, target_amount, current_amount
   - priority, target_date, status, notes
@@ -787,6 +888,7 @@ Have these accounts been paid?
 - **Routes**: Resource + 2 custom routes
 
 #### **Key Benefits**
+
 - 🎯 **Financial planning**: Clear goals with measurable progress
 - 🧠 **Artificial intelligence**: Smart analysis based on real data
 - 💡 **Personalized guidance**: Recommendations adapted to each situation
@@ -799,6 +901,7 @@ Have these accounts been paid?
 ### 📊 Trend Reports (Phase 5.1 - Completed on 01/03/2026)
 
 #### **Trend Analysis System by Category**
+
 - ✅ **Historical Analysis**: Evolution of spending by category over 6, 12, or 24 months
 - ✅ **Trend Calculation**: Automatic identification of growth, reduction, or stability
 - ✅ **Future Projections**: Spending forecast for the next 6 months based on moving average
@@ -807,6 +910,7 @@ Have these accounts been paid?
 #### **Implemented Features**
 
 **1. Analysis Dashboard**
+
 - Summary cards with general period statistics
 - Total spent, monthly average, and overall trend
 - Highlight of category with highest variation (growth or reduction)
@@ -815,12 +919,14 @@ Have these accounts been paid?
 **2. Trend Analysis by Category**
 
 **Advanced Calculations:**
+
 - ✅ **Temporal Comparison**: First 3 months vs last 3 months
 - ✅ **Percentage Variation**: Growth or reduction in each category
 - ✅ **Automatic Classification**: High, low, or stable trend
 - ✅ **Monthly Average**: Average amount spent per month in each category
 
 **Trend Classification:**
+
 ```
 📈 Growth: Variation > +10%
 📉 Reduction: Variation < -10%
@@ -830,6 +936,7 @@ Have these accounts been paid?
 **3. Interactive Charts**
 
 **Historical Evolution Chart:**
+
 - Comparative lines for each category
 - Visualization of multiple periods simultaneously
 - Informative tooltips with formatted values
@@ -837,12 +944,14 @@ Have these accounts been paid?
 - Light/dark theme support
 
 **Future Projections Chart:**
+
 - Stacked bars by category
 - Based on moving average of last 6 months
 - ±10% variation to simulate real fluctuations
 - Projection for next 6 months
 
 **4. Detailed Table**
+
 - Complete listing by category
 - Total spent and monthly average
 - Visual trend badge
@@ -850,12 +959,14 @@ Have these accounts been paid?
 - Sorting by total value (descending)
 
 **5. Projection Algorithm**
+
 - Intelligent moving average calculation
 - Standard deviation consideration
 - Controlled random variation
 - Always positive values (non-negative)
 
 #### **Technical Resources**
+
 - **TrendAnalysisService.php**: 350+ lines of analysis logic
 - **TrendReportController.php**: 5 endpoints (index, historical, trends, projections, seasonal patterns)
 - **trend-charts.js**: Modular JavaScript with Chart.js v4
@@ -863,6 +974,7 @@ Have these accounts been paid?
 - **Responsive**: Mobile-first design with light/dark theme
 
 #### **System Benefits**
+
 - 📈 **Visibility**: User sees consumption patterns over time
 - 🎯 **Accuracy**: Calculations based on real historical data
 - 🔮 **Predictability**: Projections help with financial planning
@@ -885,6 +997,7 @@ Have these accounts been paid?
 ## Database Structure
 
 ### Table: `expenses`
+
 ```sql
 - id, user_id, credit_card_id
 - description, amount
@@ -895,6 +1008,7 @@ Have these accounts been paid?
 ```
 
 ### Table: `installments`
+
 ```sql
 - id, expense_id
 - installment_number
@@ -904,6 +1018,7 @@ Have these accounts been paid?
 ```
 
 ### Table: `incomes`
+
 ```sql
 - id, user_id
 - description, amount
@@ -913,6 +1028,7 @@ Have these accounts been paid?
 ```
 
 ### Table: `credit_cards`
+
 ```sql
 - id, user_id
 - name, bank, last_four_digits
@@ -924,6 +1040,7 @@ Have these accounts been paid?
 ```
 
 ### Table: `wishlists`
+
 ```sql
 - id, user_id
 - name, description
@@ -934,6 +1051,7 @@ Have these accounts been paid?
 ```
 
 **Relationships:**
+
 - 1 Expense → N Installments (cascade delete)
 - 1 CreditCard → N Expenses (nullable foreign key)
 - 1 User → N CreditCards (user ownership)
